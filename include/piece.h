@@ -4,6 +4,6 @@
 class piece
 {
     
-}
+};
 
 #endif
