@@ -1,3 +1,10 @@
+// Author: NICOLA MARITAN
+
+/* ----------------------------------------------------
+    Classe del pawn/pedone.
+    ----------------------------------------------------
+*/
+
 #ifndef PAWN_H
 #define PAWN_H
 
@@ -5,7 +12,8 @@
 
 class pawn : public piece
 {
-
+    public:
+        
 };
 
 #endif
