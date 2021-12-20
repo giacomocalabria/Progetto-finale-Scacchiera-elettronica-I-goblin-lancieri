@@ -10,6 +10,10 @@
 
 #ifndef PIECE_H
 #define PIECE_H
+#include "position.h"
+#include <vector>
+
+//classe virtuale pura
 
 #include "position.h"
 #include "board.h"
