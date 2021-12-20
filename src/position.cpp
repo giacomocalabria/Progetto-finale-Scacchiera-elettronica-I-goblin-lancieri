@@ -7,7 +7,7 @@ position operator+(position p1, position p2)
     return p_sum;
 }
 
-std::ostream& operator<<(std::ostream& os, Position p)
+std::ostream& operator<<(std::ostream& os, position p)
 {
     return os << "(" << p.x << ", " << p.y << ")";
 }

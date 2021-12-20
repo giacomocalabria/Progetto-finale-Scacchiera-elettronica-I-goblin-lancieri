@@ -12,16 +12,18 @@
 #define PIECE_H
 
 #include "position.h"
+#include "board.h"
 #include <vector>
 
 class piece
 {
     public:
         piece(const position& _pos) : pos{_pos}{};
-        virtual void move(const position& pos) = 0;
+        virtual void move(const position& to) = 0;
         virtual bool can_move_to(const position& pos) = 0;
         
         // spunti
+        board* running_board;
         void eat(const piece& other);
         position get_position(){return pos;}
 

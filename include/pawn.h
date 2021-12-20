@@ -13,6 +13,10 @@
 class pawn : public piece
 {
     public:
+
+
+    protected:
+        std::vector<position> get_possible_positions() override;
         
 };
 
