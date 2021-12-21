@@ -5,10 +5,10 @@
 
 struct position
 {
-    position() : x{-1}, y{-1}{}
-    position(int _x, int _y) : x{_x}, y{_y}{}
-    position(const position& pos) : x{pos.x}, y{pos.y}{}
-    int x, y;
+    position() : row{-1}, col{-1}{}
+    position(int _row, int _col) : row{_row}, col{_col}{}
+    position(const position& pos) : row{pos.row}, col{pos.col}{}
+    int row, col;
 };
 
 position operator+(position p1, position p2);

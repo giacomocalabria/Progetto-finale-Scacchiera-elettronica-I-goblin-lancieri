@@ -5,7 +5,8 @@
 
 class queen : public piece
 {
-
+    public:
+        queen(const position& _pos, int _player) : piece(_pos, _player){}
 };
 
 #endif

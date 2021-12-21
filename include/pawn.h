@@ -13,7 +13,10 @@
 class pawn : public piece
 {
     public:
-
+        pawn(const position& _pos, int _player);
+        void move(const position& to) override;
+        bool can_move_to(const position& pos) override;
+        char symbol() override;
 
     protected:
         std::vector<position> get_possible_positions() override;

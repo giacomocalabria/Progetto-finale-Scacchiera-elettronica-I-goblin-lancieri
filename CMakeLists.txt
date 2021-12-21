@@ -6,25 +6,37 @@ project(scacchiera_elettronica)
 
 include_directories(include)
 
+# librerie del progetto
+add_library(board
+	include/board.h
+	src/board.cpp
+)
+
 add_library(position
 	include/position.h
 	src/position.cpp
 )
 
+# pezzi del gioco degli scacchi
+add_library(piece
+	include/piece.h
+	src/piece.cpp
+)
+
+add_library(pawn
+	include/pawn.h
+	src/pawn.cpp
+)
+
+
 #executable scacchiera
 add_executable(scacchiera
-
+	src/scacchiera.cpp
 )
 
 target_link_libraries(scacchiera
-
-)
-
-#executable replay
-add_executable(replay
-
-)
-
-target_link_libraries(replay
-    
+	board
+	position
+	piece
+	pawn
 )
