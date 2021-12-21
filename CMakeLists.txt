@@ -27,7 +27,12 @@ add_library(pawn
 
 #executable scacchiera
 add_executable(scacchiera
+    #susmake lists
 	src/scacchiera.cpp
+    src/position.cpp
+    src/pawn.cpp
+    src/piece.cpp
+    src/board.cpp
 )
 
 target_link_libraries(scacchiera
