@@ -57,7 +57,7 @@ std::vector<position> pawn::get_possible_positions()
     position p1(1, 2);
     position p2(2, 3);
     p3 = p1 + p2;
-    std::cout << p1;
+    //std::cout << p1;
 
     return possible_positions;
 }
