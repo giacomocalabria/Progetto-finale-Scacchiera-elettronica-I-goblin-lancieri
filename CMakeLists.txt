@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
-set (CMAKE_CXX_STANDARD 11)
+#set (CMAKE_CXX_STANDARD 11)
 
 #imposto il nome del progetto
 project(scacchiera_elettronica)
@@ -7,23 +7,13 @@ project(scacchiera_elettronica)
 include_directories(include)
 
 # librerie del progetto
-add_library(board
+add_library(librerie
 	include/board.h
 	src/board.cpp
-)
-
-add_library(position
 	include/position.h
 	src/position.cpp
-)
-
-# pezzi del gioco degli scacchi
-add_library(piece
 	include/piece.h
 	src/piece.cpp
-)
-
-add_library(pawn
 	include/pawn.h
 	src/pawn.cpp
 )
@@ -35,8 +25,5 @@ add_executable(scacchiera
 )
 
 target_link_libraries(scacchiera
-	board
-	position
-	piece
-	pawn
+	librerie
 )
