@@ -34,6 +34,10 @@ class board
         const int KING_NUMBER{1};
         const int QUEEN_NUMBER{1};
 
+    /*
+        Variabili membro private
+    */
+    private:
         piece* board_matrix[board_size][board_size];
         
         /* 
@@ -41,8 +45,17 @@ class board
             In questo modo per accedere ai pezzi del giocatore 2 basta
             la notazione player_pieces[1].
         */
-        std::vector<pawn> player_pawns[2];
+        //std::vector<piece*> player_pieces[2];
 
+        std::vector<pawn> player_pawns[2];
+        /*std::vector<rook> player_rooks[2];
+        std::vector<bishop> player_bishops[2];
+        */
+
+    /*
+        Funzioni membro privato.
+    */   
+    private:   
         void init_player_pieces();
 };
 

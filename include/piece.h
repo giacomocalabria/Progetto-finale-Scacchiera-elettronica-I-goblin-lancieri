@@ -1,6 +1,6 @@
 // Author: NICOLA MARITAN
 
-/* ----------------------------------------------------
+/*  ----------------------------------------------------
     Classe virtuale pura. Classe da cui discendono le
     classi dei vari pezzi. Contiene funzioni membro di
     utilità generale per una generica classe di tipo
@@ -21,6 +21,7 @@ class piece
         piece(const position& _pos, int _player) : pos{_pos}, player{_player}{};
         virtual void move(const position& to) = 0;
         virtual bool can_move_to(const position& pos) = 0;
+        // virtual bool can_eat() = 0; 
         virtual char symbol() = 0;
 
         // spunti

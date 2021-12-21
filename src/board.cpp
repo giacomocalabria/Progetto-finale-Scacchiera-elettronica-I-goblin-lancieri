@@ -49,8 +49,6 @@ void board::init_player_pieces()
     const int PAWN_ROW_PLAYER_1{6};   // Penultima riga dal basso
     /*for (int i = 0; i < PAWN_NUMBER; i++)
     {
-
-        
         // Aggiungo pawn del player 1 nel vector e aggiorno i riferimenti
         player_pawns[PLAYER_1].push_back(pawn(position(PAWN_ROW_PLAYER_1, i), PLAYER_1));
         board_matrix[PAWN_ROW_PLAYER_1][i] = &player_pawns[PLAYER_1][i];
@@ -74,27 +72,6 @@ void board::init_player_pieces()
         board_matrix[PAWN_ROW_PLAYER_1][i] = &player_pawns[PLAYER_1][i];
     }
 
-    /*player_pawns[PLAYER_1].push_back(pawn(position(PAWN_ROW_PLAYER_1, 0), PLAYER_1));
-    player_pawns[PLAYER_1].push_back(pawn(position(PAWN_ROW_PLAYER_1, 1), PLAYER_1));
-    player_pawns[PLAYER_1].push_back(pawn(position(PAWN_ROW_PLAYER_1, 2), PLAYER_1));
-    player_pawns[PLAYER_1].push_back(pawn(position(PAWN_ROW_PLAYER_1, 3), PLAYER_1));
-    player_pawns[PLAYER_1].push_back(pawn(position(PAWN_ROW_PLAYER_1, 4), PLAYER_1));
-    player_pawns[PLAYER_1].push_back(pawn(position(PAWN_ROW_PLAYER_1, 5), PLAYER_1));
-    player_pawns[PLAYER_1].push_back(pawn(position(PAWN_ROW_PLAYER_1, 6), PLAYER_1));
-    player_pawns[PLAYER_1].push_back(pawn(position(PAWN_ROW_PLAYER_1, 7), PLAYER_1));
-
-    board_matrix[PAWN_ROW_PLAYER_1][0] = &player_pawns[PLAYER_1][0];
-    board_matrix[PAWN_ROW_PLAYER_1][1] = &player_pawns[PLAYER_1][1];
-    board_matrix[PAWN_ROW_PLAYER_1][2] = &player_pawns[PLAYER_1][2];
-    board_matrix[PAWN_ROW_PLAYER_1][3] = &player_pawns[PLAYER_1][3];
-    board_matrix[PAWN_ROW_PLAYER_1][4] = &player_pawns[PLAYER_1][4];
-    board_matrix[PAWN_ROW_PLAYER_1][5] = &player_pawns[PLAYER_1][5];
-    board_matrix[PAWN_ROW_PLAYER_1][6] = &player_pawns[PLAYER_1][6];
-    board_matrix[PAWN_ROW_PLAYER_1][7] = &player_pawns[PLAYER_1][7];
-    */
-
-
-
     // work in progress, mancano ovviamnete gli altri pezzi
     /*
     const int NOT_PAWN_ROW_PLAYER_2{0};
@@ -105,26 +82,6 @@ void board::init_player_pieces()
 
 void board::print_board()
 {
-    /*for (int i = board_size; i > 0; i--)
-    {
-        std::cout << i << " ";
-        for (int j = 0; j < board_size; j++)
-        {
-            piece* p = board_matrix[board_size - i][j];
-            if (p) // se è nullptr
-            {
-                std::cout << p->symbol();
-            }
-            else
-            {
-                std::cout << " ";
-            }
-            
-        }
-        std::cout << std::endl;
-    }
-    std::cout << "  ABCDEFGH\n";
-    */
 
    for (int i = 0; i < board_size; i++)
    {

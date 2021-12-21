@@ -1,6 +1,6 @@
 // Author: NICOLA MARITAN
 
-/* ----------------------------------------------------
+/*  ----------------------------------------------------
     Classe del pawn/pedone.
     ----------------------------------------------------
 */
@@ -16,7 +16,7 @@ class pawn : public piece
         pawn(const position& _pos, int _player);
         void move(const position& to) override;
         bool can_move_to(const position& pos) override;
-        char symbol() override;
+        inline char symbol() override;
 
     protected:
         std::vector<position> get_possible_positions() override;

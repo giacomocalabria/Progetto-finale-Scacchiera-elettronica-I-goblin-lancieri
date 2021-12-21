@@ -31,11 +31,13 @@ bool pawn::can_move_to(const position& pos)
 
 }
 
-char pawn::symbol()
+inline char pawn::symbol()
 {
-    if (player == board::PLAYER_1)    // Player 1
+    /*if (player == board::PLAYER_1)    // Player 1
         return 'p';
-    return 'P'; // Player 2
+    return 'P'; // Player 2*/
+
+    return player == board::PLAYER_1 ? 'p' : 'P';
 }
 
 std::vector<position> pawn::get_possible_positions()
