@@ -7,6 +7,12 @@ position operator+(position p1, position p2)
     return p_sum;
 }
 
+position operator*(int scalar, position p)
+{
+    position p_res(scalar * p.row, scalar * p.col);
+    return p_res;
+}
+
 std::ostream& operator<<(std::ostream& os, position p)
 {
     return os << "(" << p.row << ", " << p.col << ")";

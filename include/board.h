@@ -19,6 +19,10 @@ class board
         void to_empty();
         void move_piece(const position& from, const position& to);
         void print_board();
+        // --
+        piece* get_board_piece(position pos){return board_matrix[pos.row][pos.col];}
+        void set_board_piece(position pos, piece* p){board_matrix[pos.row][pos.col] = p;}
+        
         static const int board_size {8};
         static const int PLAYER_1{0};
         static const int PLAYER_2{1};

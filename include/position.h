@@ -13,6 +13,8 @@ struct position
 
 position operator+(position p1, position p2);
 
+position operator*(int scalar, position p);
+
 std::ostream& operator<<(std::ostream& os, position p);
 
 bool operator==(position p1, position p2);
