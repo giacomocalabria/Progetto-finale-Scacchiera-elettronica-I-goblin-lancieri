@@ -42,6 +42,7 @@ void board::init_game()
         //board_matrix[1][j] <- rif a pawn in posizione (1, j) player 1
         //board_matrix[6][j] <- rif a pawn in posizione (6, j) player 2
     }
+}
 void board::init_player_pieces()
 {
     /*
