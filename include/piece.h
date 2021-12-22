@@ -13,14 +13,11 @@
 
 //classe virtuale pura
 #include "position.h"
-//#include "board.h"
 #include <vector>
 
 class piece
 {
     public:
-        /*piece(const position& _pos, int _player, board* _running_board)
-            : pos{_pos}, player{_player}, running_board{_running_board}{};*/
         piece(const position& _pos, int _player)
             : pos{_pos}, player{_player}{};
         virtual void move(const position& to) = 0;
@@ -38,7 +35,6 @@ class piece
         virtual std::vector<position> get_possible_positions() = 0;
 
         // variabili di esemplare
-        //board* running_board;
         int player; // 1 o 2 - tipo di dato da definire
         position pos;
 };
