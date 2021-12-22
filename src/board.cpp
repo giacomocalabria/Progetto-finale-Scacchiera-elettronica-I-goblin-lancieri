@@ -30,3 +30,13 @@ void board::to_empty()
         }
     }
 }
+
+void board::init_game()
+{
+    // inserimento pawn
+    for (int j = 0; j < board_size; j++)
+    {
+        //board_matrix[1][j] <- rif a pawn in posizione (1, j) player 1
+        //board_matrix[6][j] <- rif a pawn in posizione (6, j) player 2
+    }
+}

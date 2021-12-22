@@ -27,7 +27,6 @@ class piece
         virtual bool can_move_to(const position& pos) = 0;
         
         // spunti
-        board* running_board;
         void eat(const piece& other);
         position get_position(){return pos;}
 
@@ -36,7 +35,7 @@ class piece
         virtual std::vector<position> get_possible_positions() = 0;
 
         // come vengono chiamate nn ricordo
-        uint8_t player; // 1 o 2 - tipo di dato da definire
+        bool player; // 1 o 2 - tipo di dato da definire
         position pos;
 };
 
