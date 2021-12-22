@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 set (CMAKE_CXX_STANDARD 11)
 
 include_directories(include)
+
 project("Progetto")
 
 # librerie del progetto
@@ -20,9 +21,30 @@ add_library(piece
     src/piece.cpp
 )
 
-add_library(pawn
+add_library(pawn        #pedone
     include/pawn.h
     src/pawn.cpp
+)
+
+add_library(knight      #cavallo
+    include/knight.h
+    src/knight.cpp
+)
+
+add_library(queen       #regina
+    include/queen.h
+)
+
+add_library(rook        #torre
+    include/rook.h
+)
+
+add_library(king        #re
+    include/king.h
+)
+
+add_library(bishop       #alfiere
+    include/bishop.h
 )
 
 #executable scacchiera
@@ -33,12 +55,17 @@ add_executable(scacchiera
     src/pawn.cpp
     src/piece.cpp
     src/board.cpp
+    src/knight.cpp
 )
 
 target_link_libraries(scacchiera
-    piece	
     position
-    pawn
     board
-    
+    piece	
+    pawn
+    knight
+    rook
+    king
+    queen
+    bishop
 )
