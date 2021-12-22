@@ -1,9 +1,15 @@
 #include "board.h"
 
+using namespace std;
+
+
 board::board()
 {
     std::cout << "Board Initialization.\n";
+    //init_game();
+    //std::cout << "Game initialized.\n";
     to_empty();
+    std::cout << "Emptied.\n";
     init_player_pieces();
     std::cout << "Board initializated.\n";
 }
@@ -16,9 +22,19 @@ void board::move_piece(const position& from, const position& to)
     }
 
     piece* p = board_matrix[from.row][from.col];
-    if (p->can_move_to(to))
+    if (p->can_move_to(to, board_matrix))
     {
-        p->move(position(to));
+
+        // MOMENTANEO WORK IN PROGRESS
+        // aggiornare posizione in p
+        p->set_position(to);
+        board_matrix[to.row][to.col] = p;
+        board_matrix[from.row][from.col] = nullptr;
+        //p->move(position(to));
+    }
+    else
+    {
+        cout << "Chiude piece.cpp\n";
     }
     
 }
@@ -39,8 +55,7 @@ void board::init_game()
     // inserimento pawn
     for (int j = 0; j < board_size; j++)
     {
-        //board_matrix[1][j] <- rif a pawn in posizione (1, j) player 1
-        //board_matrix[6][j] <- rif a pawn in posizione (6, j) player 2
+        
     }
 }
 void board::init_player_pieces()

@@ -2,6 +2,9 @@
 
 #include "pawn.h"
 #include "board.h"
+#include <algorithm>
+
+using namespace std;
 
 /*
     Costruttore della classe pawn. Essa semplicemente richiama il
@@ -27,9 +30,49 @@ void pawn::move(const position& to)
     
 }
 
-bool pawn::can_move_to(const position& pos)
+bool pawn::can_move_to(const position& dest, piece* const mat[][8])
 {
-    
+    vector<position> possible_positions = get_possible_positions();
+    vector<position>::iterator it;
+    it = find(possible_positions.begin(), possible_positions.end(), dest);
+    if (it == possible_positions.end())
+        return false;
+
+    int sign = player == board::PLAYER_1 ? -1 : 1;  // orientazione
+    if (dest == pos + (sign * position(1, 0)))
+    {
+        // Allora si sta muovendo in avanti
+        if (mat[dest.row][dest.col])
+        {
+            return false;
+        }
+        is_init_pos = false;
+        return true;
+    }
+
+    if (dest == pos + (sign * position(2, 0)))
+    {
+        // Allora si sta muovendo in avanti
+        if (mat[dest.row][dest.col] || mat[dest.row - sign][dest.col])
+        {
+            return false;
+        }
+        is_init_pos = false;
+        return true;
+    }
+
+    // Sicuramente si sta muovendo in diagonale (gli altri casi hanno già portato a conclusione)
+
+    piece* other = mat[dest.row][dest.col];
+    if (other)
+    {
+        if (player != other->get_player())
+        {
+            is_init_pos = false;
+            return true;
+        }
+    }
+    return false;
 }
 
 inline char pawn::symbol()
@@ -47,17 +90,11 @@ std::vector<position> pawn::get_possible_positions()
     int sign = player == board::PLAYER_1 ? -1 : 1;  // orientazione
     if (is_init_pos)
     {
-        //possible_positions.push_back(pos + (sign * position(2, 0)));
+        possible_positions.push_back(pos + (sign * position(2, 0)));
     }
-    /*possible_positions.push_back(pos + (sign * position(1, 0)));    // avanza di una casa in verticale
+    possible_positions.push_back(pos + (sign * position(1, 0)));    // avanza di una casa in verticale
     possible_positions.push_back(pos + (sign * position(1, 1)));    // avanza di una casa in verticale e orizzontale
     possible_positions.push_back(pos + (sign * position(1, -1)));   
-*/
-    position p3;
-    position p1(1, 2);
-    position p2(2, 3);
-    p3 = p1 + p2;
-    //std::cout << p1;
 
     return possible_positions;
 }
