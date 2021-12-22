@@ -1,6 +1,6 @@
 // Author: NICOLA MARITAN
 
-/* ----------------------------------------------------
+/*  ----------------------------------------------------
     Classe virtuale pura. Classe da cui discendono le
     classi dei vari pezzi. Contiene funzioni membro di
     utilità generale per una generica classe di tipo
@@ -10,32 +10,36 @@
 
 #ifndef PIECE_H
 #define PIECE_H
-#include "position.h"
-#include <vector>
 
 //classe virtuale pura
-
 #include "position.h"
-#include "board.h"
+//#include "board.h"
 #include <vector>
 
 class piece
 {
     public:
-        piece(const position& _pos) : pos{_pos}{};
+        /*piece(const position& _pos, int _player, board* _running_board)
+            : pos{_pos}, player{_player}, running_board{_running_board}{};*/
+        piece(const position& _pos, int _player)
+            : pos{_pos}, player{_player}{};
         virtual void move(const position& to) = 0;
         virtual bool can_move_to(const position& pos) = 0;
-        
+        // virtual bool can_eat() = 0; 
+        virtual char symbol() = 0;
+
         // spunti
         void eat(const piece& other);
         position get_position(){return pos;}
+        
 
     protected:
         // funzioni membro protette
         virtual std::vector<position> get_possible_positions() = 0;
 
-        // come vengono chiamate nn ricordo
-        bool player; // 1 o 2 - tipo di dato da definire
+        // variabili di esemplare
+        //board* running_board;
+        int player; // 1 o 2 - tipo di dato da definire
         position pos;
 };
 

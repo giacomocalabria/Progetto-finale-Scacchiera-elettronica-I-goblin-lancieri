@@ -3,16 +3,22 @@
 
 position operator+(position p1, position p2)
 {
-    position p_sum(p1.x + p2.x, p1.y + p2.y);
+    position p_sum(p1.row + p2.row, p1.col + p2.col);
     return p_sum;
+}
+
+position operator*(int scalar, position p)
+{
+    position p_res(scalar * p.row, scalar * p.col);
+    return p_res;
 }
 
 std::ostream& operator<<(std::ostream& os, position p)
 {
-    return os << "(" << p.x << ", " << p.y << ")";
+    return os << "(" << p.row << ", " << p.col << ")";
 }
 
 bool operator==(position p1, position p2)
 {
-    return p1.x == p2.x && p1.y == p2.y;
+    return p1.row == p2.row && p1.col == p2.col;
 }

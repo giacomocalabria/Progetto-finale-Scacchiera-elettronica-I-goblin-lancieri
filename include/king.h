@@ -5,7 +5,8 @@
 
 class king : public piece
 {
-
+    public:
+        king(const position& _pos, int _player) : piece(_pos, _player){}
 };
 
 #endif
