@@ -25,5 +25,38 @@ inline char king::symbol(){
 
 vector<position> king::get_possible_positions(){
     vector<position> possible_pos;
-    //...
+    
+    position dest = pos + position(0, 1);
+    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
+        possible_pos.push_back(dest);
+
+    dest = pos + position(1, 1);
+    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
+        possible_pos.push_back(dest);
+
+    dest = pos + position(1, 0);
+    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
+        possible_pos.push_back(dest);
+    
+    dest = pos + position(1, -1);
+    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
+        possible_pos.push_back(dest);
+    
+    dest = pos + position(0, -1);
+    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
+        possible_pos.push_back(dest);
+    
+    dest = pos + position(-1, -1);
+    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
+        possible_pos.push_back(dest);
+    
+    dest = pos + position(-1, 0);
+    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
+        possible_pos.push_back(dest);
+    
+    dest = pos + position(-1, 1);
+    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
+        possible_pos.push_back(dest);
+
+    return possible_pos;
 }

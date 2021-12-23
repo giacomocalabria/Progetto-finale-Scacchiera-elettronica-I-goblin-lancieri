@@ -6,10 +6,8 @@
 int main()
 {
     board b;
-    space
     b.print_board();
     
-    //
     //b.move_piece(position(6, 3), position(4, 3));
     //space
     //b.print_board();

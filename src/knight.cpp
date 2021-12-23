@@ -35,35 +35,35 @@ vector<position> knight::get_possible_positions(){
     vector<position> possible_pos;
 
     position dest = pos + position(1, 2);
-    if(dest.col < 0 || dest.col > 7 || dest.row < 0 || dest.row > 7)
+    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
         possible_pos.push_back(dest);
 
     dest = pos + position(2, 1);
-    if(dest.col < 0 || dest.col > 7 || dest.row < 0 || dest.row > 7)
+    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
         possible_pos.push_back(dest);
 
     dest = pos + position(1, -2);
-    if(dest.col < 0 || dest.col > 7 || dest.row < 0 || dest.row > 7)
+    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
         possible_pos.push_back(dest);
     
     dest = pos + position(2, -1);
-    if(dest.col < 0 || dest.col > 7 || dest.row < 0 || dest.row > 7)
+    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
         possible_pos.push_back(dest);
     
     dest = pos + position(-1, -2);
-    if(dest.col < 0 || dest.col > 7 || dest.row < 0 || dest.row > 7)
+    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
         possible_pos.push_back(dest);
     
     dest = pos + position(-2, -1);
-    if(dest.col < 0 || dest.col > 7 || dest.row < 0 || dest.row > 7)
+    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
         possible_pos.push_back(dest);
     
     dest = pos + position(-1, 2);
-    if(dest.col < 0 || dest.col > 7 || dest.row < 0 || dest.row > 7)
+    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
         possible_pos.push_back(dest);
     
     dest = pos + position(-2, 1);
-    if(dest.col < 0 || dest.col > 7 || dest.row < 0 || dest.row > 7)
+    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
         possible_pos.push_back(dest);
 
     return possible_pos;

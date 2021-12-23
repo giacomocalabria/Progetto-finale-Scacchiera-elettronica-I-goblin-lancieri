@@ -94,6 +94,46 @@ void board::init_player_pieces()
     board_matrix[7][6] = &player_knights[PLAYER_1][1];
     board_matrix[0][6] = &player_knights[PLAYER_2][1]; 
 
+    // ----------- Inserimento bishop ----------- 
+
+    player_bishops[PLAYER_1].push_back(bishop(position(7, 2), PLAYER_1));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 2), PLAYER_2));
+    player_bishops[PLAYER_1].push_back(bishop(position(7, 5), PLAYER_1));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 5), PLAYER_2));
+    
+    board_matrix[7][2] = &player_bishops[PLAYER_1][0];
+    board_matrix[0][2] = &player_bishops[PLAYER_2][0];
+    board_matrix[7][5] = &player_bishops[PLAYER_1][1];
+    board_matrix[0][5] = &player_bishops[PLAYER_2][1];
+
+    // ----------- Inserimento rook ----------- 
+
+    player_rooks[PLAYER_1].push_back(rook(position(7, 0), PLAYER_1));
+    player_rooks[PLAYER_2].push_back(rook(position(0, 0), PLAYER_2));
+    player_rooks[PLAYER_1].push_back(rook(position(7, 7), PLAYER_1));
+    player_rooks[PLAYER_2].push_back(rook(position(0, 7), PLAYER_2));
+    
+    board_matrix[7][0] = &player_rooks[PLAYER_1][0];
+    board_matrix[0][0] = &player_rooks[PLAYER_2][0];
+    board_matrix[7][7] = &player_rooks[PLAYER_1][1];
+    board_matrix[0][7] = &player_rooks[PLAYER_2][1];
+
+    // ----------- Inserimento queen -----------
+
+    player_queen[PLAYER_1].push_back(queen(position(0, 3), PLAYER_1));
+    player_queen[PLAYER_2].push_back(queen(position(7, 3), PLAYER_2));
+
+    board_matrix[7][3] = &player_queen[PLAYER_1][0];
+    board_matrix[0][3] = &player_queen[PLAYER_2][0];
+
+    // ----------- Inserimento king -----------
+
+    player_king[PLAYER_1].push_back(king(position(0, 4), PLAYER_1));
+    player_king[PLAYER_2].push_back(king(position(7, 4), PLAYER_2));
+
+    board_matrix[7][4] = &player_king[PLAYER_1][0];
+    board_matrix[0][4] = &player_king[PLAYER_2][0];
+
     // work in progress, mancano ovviamnete gli altri pezzi
     /*
     const int NOT_PAWN_ROW_PLAYER_2{0};

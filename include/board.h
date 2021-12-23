@@ -56,10 +56,10 @@ class board
 
         std::vector<pawn> player_pawns[2];
         std::vector<knight> player_knights[2];
-        /*std::vector<rook> player_rooks[2];
+        std::vector<rook> player_rooks[2];
         std::vector<bishop> player_bishops[2];
-        */
-
+        std::vector<king> player_king[2];
+        std::vector<queen> player_queen[2];
     /*
         Funzioni membro privato.
     */   
