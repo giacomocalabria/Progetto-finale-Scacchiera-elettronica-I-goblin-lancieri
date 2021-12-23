@@ -27,3 +27,4 @@ build/CMakeFiles/king.dir/link.txt
 .gitignore
 .vscode/settings.json
 *.json
+build/CMakeFiles/bishop.dir/link.txt

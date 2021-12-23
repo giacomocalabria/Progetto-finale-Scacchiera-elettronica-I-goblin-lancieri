@@ -38,6 +38,7 @@ add_library(queen       #regina
 
 #add_library(rook        #torre
 #    include/rook.h
+#    src/rook.cpp
 #)
 
 add_library(king        #re
@@ -45,9 +46,10 @@ add_library(king        #re
     src/king.cpp
 )
 
-#add_library(bishop       #alfiere
-#    include/bishop.h
-#)
+add_library(bishop       #alfiere
+    include/bishop.h
+    src/bishop.cpp
+)
 
 #executable scacchiera
 add_executable(scacchiera
@@ -60,6 +62,8 @@ add_executable(scacchiera
     src/knight.cpp
     src/queen.cpp
     src/king.cpp
+    #src/bishop.cpp
+    #src/rook.cpp
 )
 
 target_link_libraries(scacchiera
@@ -68,8 +72,8 @@ target_link_libraries(scacchiera
     piece	
     pawn
     knight
-    #rook
+    rook
     king
-    queen
+    #queen
     #bishop
 )
