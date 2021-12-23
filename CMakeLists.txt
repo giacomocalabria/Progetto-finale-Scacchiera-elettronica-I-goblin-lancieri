@@ -3,7 +3,7 @@ set (CMAKE_CXX_STANDARD 11)
 
 include_directories(include)
 
-project("Progetto")
+project("scacchiera_elettronica")
 
 # librerie del progetto
 add_library(position
