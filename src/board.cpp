@@ -63,20 +63,11 @@ void board::init_player_pieces()
             - 1 king e 1 queen ciascuno
     */
 
+
+    // ----------- Inserimento pawns ----------- 
+
     const int PAWN_ROW_PLAYER_2{1};  // Seconda riga dall'alto
     const int PAWN_ROW_PLAYER_1{6};   // Penultima riga dal basso
-    /*for (int i = 0; i < PAWN_NUMBER; i++)
-    {
-        // Aggiungo pawn del player 1 nel vector e aggiorno i riferimenti
-        player_pawns[PLAYER_1].push_back(pawn(position(PAWN_ROW_PLAYER_1, i), PLAYER_1));
-        board_matrix[PAWN_ROW_PLAYER_1][i] = &player_pawns[PLAYER_1][i];
-
-        // Analogo per player 2
-        player_pawns[PLAYER_2].push_back(pawn(position(PAWN_ROW_PLAYER_2, i), PLAYER_2));
-        board_matrix[PAWN_ROW_PLAYER_2][i] = &player_pawns[PLAYER_2][i];
-
-        
-    }*/
 
     for (int i = 0; i < PAWN_NUMBER; i++)
     {
@@ -89,16 +80,19 @@ void board::init_player_pieces()
         board_matrix[PAWN_ROW_PLAYER_2][i] = &player_pawns[PLAYER_2][i];
         board_matrix[PAWN_ROW_PLAYER_1][i] = &player_pawns[PLAYER_1][i];
     }
+
+
+    // ----------- Inserimento knights ----------- 
 
     player_knights[PLAYER_1].push_back(knight(position(7, 1), PLAYER_1));
     player_knights[PLAYER_2].push_back(knight(position(0, 1), PLAYER_2));
     player_knights[PLAYER_1].push_back(knight(position(7, 6), PLAYER_1));
     player_knights[PLAYER_2].push_back(knight(position(0, 6), PLAYER_2));
     
-    board_matrix[0][1] = &player_knights[PLAYER_2][1];
-    board_matrix[7][1] = &player_knights[PLAYER_1][1];
-    board_matrix[0][6] = &player_knights[PLAYER_2][6];
-    board_matrix[7][6] = &player_knights[PLAYER_1][6];
+    board_matrix[7][1] = &player_knights[PLAYER_1][0];
+    board_matrix[0][1] = &player_knights[PLAYER_2][0];
+    board_matrix[7][6] = &player_knights[PLAYER_1][1];
+    board_matrix[0][6] = &player_knights[PLAYER_2][1]; 
 
     // work in progress, mancano ovviamnete gli altri pezzi
     /*
@@ -123,11 +117,11 @@ void board::print_board()
            }
            else
            {
-               std::cout << p->get_position();
-               //std::cout << p->symbol();
+               //std::cout << p->get_position();
+               std::cout << p->symbol();
                
                //std::cout << "good";
-               std::cout << "*";
+               //std::cout << "*";
            }
            
        }
