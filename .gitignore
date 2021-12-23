@@ -22,3 +22,8 @@ build/CMakeFiles/board.dir/link.txt
 build/CMakeFiles/3.21.4/CompilerIdCXX/CMakeCXXCompilerId.cpp
 build/CMakeCache.txt
 build/CMakeFiles/3.21.4/CompilerIdC/CMakeCCompilerId.c
+build/CMakeFiles/queen.dir/link.txt
+build/CMakeFiles/king.dir/link.txt
+.gitignore
+.vscode/settings.json
+*.json

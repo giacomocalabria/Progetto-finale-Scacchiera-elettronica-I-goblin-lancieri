@@ -27,8 +27,7 @@ bool knight::can_move_to(const position& dest, piece* const mat[][8]){
     return true;
 }
 
-inline char knight::symbol()
-{
+inline char knight::symbol(){
     return player == board::PLAYER_1 ? 'c' : 'C';
 }
 
