@@ -1,3 +1,5 @@
+//Autore: EDDIE CARRARO
+
 #include "bishop.h"
 #include "board.h"
 #include <algorithm>
@@ -12,7 +14,7 @@ void bishop::move(const position& to)
 bool bishop::can_move_to(const position& dest, piece* const mat[][8])
 {
 //--------controllo il bounding--------
-	if(dest.row < 8 || dest.row > 0 || dest.col < 8 || dest.col > 0)
+	if(dest.row < 8 || dest.row > 0 || dest.col < 8 || dest.col > 0)	//ridondante? velocizza????????
 	{
 		return false;
 	}
@@ -22,26 +24,77 @@ bool bishop::can_move_to(const position& dest, piece* const mat[][8])
 	if(it == possible_positions.end())
 		return false;
 
-	int sign = player == board::PLAYER_1 ? -1 : 1;  // orientazione (mi serve???)
+	position go_on = position(pos.row, pos.col);		//posizione che avanza fino a dest
+	piece* go_piece = mat[go_on.row][go_on.col];			//pedina di ogni posizione considerata fino a dest
 
-	it = possible_positions.begin();	//faccio ripartire l'iteratore
 	if(dest.col > pos.col)			//controllo se la destinazione e' a "destra" rispetto alla current_pos
 	{
-		while(it != possible_positions.end())
+		if(dest.row > pos.row)		//controllo se la destinazione e' "in alto" (a destra) rispetto alla current_pos
 		{
-			if((*it).col > dest.col && (*it).col <= dest.col)	//- - - - .controllo se ci sono pedine nelle caselle interessate
+			while(go_on.row != dest.row && go_on.col != dest.col)
 			{
-				//position is_piece = position((*it).row, (*it).col);
+				go_on = position(go_on.row + 1, go_on.col + 1);
+				go_piece = mat[go_on.row][go_on.col];
 
-				if(mat[(*it).row][(*it).col])
+				if(go_piece && (*go_piece).get_player() == this->get_player())
 				{
 					return false;
 				}
 			}
-			it++;
 		}
+		else if(dest.row < pos.row)
+		{
+			while(go_on.row != dest.row && go_on.col != dest.col)
+			{
+				go_on = position(go_on.row - 1, go_on.col + 1);
+				go_piece = mat[go_on.row][go_on.col];
+
+				if(go_piece && (*go_piece).get_player() == this->get_player())
+				{
+					return false;
+				}
+			}
+		}
+		else
+			return false;
+
+		return true;
 	}
-	return true;
+	else if(dest.col < pos.col)
+	{
+		if(dest.row > pos.row)		//controllo se la destinazione e' "in alto" (a destra) rispetto alla current_pos
+		{
+			while(go_on.row != dest.row && go_on.col != dest.col)
+			{
+				go_on = position(go_on.row + 1, go_on.col - 1);
+				go_piece = mat[go_on.row][go_on.col];
+
+				if((*go_piece).get_player() == this->get_player())
+				{
+					return false;
+				}
+			}
+		}
+		else if(dest.row < pos.row)
+		{
+			while(go_on.row != dest.row && go_on.col != dest.col)
+			{
+				go_on = position(go_on.row - 1, go_on.col - 1);
+				go_piece = mat[go_on.row][go_on.col];
+
+				if((*go_piece).get_player() == this->get_player())
+				{
+					return false;
+				}
+			}
+		}
+		else
+			return false;
+
+		return true;
+	}
+	else
+		return false;
 }
 
 char bishop::symbol()
@@ -59,8 +112,8 @@ vector<position> bishop::get_possible_positions()
 	{
 		possible_positions.push_back(go_on);
 
-		go_on.row += 1;
-		go_on.col += sign;		//controllo le posizioni successive (in cui bishop puo'andare)
+		go_on.row++;
+		go_on.col++;		//controllo le posizioni successive (in cui bishop puo'andare)
 	}
 
 	go_on = position(pos.row - 1, pos.col + sign);
@@ -68,8 +121,8 @@ vector<position> bishop::get_possible_positions()
 	{
 		possible_positions.push_back(go_on);
 
-		go_on.row -= 1;
-		go_on.col += sign;		//controllo le posizioni successive (in cui bishop puo'andare)
+		go_on.row--;
+		go_on.col++;		//controllo le posizioni successive (in cui bishop puo'andare)
 	}
 
 	return possible_positions;
