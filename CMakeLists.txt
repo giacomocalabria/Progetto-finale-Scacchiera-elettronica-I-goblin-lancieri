@@ -25,6 +25,11 @@ add_library(pawn
     src/pawn.cpp
 )
 
+add_library(bishop
+    include/bishop.h
+    src/bishop.cpp
+)
+
 #executable scacchiera
 add_executable(scacchiera
     #susmake lists
@@ -33,6 +38,7 @@ add_executable(scacchiera
     src/pawn.cpp
     src/piece.cpp
     src/board.cpp
+    src/bishop.cpp
 )
 
 target_link_libraries(scacchiera
@@ -40,5 +46,6 @@ target_link_libraries(scacchiera
     position
     pawn
     board
+    bishop
     
 )
