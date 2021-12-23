@@ -1,7 +1,7 @@
 // Author: GIACOMO CALABRIA
 
 /*  ----------------------------------------------------
-    Classe del knight/cavallo.
+    Classe derivata da piece del knight/cavallo.
     ----------------------------------------------------
 */
 
@@ -12,8 +12,7 @@
 
 class knight : public piece{
     public:
-        //pawn(const position& _pos, int _player, board* _running_board);
-        knight(const position& _pos, int _player);
+        knight(const position& _pos, int _player) : piece(_pos, _player){}
         void move(const position& to) override;
         bool can_move_to(const position& dest, piece* const mat[][8]) override;
         inline char symbol() override;
@@ -22,4 +21,4 @@ class knight : public piece{
         std::vector<position> get_possible_positions() override;    
 };
 
-#endif //KNIGHT_h
+#endif //KNIGHT_H

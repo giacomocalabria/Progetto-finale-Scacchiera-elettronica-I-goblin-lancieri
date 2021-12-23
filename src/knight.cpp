@@ -5,10 +5,6 @@
 #include <algorithm>
 
 using namespace std;
-//Costruttore della classe knight. Essa semplicemente richiama il costruttore della base class piece.
-
-knight::knight(const position& _pos, int _player) 
-    : piece(_pos, _player){}
 
 void knight::move(const position& to){
     
@@ -36,7 +32,7 @@ inline char knight::symbol()
     return player == board::PLAYER_1 ? 'c' : 'C';
 }
 
-std::vector<position> knight::get_possible_positions(){
+vector<position> knight::get_possible_positions(){
     vector<position> possible_pos;
 
     position dest = pos + position(1, 2);
