@@ -1,5 +1,7 @@
 #include "board.h"
 
+#include <vector>
+
 using namespace std;
 
 
@@ -50,14 +52,6 @@ void board::to_empty()
     }
 }
 
-void board::init_game()
-{
-    // inserimento pawn
-    for (int j = 0; j < board_size; j++)
-    {
-        
-    }
-}
 void board::init_player_pieces()
 {
     /*
@@ -95,6 +89,16 @@ void board::init_player_pieces()
         board_matrix[PAWN_ROW_PLAYER_2][i] = &player_pawns[PLAYER_2][i];
         board_matrix[PAWN_ROW_PLAYER_1][i] = &player_pawns[PLAYER_1][i];
     }
+
+    player_knights[PLAYER_1].push_back(knight(position(7, 1), PLAYER_1));
+    player_knights[PLAYER_2].push_back(knight(position(0, 1), PLAYER_2));
+    player_knights[PLAYER_1].push_back(knight(position(7, 6), PLAYER_1));
+    player_knights[PLAYER_2].push_back(knight(position(0, 6), PLAYER_2));
+    
+    board_matrix[0][1] = &player_knights[PLAYER_2][1];
+    board_matrix[7][1] = &player_knights[PLAYER_1][1];
+    board_matrix[0][6] = &player_knights[PLAYER_2][6];
+    board_matrix[7][6] = &player_knights[PLAYER_1][6];
 
     // work in progress, mancano ovviamnete gli altri pezzi
     /*

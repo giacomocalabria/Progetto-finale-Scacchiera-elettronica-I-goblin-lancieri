@@ -5,12 +5,12 @@
 
 #include <iostream>
 #include <vector>
-#include "piece.h"
 #include "pawn.h"
-/*#include "king.h"
+#include "king.h"
 #include "queen.h"
 #include "rook.h"
-#include "bishop.h"*/
+#include "bishop.h"
+#include "knight.h"
 
 class board
 {
@@ -27,7 +27,7 @@ class board
         void set_board_piece(position pos, piece* p){board_matrix[pos.row][pos.col] = p;}
         
         static const int board_size {8};
-        static const int PLAYER_1{0};
+        static const int PLAYER_1{0}; //fare un enum?
         static const int PLAYER_2{1};
 
     
@@ -35,12 +35,12 @@ class board
         /*
             Costanti relative al numero di pezzi di ogni giocatore.
         */
-        const int PAWN_NUMBER{8};
+        const int PAWN_NUMBER{8}; //fare un enum?
         const int ROOK_NUMBER{2};
         const int BISHOP_NUMBER{2};
         const int KING_NUMBER{1};
         const int QUEEN_NUMBER{1};
-
+        const int KNIGHT_NUMBER{2};
     /*
         Variabili membro private
     */
@@ -55,6 +55,7 @@ class board
         //std::vector<piece*> player_pieces[2];
 
         std::vector<pawn> player_pawns[2];
+        std::vector<knight> player_knights[2];
         /*std::vector<rook> player_rooks[2];
         std::vector<bishop> player_bishops[2];
         */
