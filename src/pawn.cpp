@@ -13,20 +13,6 @@ using namespace std;
 //pawn::pawn(const position& _pos, int _player, board* _running_board) : piece(_pos, _player, _running_board)
 pawn::pawn(const position& _pos, int _player) : piece(_pos, _player)
 {
-    // Alla fine ho trovato un modo migliore :) ^ chiamata al base constructor
-    /*
-        C++ non permette di inizializzare var membro ereditate nel
-        member initializer list di un construttore. Il valore di una
-        var membro può essere inizializzata solo in una lista appartenente
-        alla stesso classe della var.
-    */
-    /*pos = _pos;
-    player = _player;
-    */
-}
-
-void pawn::move(const position& to)
-{
     
 }
 

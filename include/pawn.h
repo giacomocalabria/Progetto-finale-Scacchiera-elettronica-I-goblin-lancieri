@@ -15,8 +15,7 @@ class pawn : public piece
     public:
         //pawn(const position& _pos, int _player, board* _running_board);
         pawn(const position& _pos, int _player);
-        void move(const position& to) override;
-        bool can_move_to(const position& dest, piece* const mat[][8]) override;
+        bool can_move_to(const position& dest, piece* const mat[][max_position]) override;
         inline char symbol() override;
 
     private:
