@@ -9,8 +9,8 @@
 #include "pawn.h"
 /*#include "king.h"
 #include "queen.h"
-#include "rook.h"
-#include "bishop.h"*/
+#include "rook.h"*/
+#include "bishop.h"
 
 class board
 {
@@ -55,9 +55,9 @@ class board
         //std::vector<piece*> player_pieces[2];
 
         std::vector<pawn> player_pawns[2];
-        /*std::vector<rook> player_rooks[2];
+        //std::vector<rook> player_rooks[2];
         std::vector<bishop> player_bishops[2];
-        */
+        
 
     /*
         Funzioni membro privato.

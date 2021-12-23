@@ -96,6 +96,12 @@ void board::init_player_pieces()
         board_matrix[PAWN_ROW_PLAYER_1][i] = &player_pawns[PLAYER_1][i];
     }
 
+    const int BISHOP_ROW_PLAYER_2{0};
+    const int BISHOP_ROW_PLAYER_1{7};       //righe in cui sono presenti gli alfieri
+
+
+
+
     // work in progress, mancano ovviamnete gli altri pezzi
     /*
     const int NOT_PAWN_ROW_PLAYER_2{0};
