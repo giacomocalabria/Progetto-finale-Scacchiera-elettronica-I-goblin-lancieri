@@ -13,7 +13,7 @@
 class knight : public piece{
     public:
         knight(const position& _pos, int _player) : piece(_pos, _player){}
-        void move(const position& to) override;
+        //void move(const position& to) override;
         bool can_move_to(const position& dest, piece* const mat[][8]) override;
         inline char symbol() override;
 

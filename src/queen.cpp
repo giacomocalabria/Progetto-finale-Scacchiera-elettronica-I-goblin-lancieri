@@ -6,10 +6,6 @@
 
 using namespace std;
 
-void queen::move(const position& to){
-    
-}
-
 bool queen::can_move_to(const position& dest, piece* const mat[][8]){
     vector<position> possible_pos = get_possible_positions();
     //vector<position>::iterator it;

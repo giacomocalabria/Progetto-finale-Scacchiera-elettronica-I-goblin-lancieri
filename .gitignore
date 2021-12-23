@@ -93,3 +93,4 @@ src/CMakeFiles/TargetDirectories.txt
 src/CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.cpp
 src/CMakeCache.txt
 *.internal
+include/queen.h

@@ -6,11 +6,6 @@
 
 using namespace std;
 
-void bishop::move(const position& to)
-{
-
-}
-
 bool bishop::can_move_to(const position& dest, piece* const mat[][8])
 {
 //--------controllo il bounding--------
