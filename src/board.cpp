@@ -110,7 +110,6 @@ void board::init_player_pieces()
 
 void board::print_board()
 {
-
    for (int i = 0; i < board_size; i++)
    {
        std::cout << board_size - i << " ";
@@ -124,11 +123,11 @@ void board::print_board()
            }
            else
            {
-               //std::cout << p->get_position();
-               std::cout << p->symbol();
+               std::cout << p->get_position();
+               //std::cout << p->symbol();
                
                //std::cout << "good";
-               //std::cout << "*";
+               std::cout << "*";
            }
            
        }
