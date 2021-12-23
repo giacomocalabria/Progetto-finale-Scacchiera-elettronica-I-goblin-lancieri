@@ -28,3 +28,10 @@ build/CMakeFiles/king.dir/link.txt
 .vscode/settings.json
 *.json
 build/CMakeFiles/bishop.dir/link.txt
+*.internal
+*.obj
+*.cxx
+*.d
+*.a
+build/CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.cpp
+build/CMakeFiles/3.22.0/CompilerIdC/CMakeCCompilerId.c
