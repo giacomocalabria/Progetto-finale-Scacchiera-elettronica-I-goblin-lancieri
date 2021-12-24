@@ -1,7 +1,7 @@
 #include <iostream>
 #include "board.h"
 
-#define space std::cout << "\n////////////////\n";
+#define space std::cout << "\n------------------------\n";
 
 int main()
 {
@@ -16,6 +16,18 @@ int main()
 
     /*pawn p1(position(1, 2), 1);
     std::cout << p1.get_position();*/
+
+    //b.move_piece(position(7, 7), position(4, 7));
+    b.move_piece(position(7, 7), position(7, 4));
+    b.move_piece(position(7, 7), position(0, 7));
+    b.move_piece(position(0, 7), position(0, 6));
+    b.move_piece(position(0, 6), position(3, 6));
+    b.move_piece(position(3, 6), position(2, 5));   // non valida
+
+    b.move_piece(position(3, 6), position(0, 6));   // ritorno su
+    b.move_piece(position(0, 6), position(0, 2));
+    space
+    b.print_board();
 
 
     return 0;
