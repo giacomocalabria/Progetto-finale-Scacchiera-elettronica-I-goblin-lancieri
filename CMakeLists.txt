@@ -77,3 +77,30 @@ target_link_libraries(scacchiera
     queen
     bishop
 )
+
+#executable replay
+add_executable(replay
+    #susmake lists
+	src/replay.cpp
+    src/position.cpp
+    src/pawn.cpp
+    src/piece.cpp
+    src/board.cpp
+    src/knight.cpp
+    src/queen.cpp
+    src/king.cpp
+    src/bishop.cpp
+    src/rook.cpp
+)
+
+target_link_libraries(replay
+    position
+    board
+    piece	
+    pawn
+    knight
+    rook
+    king
+    queen
+    bishop
+)

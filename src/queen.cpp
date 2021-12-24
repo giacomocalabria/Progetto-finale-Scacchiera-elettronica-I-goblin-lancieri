@@ -64,5 +64,6 @@ vector<position> queen::get_possible_positions(){
         dest = position(7 + pos.row - i , i);
         if(!(dest == pos))
             possible_pos.push_back(dest);
+        }
     }
 }

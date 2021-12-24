@@ -1,10 +1,20 @@
 #include <iostream>
 #include "board.h"
+#include <string>
 
-#define space std::cout << "\n////////////////\n";
+#define space cout << "\n////////////////\n";
 
-int main()
+using namespace std;
+
+int main(int argc, char* argv[])
 {
+    if(argv[1][1] != 'c' || argv[1][0] != 'c' && argv[1][0] != 'p'){
+        cout << "Parametri da riga di comando non corretti !!";
+        return 0;
+    }
+
+    bool type_of_match = (argv[1][0] == 'p'); //questa variabile è vera se la partita è del tipo giocatore vs computer. E' falsa nel caso contrario ovvero se è del tipo  computer vs computer
+
     board b;
     b.print_board();
     
@@ -19,4 +29,4 @@ int main()
 
 
     return 0;
-}
+} 
