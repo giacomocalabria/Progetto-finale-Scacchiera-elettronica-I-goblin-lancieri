@@ -21,5 +21,38 @@ inline char queen::symbol(){
 
 vector<position> queen::get_possible_positions(){
     vector<position> possible_pos;
-    //...
+    position dest; //position(riga, colonna)
+    
+    //riga intera e colonna intera
+    for(int i = 0; i < 7; i++){
+        dest = position(i, pos.col);
+        if(!(dest == pos))
+            possible_pos.push_back(dest);
+        dest = position(pos.row, i);
+        if(!(dest == pos))
+            possible_pos.push_back(dest);
+    }
+
+    //diagonale principale
+    if(pos.col-pos.row > 0){
+        for(int i = 0; i < 7 - (pos.col - pos.row - 1); i++){ 
+            dest = position((pos.col-pos.row) + i, i);
+            if(!(dest == pos))
+                possible_pos.push_back(dest);
+        }
+    }
+    else{
+        for(int i = 0; i < 7 - (pos.row - pos.col - 1); i++){ 
+            dest = position((pos.row - pos.col) + i, i);
+            if(!(dest == pos))
+                possible_pos.push_back(dest);
+        }
+    }
+
+    //diagonale secondaria
+    for(int i = 0; i < 7 - (pos.row-pos.col); i++){
+        dest = position(7+(pos.col-pos.row), i);
+        if(!(dest == pos))
+            possible_pos.push_back(dest);
+    }
 }
