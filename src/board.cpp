@@ -36,7 +36,7 @@ void board::move_piece(const position& from, const position& to)
     }
     else
     {
-        cout << "Chiude piece.cpp\n";
+        cout << "Mossa non valida. Da " << from << " a " << to << endl;
     }
     
 }
@@ -69,7 +69,7 @@ void board::init_player_pieces()
     const int PAWN_ROW_PLAYER_2{1};  // Seconda riga dall'alto
     const int PAWN_ROW_PLAYER_1{6};   // Penultima riga dal basso
 
-    for (int i = 0; i < PAWN_NUMBER; i++)
+    /*for (int i = 0; i < PAWN_NUMBER; i++)
     {
         player_pawns[PLAYER_1].push_back(pawn(position(PAWN_ROW_PLAYER_1, i), PLAYER_1));
         player_pawns[PLAYER_2].push_back(pawn(position(PAWN_ROW_PLAYER_2, i), PLAYER_2));
@@ -79,7 +79,7 @@ void board::init_player_pieces()
     {
         board_matrix[PAWN_ROW_PLAYER_2][i] = &player_pawns[PLAYER_2][i];
         board_matrix[PAWN_ROW_PLAYER_1][i] = &player_pawns[PLAYER_1][i];
-    }
+    }*/
 
 
     // ----------- Inserimento knights ----------- 
