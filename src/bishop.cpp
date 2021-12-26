@@ -8,8 +8,9 @@ using namespace std;
 
 bool bishop::can_move_to(const position& dest, piece* const mat[][8])
 {
+
 //--------controllo il bounding--------
-	if(dest.row < 8 || dest.row > 0 || dest.col < 8 || dest.col > 0)	//ridondante? velocizza????????
+	if(dest.row > 8 || dest.row < 0 || dest.col > 8 || dest.col < 0)	//ridondante? velocizza????????
 	{
 		return false;
 	}
@@ -31,7 +32,7 @@ bool bishop::can_move_to(const position& dest, piece* const mat[][8])
 				go_on = position(go_on.row + 1, go_on.col + 1);
 				go_piece = mat[go_on.row][go_on.col];
 
-				if(go_piece && (*go_piece).get_player() == this->get_player())
+				if(go_piece != nullptr && (*go_piece).get_player() == this->get_player())
 				{
 					return false;
 				}
@@ -44,7 +45,7 @@ bool bishop::can_move_to(const position& dest, piece* const mat[][8])
 				go_on = position(go_on.row - 1, go_on.col + 1);
 				go_piece = mat[go_on.row][go_on.col];
 
-				if(go_piece && (*go_piece).get_player() == this->get_player())
+				if(go_piece != nullptr && (*go_piece).get_player() == this->get_player())
 				{
 					return false;
 				}
@@ -64,7 +65,7 @@ bool bishop::can_move_to(const position& dest, piece* const mat[][8])
 				go_on = position(go_on.row + 1, go_on.col - 1);
 				go_piece = mat[go_on.row][go_on.col];
 
-				if((*go_piece).get_player() == this->get_player())
+				if(go_piece != nullptr && (*go_piece).get_player() == this->get_player())
 				{
 					return false;
 				}
@@ -77,7 +78,7 @@ bool bishop::can_move_to(const position& dest, piece* const mat[][8])
 				go_on = position(go_on.row - 1, go_on.col - 1);
 				go_piece = mat[go_on.row][go_on.col];
 
-				if((*go_piece).get_player() == this->get_player())
+				if(go_piece != nullptr && (*go_piece).get_player() == this->get_player())
 				{
 					return false;
 				}
@@ -85,11 +86,11 @@ bool bishop::can_move_to(const position& dest, piece* const mat[][8])
 		}
 		else
 			return false;
-
-		return true;
 	}
 	else
 		return false;
+
+	return true;
 }
 
 char bishop::symbol()
@@ -100,9 +101,8 @@ char bishop::symbol()
 vector<position> bishop::get_possible_positions()
 {
 	vector<position> possible_positions;
-	int sign = player == board::PLAYER_1 ? -1 : 1;  // orientazione
 
-	position go_on = position(pos.row + 1, pos.col + sign);
+	position go_on = position(pos.row + 1, pos.col + 1);
 	while(go_on.row < 8 && go_on.row > 0 && go_on.col < 8 && go_on.col > 0) //boundary rispettato?
 	{
 		possible_positions.push_back(go_on);
@@ -111,13 +111,31 @@ vector<position> bishop::get_possible_positions()
 		go_on.col++;		//controllo le posizioni successive (in cui bishop puo'andare)
 	}
 
-	go_on = position(pos.row - 1, pos.col + sign);
+	go_on = position(pos.row - 1, pos.col + 1);
 	while(go_on.row < 8 && go_on.row > 0 && go_on.col < 8 && go_on.col > 0)	//boundary rispettato?
 	{
 		possible_positions.push_back(go_on);
 
 		go_on.row--;
 		go_on.col++;		//controllo le posizioni successive (in cui bishop puo'andare)
+	}
+
+	go_on = position(pos.row + 1, pos.col - 1);
+	while(go_on.row < 8 && go_on.row > 0 && go_on.col < 8 && go_on.col > 0)	//boundary rispettato?
+	{
+		possible_positions.push_back(go_on);
+
+		go_on.row++;
+		go_on.col--;		//controllo le posizioni successive (in cui bishop puo'andare)
+	}
+
+	go_on = position(pos.row - 1, pos.col - 1);
+	while(go_on.row < 8 && go_on.row > 0 && go_on.col < 8 && go_on.col > 0)	//boundary rispettato?
+	{
+		possible_positions.push_back(go_on);
+
+		go_on.row--;
+		go_on.col--;		//controllo le posizioni successive (in cui bishop puo'andare)
 	}
 
 	return possible_positions;
