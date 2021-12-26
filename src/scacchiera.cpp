@@ -4,11 +4,11 @@
 
 #define space std::cout << "\n------------------------\n";
 
-using namespace std;
+using namespace std; // ./scacchiera singi ginsgo
 
 int main(int argc, char* argv[])
 {
-    if(argv[1][1] != 'c' || argv[1][0] != 'c' && argv[1][0] != 'p'){
+    if(argv[1][1] != 'c' || argv[1][0] != 'c' && argv[1][0] != 'p'){ // se l'argomento non è nè pc nè cc allora il programma termina
         cout << "Parametri da riga di comando non corretti !!";
         return 0;
     }
@@ -51,7 +51,6 @@ int main(int argc, char* argv[])
     b.move_piece(position(0, 6), position(0, 2));
     space
     b.print_board();
-
 
     return 0;
 } 

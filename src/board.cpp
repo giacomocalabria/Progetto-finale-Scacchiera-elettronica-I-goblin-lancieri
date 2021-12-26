@@ -69,7 +69,7 @@ void board::init_player_pieces()
     const int PAWN_ROW_PLAYER_2{1};  // Seconda riga dall'alto
     const int PAWN_ROW_PLAYER_1{6};   // Penultima riga dal basso
 
-    /*for (int i = 0; i < PAWN_NUMBER; i++)
+    for (int i = 0; i < PAWN_NUMBER; i++)
     {
         player_pawns[PLAYER_1].push_back(pawn(position(PAWN_ROW_PLAYER_1, i), PLAYER_1));
         player_pawns[PLAYER_2].push_back(pawn(position(PAWN_ROW_PLAYER_2, i), PLAYER_2));
@@ -79,7 +79,7 @@ void board::init_player_pieces()
     {
         board_matrix[PAWN_ROW_PLAYER_2][i] = &player_pawns[PLAYER_2][i];
         board_matrix[PAWN_ROW_PLAYER_1][i] = &player_pawns[PLAYER_1][i];
-    }*/
+    }
 
 
     // ----------- Inserimento knights ----------- 
@@ -138,8 +138,8 @@ void board::init_player_pieces()
     /*
     const int NOT_PAWN_ROW_PLAYER_2{0};
     const int NOT_PAWN_ROW_PLAYER_1{7};
-    player_pieces[PLAYER_1].push_back(rook(position(NOT_PAWN_ROW_PLAYER_1, 0), PLAYER_1));
-    */
+    player_pieces[PLAYER_1].push_back(rook(position(NOT_PAWN_ROW_PLAYER_1, 0), PLAYER_1));*/
+    
 }
 
 void board::print_board()
@@ -157,23 +157,13 @@ void board::print_board()
            }
            else
            {
-               //std::cout << p->get_position();
                std::cout << p->symbol();
-               
-               //std::cout << "good";
                //std::cout << "*";
            }
            
        }
-       //std::cout << "end line" << std::endl;
        std::cout << std::endl;
    }
    std::cout << "  ABCDEFGH\n";
-   
-
-    /*std::cout << board_matrix[1][3]->symbol();
-    std::cout << "good";
-    std::cout << board_matrix[1][6]->symbol();
-    std::cout << "good";*/
 
 }
