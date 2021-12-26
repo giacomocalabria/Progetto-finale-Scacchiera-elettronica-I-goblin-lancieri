@@ -14,7 +14,7 @@ class knight : public piece{
     public:
         knight(const position& _pos, int _player) : piece(_pos, _player){}
         //void move(const position& to) override;
-        bool can_move_to(const position& dest, piece* const mat[][8]) override;
+        bool can_move_to(const position& dest, const std::vector<piece*>& board_pieces) override;
         inline char symbol() override;
 
     private:

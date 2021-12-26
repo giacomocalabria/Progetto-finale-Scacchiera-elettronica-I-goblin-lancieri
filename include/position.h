@@ -21,5 +21,9 @@ std::ostream& operator<<(std::ostream& os, position p);
 
 bool operator==(position p1, position p2);
 
+int make_index_8(position p);
+
+int make_index_8(int row, int col);
+
 
 #endif

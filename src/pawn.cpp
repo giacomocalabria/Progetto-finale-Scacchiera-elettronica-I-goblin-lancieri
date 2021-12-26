@@ -15,7 +15,7 @@ pawn::pawn(const position& _pos, int _player) : piece(_pos, _player) {}
 
 
 
-bool pawn::can_move_to(const position& dest, piece* const mat[][8])
+bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
     vector<position> possible_positions = get_possible_positions();
     vector<position>::iterator it;
@@ -27,7 +27,7 @@ bool pawn::can_move_to(const position& dest, piece* const mat[][8])
     if (dest == pos + (sign * position(1, 0)))
     {
         // Allora si sta muovendo in avanti
-        if (mat[dest.row][dest.col])
+        if (board_pieces[make_index_8(dest)])
         {
             return false;
         }
@@ -38,7 +38,7 @@ bool pawn::can_move_to(const position& dest, piece* const mat[][8])
     if (dest == pos + (sign * position(2, 0)))
     {
         // Allora si sta muovendo in avanti
-        if (mat[dest.row][dest.col] || mat[dest.row - sign][dest.col])
+        if (board_pieces[make_index_8(dest)] || board_pieces[make_index_8(dest.row - sign, dest.col)])
         {
             return false;
         }
@@ -48,7 +48,7 @@ bool pawn::can_move_to(const position& dest, piece* const mat[][8])
 
     // Sicuramente si sta muovendo in diagonale (gli altri casi hanno già portato a conclusione)
 
-    piece* other = mat[dest.row][dest.col];
+    piece* other = board_pieces[make_index_8(dest)];
     if (other)
     {
         if (player != other->get_player())

@@ -6,14 +6,14 @@
 
 using namespace std;
 
-bool knight::can_move_to(const position& dest, piece* const mat[][8]){
+bool knight::can_move_to(const position& dest, const vector<piece*>& board_pieces){
     vector<position> possible_pos = get_possible_positions();
     //vector<position>::iterator it;
     auto it = find(possible_pos.begin(), possible_pos.end(), dest);
     if (it == possible_pos.end()) 
         return false;
     
-    piece* other = mat[dest.row][dest.col];
+    piece* other = board_pieces[make_index_8(dest)];
     if (other){
         if(player != other -> get_player()){
             return true;

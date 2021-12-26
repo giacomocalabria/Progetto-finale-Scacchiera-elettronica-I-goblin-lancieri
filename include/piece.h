@@ -23,7 +23,7 @@ class piece
 
     public:
         piece(const position& _pos, int _player) : pos{_pos}, player{_player}{};
-        virtual bool can_move_to(const position& dest, piece* const mat[][max_position]) = 0;
+        virtual bool can_move_to(const position& dest, const std::vector<piece*>& board_pieces) = 0;
         virtual char symbol() = 0;
 
         // spunti

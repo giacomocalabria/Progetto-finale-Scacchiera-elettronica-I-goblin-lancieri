@@ -6,7 +6,7 @@
 
 using namespace std;
 
-bool bishop::can_move_to(const position& dest, piece* const mat[][8])
+bool bishop::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
 
 //--------controllo il bounding--------
@@ -21,7 +21,7 @@ bool bishop::can_move_to(const position& dest, piece* const mat[][8])
 		return false;
 
 	position go_on = position(pos.row, pos.col);		//posizione che avanza fino a dest
-	piece* go_piece = mat[go_on.row][go_on.col];			//pedina di ogni posizione considerata fino a dest
+	piece* go_piece = board_pieces[make_index_8(go_on)];			//pedina di ogni posizione considerata fino a dest
 
 	if(dest.col > pos.col)			//controllo se la destinazione e' a "destra" rispetto alla current_pos
 	{
@@ -30,7 +30,7 @@ bool bishop::can_move_to(const position& dest, piece* const mat[][8])
 			while(go_on.row != dest.row && go_on.col != dest.col)
 			{
 				go_on = position(go_on.row + 1, go_on.col + 1);
-				go_piece = mat[go_on.row][go_on.col];
+				go_piece = board_pieces[make_index_8(go_on)];
 
 				if(go_piece != nullptr && (*go_piece).get_player() == this->get_player())
 				{
@@ -43,7 +43,7 @@ bool bishop::can_move_to(const position& dest, piece* const mat[][8])
 			while(go_on.row != dest.row && go_on.col != dest.col)
 			{
 				go_on = position(go_on.row - 1, go_on.col + 1);
-				go_piece = mat[go_on.row][go_on.col];
+				go_piece = board_pieces[make_index_8(go_on)];
 
 				if(go_piece != nullptr && (*go_piece).get_player() == this->get_player())
 				{
@@ -63,7 +63,7 @@ bool bishop::can_move_to(const position& dest, piece* const mat[][8])
 			while(go_on.row != dest.row && go_on.col != dest.col)
 			{
 				go_on = position(go_on.row + 1, go_on.col - 1);
-				go_piece = mat[go_on.row][go_on.col];
+				go_piece = board_pieces[make_index_8(go_on)];
 
 				if(go_piece != nullptr && (*go_piece).get_player() == this->get_player())
 				{
@@ -76,7 +76,7 @@ bool bishop::can_move_to(const position& dest, piece* const mat[][8])
 			while(go_on.row != dest.row && go_on.col != dest.col)
 			{
 				go_on = position(go_on.row - 1, go_on.col - 1);
-				go_piece = mat[go_on.row][go_on.col];
+				go_piece = board_pieces[make_index_8(go_on)];
 
 				if(go_piece != nullptr && (*go_piece).get_player() == this->get_player())
 				{

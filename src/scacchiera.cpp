@@ -54,5 +54,6 @@ int main(int argc, char* argv[])
     space
     b.print_board();
 
+    std::cout << "main ended correctly.\n";
     return 0;
 } 

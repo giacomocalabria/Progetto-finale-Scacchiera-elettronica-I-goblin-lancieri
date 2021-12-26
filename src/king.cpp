@@ -6,7 +6,7 @@
 
 using namespace std;
 
-bool king::can_move_to(const position& dest, piece* const mat[][8])
+bool king::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
     vector<position> possible_pos = get_possible_positions();
     //vector<position>::iterator it;

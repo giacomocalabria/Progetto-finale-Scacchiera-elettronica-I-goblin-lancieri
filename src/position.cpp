@@ -27,3 +27,14 @@ bool operator==(position p1, position p2)
 {
     return p1.row == p2.row && p1.col == p2.col;
 }
+
+int make_index_8(position p)
+{
+    constexpr int pos_max{8};
+    return p.row * pos_max + p.col;
+}
+
+int make_index_8(int row, int col)
+{
+    return make_index_8(position(row, col));
+}

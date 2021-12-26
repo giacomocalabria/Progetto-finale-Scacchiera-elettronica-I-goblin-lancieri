@@ -19,12 +19,13 @@ class board
         void to_empty();    // rende la board priva di pezzi
         void move_piece(const position& from, const position& to);
         void init_game();
+        void init_board();
     
     public:
         void print_board();
         // --
-        piece* get_board_piece(position pos){return board_matrix[pos.row][pos.col];}
-        void set_board_piece(position pos, piece* p){board_matrix[pos.row][pos.col] = p;}
+        piece* get_board_piece(position pos){return board_matrix[make_index_8(pos)];}
+        void set_board_piece(position pos, piece* p){board_matrix[make_index_8(pos)] = p;}
         
         static const int board_size {8};
         static const int PLAYER_1{0}; //fare un enum?
@@ -45,7 +46,8 @@ class board
         Variabili membro private
     */
     private:
-        piece* board_matrix[board_size][board_size];
+        // piece* board_matrix[board_size][board_size];
+        std::vector<piece*> board_matrix;
         
         /* 
             Array di dimensione 2, contenenti i vector dei pezzi dei giocatori 1 e 2.

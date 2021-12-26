@@ -7,7 +7,7 @@
 using namespace std;
 
 
-bool rook::can_move_to(const position& dest, piece* const mat[][piece::max_position])
+bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
     vector<position> possible_positions = get_possible_positions();
     //std::cout << "Positions generated (Rook).\n";
@@ -27,7 +27,7 @@ bool rook::can_move_to(const position& dest, piece* const mat[][piece::max_posit
         cursor = cursor + position(1, 0);
         while (cursor.row < piece::max_position && cursor.row < dest.row)
         {
-            other = mat[cursor.row][cursor.col];
+            other = board_pieces[make_index_8(cursor)];
             if (other)
                 return false;
             cursor = cursor + position(1, 0);
@@ -40,7 +40,7 @@ bool rook::can_move_to(const position& dest, piece* const mat[][piece::max_posit
         cursor = cursor - position(1, 0);
         while (cursor.row >= piece::min_position && cursor.row > dest.row)
         {
-            other = mat[cursor.row][cursor.col];
+            other = board_pieces[make_index_8(cursor)];
             if (other)
             {
                 //cout << "Obstacle.\n";
@@ -56,7 +56,7 @@ bool rook::can_move_to(const position& dest, piece* const mat[][piece::max_posit
         cursor = cursor + position(0, 1);
         while (cursor.col < piece::max_position && cursor.col < dest.col)
         {    
-            other = mat[cursor.row][cursor.col];
+            other = board_pieces[make_index_8(cursor)];
             if (other)
                 return false;
             cursor = cursor + position(0, 1);
@@ -69,7 +69,7 @@ bool rook::can_move_to(const position& dest, piece* const mat[][piece::max_posit
         cursor = cursor - position(0, 1);
         while (cursor.col >= piece::min_position && cursor.col > dest.col)
         {
-            other = mat[cursor.row][cursor.col];
+            other = board_pieces[make_index_8(cursor)];
             if (other)
                 return false;
             cursor = cursor - position(0, 1);
@@ -77,7 +77,7 @@ bool rook::can_move_to(const position& dest, piece* const mat[][piece::max_posit
     }
 
     // se la cella di arrivo è occupata ed è occupata da un pezzo del stesso giocatore -> rest falso
-    other = mat[dest.row][dest.col];
+    other = board_pieces[make_index_8(dest)];
     //cout << other->symbol();
     if (other && other->get_player() == player)
     {
