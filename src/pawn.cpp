@@ -11,10 +11,9 @@ using namespace std;
     costruttore della base class piece.
 */
 //pawn::pawn(const position& _pos, int _player, board* _running_board) : piece(_pos, _player, _running_board)
-pawn::pawn(const position& _pos, int _player) : piece(_pos, _player)
-{
-    
-}
+pawn::pawn(const position& _pos, int _player) : piece(_pos, _player) {}
+
+
 
 bool pawn::can_move_to(const position& dest, piece* const mat[][8])
 {
