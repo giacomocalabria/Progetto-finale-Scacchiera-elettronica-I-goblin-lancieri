@@ -1,5 +1,4 @@
 #include "board.h"
-
 #include <vector>
 
 using namespace std;

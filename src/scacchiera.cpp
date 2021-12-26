@@ -1,3 +1,5 @@
+//Author: 
+
 #include <iostream>
 #include "board.h"
 #include <string>
