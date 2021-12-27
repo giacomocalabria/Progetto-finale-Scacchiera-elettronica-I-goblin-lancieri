@@ -38,3 +38,10 @@ int make_index_8(int row, int col)
 {
     return make_index_8(position(row, col));
 }
+
+bool is_valid_position_8(const position& pos)
+{
+    //constexpr int pos_max{8};
+
+    return pos.row < max_position && pos.col < max_position && pos.row >= min_position && pos.col >= min_position;
+}

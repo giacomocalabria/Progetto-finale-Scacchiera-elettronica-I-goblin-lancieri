@@ -37,12 +37,21 @@ class board
         /*
             Costanti relative al numero di pezzi di ogni giocatore.
         */
-        const int PAWN_NUMBER{8}; //fare un enum?
+        /*const int PAWN_NUMBER{8}; //fare un enum?
         const int ROOK_NUMBER{2};
         const int BISHOP_NUMBER{2};
         const int KING_NUMBER{1};
         const int QUEEN_NUMBER{1};
-        const int KNIGHT_NUMBER{2};
+        const int KNIGHT_NUMBER{2};*/
+        enum piece_numbers
+        {
+            king_number = 1,
+            queen_number = 1,
+            knight_number = 2,
+            bishop_number = 2,
+            rook_number = 2,
+            pawn_number = 8
+        };
     /*
         Variabili membro private
     */

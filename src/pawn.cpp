@@ -17,6 +17,9 @@ pawn::pawn(const position& _pos, int _player) : piece(_pos, _player) {}
 
 bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
+    if (!is_valid_position_8(dest))
+        return false;
+
     vector<position> possible_positions = get_possible_positions();
     vector<position>::iterator it;
     it = find(possible_positions.begin(), possible_positions.end(), dest);

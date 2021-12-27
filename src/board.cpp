@@ -20,7 +20,7 @@ bool board::move_piece(const position& from, const position& to)
 {
     if (board_matrix[make_index_8(from)] == nullptr)   // non c'è una pedina nella casella from
     {
-        return; // da def, forse eccezione o altro
+        return false; // da def, forse eccezione o altro
     }
 
     piece* p = board_matrix[make_index_8(from)];
@@ -33,10 +33,12 @@ bool board::move_piece(const position& from, const position& to)
         board_matrix[make_index_8(to)] = p;
         board_matrix[make_index_8(from)] = nullptr;
         //p->move(position(to));
+        return true;
     }
     else
     {
-        cout << "Mossa non valida. Da " << from << " a " << to << endl;
+        //cout << "Mossa non valida. Da " << from << " a " << to << endl;
+        return false;
     }
     
 }
@@ -116,13 +118,13 @@ void board::init_player_pieces()
     const int PAWN_ROW_PLAYER_2{1};  // Seconda riga dall'alto
     const int PAWN_ROW_PLAYER_1{6};   // Penultima riga dal basso
 
-    for (int i = 0; i < PAWN_NUMBER; i++)
+    for (int i = 0; i < piece_numbers::pawn_number; i++)
     {
         player_pawns[PLAYER_1].push_back(pawn(position(PAWN_ROW_PLAYER_1, i), PLAYER_1));
         player_pawns[PLAYER_2].push_back(pawn(position(PAWN_ROW_PLAYER_2, i), PLAYER_2));
         
     }
-    for (int i = 0; i < PAWN_NUMBER; i++)
+    for (int i = 0; i < piece_numbers::pawn_number; i++)
     {
         //board_matrix[PAWN_ROW_PLAYER_2][i] = &player_pawns[PLAYER_2][i];
         //board_matrix[PAWN_ROW_PLAYER_1][i] = &player_pawns[PLAYER_1][i];
@@ -180,16 +182,16 @@ void board::init_player_pieces()
 
     // ----------- Inserimento queen -----------
 
-    player_queen[PLAYER_1].push_back(queen(position(0, 3), PLAYER_1));
-    player_queen[PLAYER_2].push_back(queen(position(7, 3), PLAYER_2));
+    player_queen[PLAYER_1].push_back(queen(position(7, 3), PLAYER_1));
+    player_queen[PLAYER_2].push_back(queen(position(0, 3), PLAYER_2));
 
-    board_matrix[make_index_8(7, 3)] = &player_queen[PLAYER_1][0];
     board_matrix[make_index_8(0, 3)] = &player_queen[PLAYER_2][0];
+    board_matrix[make_index_8(7, 3)] = &player_queen[PLAYER_1][0];
 
     // ----------- Inserimento king -----------
 
-    player_king[PLAYER_1].push_back(king(position(0, 4), PLAYER_1));
-    player_king[PLAYER_2].push_back(king(position(7, 4), PLAYER_2));
+    player_king[PLAYER_1].push_back(king(position(7, 4), PLAYER_1));
+    player_king[PLAYER_2].push_back(king(position(0, 4), PLAYER_2));
 
     board_matrix[make_index_8(7, 4)] = &player_king[PLAYER_1][0];
     board_matrix[make_index_8(0, 4)] = &player_king[PLAYER_2][0];

@@ -8,6 +8,8 @@ using namespace std;
 
 bool king::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
+    return false;
+
     vector<position> possible_pos = get_possible_positions();
     //vector<position>::iterator it;
     auto it = find(possible_pos.begin(), possible_pos.end(), dest);

@@ -30,36 +30,38 @@ inline char knight::symbol(){
 vector<position> knight::get_possible_positions(){
     vector<position> possible_pos;
 
+    // prima nelle condizioni: dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7 ????????
+
     position dest = pos + position(1, 2);
-    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
+    if(is_valid_position_8(dest))
         possible_pos.push_back(dest);
 
     dest = pos + position(2, 1);
-    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
+    if(is_valid_position_8(dest))
         possible_pos.push_back(dest);
 
     dest = pos + position(1, -2);
-    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
+    if(is_valid_position_8(dest))
         possible_pos.push_back(dest);
     
     dest = pos + position(2, -1);
-    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
+    if(is_valid_position_8(dest))
         possible_pos.push_back(dest);
     
     dest = pos + position(-1, -2);
-    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
+    if(is_valid_position_8(dest))
         possible_pos.push_back(dest);
     
     dest = pos + position(-2, -1);
-    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
+    if(is_valid_position_8(dest))
         possible_pos.push_back(dest);
     
     dest = pos + position(-1, 2);
-    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
+    if(is_valid_position_8(dest))
         possible_pos.push_back(dest);
     
     dest = pos + position(-2, 1);
-    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
+    if(is_valid_position_8(dest))
         possible_pos.push_back(dest);
 
     return possible_pos;
