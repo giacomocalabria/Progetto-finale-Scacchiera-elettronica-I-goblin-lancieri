@@ -17,8 +17,6 @@ class pawn : public piece
         pawn(const position& _pos, int _player);
         bool can_move_to(const position& dest, const std::vector<piece*>& board_pieces) override;
         inline char symbol() override;
-
-    private:
         std::vector<position> get_possible_positions() override;
 
     private:

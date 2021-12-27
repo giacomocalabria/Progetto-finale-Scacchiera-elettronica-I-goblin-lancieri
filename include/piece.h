@@ -32,13 +32,9 @@ class piece
         position get_position(){return pos;}
         void set_position(position new_pos){pos = new_pos;}
         int get_player(){return player;}
-
-        
-        
-
-    protected:
-        // funzioni membro protette
         virtual std::vector<position> get_possible_positions() = 0;
+        
+    protected:
 
         // variabili di esemplare
         int player; // 1 o 2 - tipo di dato da definire

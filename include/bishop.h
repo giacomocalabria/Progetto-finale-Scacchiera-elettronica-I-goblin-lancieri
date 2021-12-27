@@ -12,7 +12,6 @@ class bishop : public piece
         //void move(const position& to) override;
         bool can_move_to(const position& dest, const std::vector<piece*>& board_pieces) override;
         inline char symbol() override;// -  -  -  - > giocatore 1 o 2
-    private:
         std::vector<position> get_possible_positions() override;
 };
 

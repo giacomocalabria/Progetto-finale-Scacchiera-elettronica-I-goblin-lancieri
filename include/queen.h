@@ -10,7 +10,6 @@ class queen : public piece
         inline char symbol() override;
         //void move(const position& to) override;
         bool can_move_to(const position& dest, const std::vector<piece*>& board_pieces) override;
-    private:
         std::vector<position> get_possible_positions() override;
 };
 
