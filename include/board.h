@@ -17,7 +17,7 @@ class board
     public:
         board();
         void to_empty();    // rende la board priva di pezzi
-        void move_piece(const position& from, const position& to);
+        bool move_piece(const position& from, const position& to);
         void init_game();
         void init_board();
     

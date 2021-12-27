@@ -16,11 +16,11 @@ board::board()
     std::cout << "Board initializated.\n";
 }
 
-void board::move_piece(const position& from, const position& to)
+bool board::move_piece(const position& from, const position& to)
 {
     if (board_matrix[make_index_8(from)] == nullptr)   // non c'è una pedina nella casella from
     {
-        return; // da def, forse eccezione o altro
+        return false; // da def, forse eccezione o altro
     }
 
     piece* p = board_matrix[make_index_8(from)];
@@ -33,12 +33,9 @@ void board::move_piece(const position& from, const position& to)
         board_matrix[make_index_8(to)] = p;
         board_matrix[make_index_8(from)] = nullptr;
         //p->move(position(to));
+        return true;
     }
-    else
-    {
-        cout << "Mossa non valida. Da " << from << " a " << to << endl;
-    }
-    
+    return false;    
 }
 
 void board::to_empty()

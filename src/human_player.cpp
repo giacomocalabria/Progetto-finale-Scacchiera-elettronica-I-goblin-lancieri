@@ -3,22 +3,26 @@
 
 using namespace std;
 
-void human_player::move(){
-    bool success = false;
-    string input;
-    while(success){
-        cout << "Inserisci mossa tramite coordinate di partenza e arrivo nel formato XX XX " << endl;
-        cin >> input;
-        if(input.length() > 5){
-            cout << "Comando non valido ! Troppo lungo";
-            continue;
-        }
+/*void human_player::turn(){
+    move();
+}*/
 
-        position from = position(input.substr(0,2));
+bool human_player::move(){
+    bool success = false;
+    string in1, in2;
+    while(!success){
+        cout << "Inserisci mossa tramite coordinate di partenza e arrivo nel formato XX XX " << endl;
+        cin >> in1 >> in2; // altrimenti getline(ostream, string)
+        /*if(input.length() > 5){
+            cout << "Comando non valido ! Troppo lungo" << endl;
+            continue;
+        }*/
+
+        position from = position(in1);
         position to = position(input.substr(2,2));
         
         if(is_valid_range_position(from) && is_valid_range_position(to)){
-            cout << "Comando non valido !  La posizione non è nella scacchiera";
+            cout << "Comando non valido !  La posizione non è nella scacchiera" << endl;
             continue;
         }
 
