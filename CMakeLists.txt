@@ -51,6 +51,15 @@ add_library(bishop       #alfiere
     src/bishop.cpp
 )
 
+add_library(player
+    include/player.h
+    include/human_player.h
+    include/computer_player.h
+    src/player.cpp
+    src/human_player.cpp
+    src/computer_player.cpp
+)
+
 #executable scacchiera
 add_executable(scacchiera
     #susmake lists
@@ -64,6 +73,9 @@ add_executable(scacchiera
     src/king.cpp
     src/bishop.cpp
     src/rook.cpp
+    src/player.cpp
+    src/human_player.cpp
+    src/computer_player.cpp
 )
 
 target_link_libraries(scacchiera
@@ -76,6 +88,7 @@ target_link_libraries(scacchiera
     king
     queen
     bishop
+    player
 )
 
 #executable replay
@@ -91,6 +104,9 @@ add_executable(replay
     src/king.cpp
     src/bishop.cpp
     src/rook.cpp
+    src/player.cpp
+    src/human_player.cpp
+    src/computer_player.cpp
 )
 
 target_link_libraries(replay
@@ -103,4 +119,5 @@ target_link_libraries(replay
     king
     queen
     bishop
+    player
 )
