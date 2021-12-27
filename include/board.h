@@ -17,7 +17,7 @@ class board
     public:
         board();
         void to_empty();    // rende la board priva di pezzi
-        void move_piece(const position& from, const position& to);
+        bool move_piece(const position& from, const position& to);
         void init_game();
         void init_board();
     
@@ -26,6 +26,7 @@ class board
         // --
         piece* get_board_piece(position pos){return board_matrix[make_index_8(pos)];}
         void set_board_piece(position pos, piece* p){board_matrix[make_index_8(pos)] = p;}
+        std::vector<position> get_player_pieces_positions(int player);
         
         static const int board_size {8};
         static const int PLAYER_1{0}; //fare un enum?
@@ -54,7 +55,6 @@ class board
             In questo modo per accedere ai pezzi del giocatore 2 basta
             la notazione player_pieces[1].
         */
-        //std::vector<piece*> player_pieces[2];
 
         std::vector<pawn> player_pawns[2];
         std::vector<knight> player_knights[2];

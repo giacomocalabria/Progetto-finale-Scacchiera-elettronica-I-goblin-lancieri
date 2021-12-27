@@ -16,7 +16,7 @@ board::board()
     std::cout << "Board initializated.\n";
 }
 
-void board::move_piece(const position& from, const position& to)
+bool board::move_piece(const position& from, const position& to)
 {
     if (board_matrix[make_index_8(from)] == nullptr)   // non c'è una pedina nella casella from
     {
@@ -56,6 +56,47 @@ void board::init_board()
 {
     board_matrix.resize(board_size * board_size);
     to_empty();
+}
+
+std::vector<position> board::get_player_pieces_positions(int player)
+{
+    vector<position> player_pieces_positions;
+    
+    // Scan di tutti i contenitori relativi ai pezzi del player
+    
+    // Scan dei pawns
+    for (pawn p : player_pawns[player])
+    {
+        player_pieces_positions.push_back(p.get_position());
+    }
+    // Scan dei knight
+    for (knight p : player_knights[player])
+    {
+        player_pieces_positions.push_back(p.get_position());
+    }
+    // Scan dei bishop
+    for (bishop p : player_bishops[player])
+    {
+        player_pieces_positions.push_back(p.get_position());
+    }
+    // Scan dei king
+    for (king p : player_king[player])
+    {
+        player_pieces_positions.push_back(p.get_position());
+    }
+    // Scan dei queen
+    for (queen p : player_queen[player])
+    {
+        player_pieces_positions.push_back(p.get_position());
+    }
+    // Scan dei rook
+    for (rook p : player_rooks[player])
+    {
+        player_pieces_positions.push_back(p.get_position());
+    }
+
+    return player_pieces_positions;
+
 }
 
 void board::init_player_pieces()
