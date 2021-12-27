@@ -35,7 +35,6 @@ class piece
         virtual std::vector<position> get_possible_positions() = 0;
         
     protected:
-
         // variabili di esemplare
         int player; // 1 o 2 - tipo di dato da definire
         position pos;
