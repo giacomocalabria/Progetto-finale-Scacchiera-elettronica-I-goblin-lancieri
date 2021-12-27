@@ -24,9 +24,8 @@ void board::move_piece(const position& from, const position& to)
     }
 
     piece* p = board_matrix[make_index_8(from)];
-    if (p->can_move_to(to, board_matrix))
+    if (p->can_move_to(to, board_matrix) || p->can_eat(to, board_matrix))   //migliora
     {
-
         // MOMENTANEO WORK IN PROGRESS
         // aggiornare posizione in p
         p->set_position(to);
@@ -147,8 +146,8 @@ void board::init_player_pieces()
 
     // ----------- Inserimento king -----------
 
-    player_king[PLAYER_1].push_back(king(position(0, 4), PLAYER_1));
-    player_king[PLAYER_2].push_back(king(position(7, 4), PLAYER_2));
+    player_king[PLAYER_1].push_back(king(position(7, 4), PLAYER_1));
+    player_king[PLAYER_2].push_back(king(position(0, 4), PLAYER_2));
 
     board_matrix[make_index_8(7, 4)] = &player_king[PLAYER_1][0];
     board_matrix[make_index_8(0, 4)] = &player_king[PLAYER_2][0];

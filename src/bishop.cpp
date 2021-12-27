@@ -98,6 +98,11 @@ char bishop::symbol()
 	return player == board::PLAYER_1 ? 'a' : 'A';
 }
 
+bool bishop::can_eat(const position& dest, const vector<piece*>& board_pieces)
+{
+	return this->can_move_to(dest, board_pieces);
+}
+
 vector<position> bishop::get_possible_positions()
 {
 	vector<position> possible_positions;
@@ -112,7 +117,7 @@ vector<position> bishop::get_possible_positions()
 	}
 
 	go_on = position(pos.row - 1, pos.col + 1);
-	while(go_on.row < 8 && go_on.row > 0 && go_on.col < 8 && go_on.col > 0)	//boundary rispettato?
+	while(go_on.row < 8 && go_on.row > -1 && go_on.col < 8 && go_on.col > -1)	//boundary rispettato?
 	{
 		possible_positions.push_back(go_on);
 

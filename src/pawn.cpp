@@ -57,7 +57,42 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
             return true;
         }
     }
+
     return false;
+}
+
+bool pawn::can_eat(const position& dest, const vector<piece*>& board_pieces)
+{
+    int sign = player == board::PLAYER_1 ? -1 : 1;  // orientazione
+
+    if(dest == pos + (sign * position(1, 1)) || dest == pos + (sign * position(1, -1)))
+    {
+        return true;
+    }
+
+    /*position straight_right = pos + (sign * position(1, 1));
+    position straight_left = pos + (sign * position(1, 1));
+
+    piece* alto_dx = board_pieces[make_index_8(straight_right)];
+    piece* alto_sx = board_pieces[make_index_8(straight_left)];
+
+    if(dest == straight_right)
+    {
+        if(alto_dx)
+        {
+            return true;
+        }
+    }
+    else if(dest == straight_left)
+    {
+        if(alto_sx)
+        {
+            return true;
+        }
+    }*/
+    
+    return false;
+
 }
 
 inline char pawn::symbol()

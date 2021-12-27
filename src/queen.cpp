@@ -14,6 +14,13 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
     if (it == possible_pos.end()) 
         return false;
     //...
+
+    return false;
+}
+
+bool queen::can_eat(const position& dest, const vector<piece*>& board_pieces)
+{
+    return this->can_move_to(dest, board_pieces);
 }
 
 inline char queen::symbol(){
@@ -67,4 +74,6 @@ vector<position> queen::get_possible_positions(){
             possible_pos.push_back(dest);
         }
     }
+
+    return possible_pos;
 }
