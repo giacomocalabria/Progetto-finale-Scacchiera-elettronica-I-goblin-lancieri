@@ -14,7 +14,7 @@ int main(int argc, char* argv[]){
 
     */
     if(argv[1][0] != 'v' && argv[1][0] != 'f' || argv[2] == nullptr){
-        clog << "[ERROR] Parametri da riga di comando non corretti !!" << endl;
+        cerr << "[ERROR] Parametri da riga di comando non corretti !!" << endl;
         return -1;
     }
 
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]){
     if(type_of_replay){
         string nome_file_log;
         int i = 0;
-        while(argv[2][i] != '\0'){
+        while(argv[2][i] != '\0'){ //carattere terminatore stringa C-type
             nome_file_log.push_back(argv[2][i]);
             i++;
         }
@@ -31,19 +31,19 @@ int main(int argc, char* argv[]){
         return video_replay(nome_file_log);
     }
     else{
-        if(argv[3] == nullptr){
-            clog << "[ERROR] Parametri da riga di comando non corretti !!" << endl;
+        if(argv[3] == nullptr){ //non esiste la terza stringa
+            cerr << "[ERROR] Parametri da riga di comando non corretti !!" << endl;
             return -1;
         }
         string nome_file_log;
         string nome_file_output_replay;
         int i = 0;
-        while(argv[2][i] != '\0'){
+        while(argv[2][i] != '\0'){ //carattere terminatore stringa C-type
             nome_file_log.push_back(argv[2][i]);
             i++;
         }
         i = 0;
-        while(argv[3][i] != '\0'){
+        while(argv[3][i] != '\0'){ //carattere terminatore stringa C-type
             nome_file_output_replay.push_back(argv[3][i]);
             i++;
         }
