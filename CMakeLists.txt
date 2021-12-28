@@ -60,6 +60,11 @@ add_library(player
     src/computer_player.cpp
 )
 
+add_library(replay_player
+    include/replay_player.h
+    src/replay_player.cpp
+)
+
 #executable scacchiera
 add_executable(scacchiera
     #susmake lists
@@ -104,9 +109,7 @@ add_executable(replay
     src/king.cpp
     src/bishop.cpp
     src/rook.cpp
-    src/player.cpp
-    src/human_player.cpp
-    src/computer_player.cpp
+    src/replay_player.cpp
 )
 
 target_link_libraries(replay
@@ -119,5 +122,5 @@ target_link_libraries(replay
     king
     queen
     bishop
-    player
+    replay_player
 )

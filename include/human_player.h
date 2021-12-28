@@ -13,7 +13,6 @@ class human_player : public player{
     
     private:
         bool move() override;  
-        bool is_valid_range_position(position& _pos); 
 };
 
 #endif
