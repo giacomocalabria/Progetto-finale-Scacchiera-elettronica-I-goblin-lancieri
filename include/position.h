@@ -11,7 +11,7 @@ struct position
     position() : row{-1}, col{-1}{}
     position(int _row, int _col) : row{_row}, col{_col}{}
     position(const position& pos) : row{pos.row}, col{pos.col}{}
-    position(std::string& pos);
+    position(const std::string& pos);
     int row, col;
 };
 

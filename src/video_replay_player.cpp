@@ -38,3 +38,16 @@ bool video_replay_player::move(std::string& mossa){
         return false;
     }
 }
+
+int video_replay(const string& _nome_file_log){
+    ifstream in_file(_nome_file_log);
+    if(in_file.is_open()) {
+        // gioco ... qui si implementerà
+        in_file.close();
+    } else {
+        cerr << "[ERROR] Impossibile aprire/leggere il file: '" << _nome_file_log << "'" << endl;
+        return -1;
+    }
+    cout << "Replay a video eseguito con successo !" << endl;
+    return 0;
+}

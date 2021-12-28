@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-position::position(std::string& pos){
+position::position(const std::string& pos){
     char c_col = pos.at(0);
     char c_row = pos.at(1);
     col = c_col - 'A';

@@ -4,6 +4,8 @@
 #include "board.h"
 #include <string>
 #include <fstream>
+#include "video_replay_player.h"
+#include "file_replay_player.h"
 
 using namespace std;
 
@@ -28,7 +30,8 @@ int main(int argc, char* argv[]){
             i++;
         }
         board b;
-        return video_replay(nome_file_log);
+        int ret = video_replay(nome_file_log);
+        return ret;
     }
     else{
         if(argv[3] == nullptr){ //non esiste la terza stringa
@@ -48,11 +51,12 @@ int main(int argc, char* argv[]){
             i++;
         }
         board b;
-        return file_replay(nome_file_log, nome_file_output_replay);
+        int ret = file_replay(nome_file_log, nome_file_output_replay);
+        return ret;
     }
 }
 
-int video_replay(string& _nome_file_log){
+/*int video_replay(string& _nome_file_log){
     ifstream in_file(_nome_file_log);
     if(in_file.is_open()) {
         // gioco ... qui si implementerà
@@ -63,9 +67,9 @@ int video_replay(string& _nome_file_log){
     }
     cout << "Replay a video eseguito con successo !" << endl;
     return 0;
-}
+}*/
 
-int file_replay(string& _nome_file_log, string& _nome_file_output_replay){
+/*int file_replay(string& _nome_file_log, string& _nome_file_output_replay){
     ifstream in_file(_nome_file_log);
     ifstream out_file(_nome_file_output_replay);
     if(in_file.is_open()) {
@@ -84,4 +88,4 @@ int file_replay(string& _nome_file_log, string& _nome_file_output_replay){
     }
     cout << "Replay su file eseguito con successo !" << endl;
     return 0;
-}
+}*/
