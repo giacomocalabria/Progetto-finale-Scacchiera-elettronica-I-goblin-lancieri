@@ -101,7 +101,7 @@ std::vector<position> rook::get_possible_positions()
     // ----------- scansione a destra -----------
     //std::cout << "Scansione a destra.\n";
     cursor = pos;
-    while (cursor.col <= piece::max_position)
+    while (cursor.col < piece::max_position)
     {
         cursor = cursor + position(0, 1);
         possible_positions.push_back(cursor);
@@ -110,7 +110,7 @@ std::vector<position> rook::get_possible_positions()
     // ----------- scansione a sinistra -----------
     //std::cout << "Scansione a sinistra.\n";
     cursor = pos;
-    while (cursor.col >= piece::min_position)
+    while (cursor.col > piece::min_position)
     {
         cursor = cursor - position(0, 1);
         possible_positions.push_back(cursor);
@@ -119,7 +119,7 @@ std::vector<position> rook::get_possible_positions()
     // ----------- scansione in basso -----------
     //std::cout << "Scansione in basso.\n";
     cursor = pos;
-    while (cursor.row <= piece::max_position)
+    while (cursor.row < piece::max_position)
     {
         cursor = cursor + position(1, 0);
         possible_positions.push_back(cursor);
@@ -128,7 +128,7 @@ std::vector<position> rook::get_possible_positions()
     // ----------- scansione in alto -----------
     //std::cout << "Scansione in alto.\n";
     cursor = pos;
-    while (cursor.row >= piece::min_position)
+    while (cursor.row > piece::min_position)
     {
         cursor = cursor - position(1, 0);
         possible_positions.push_back(cursor);

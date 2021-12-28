@@ -26,6 +26,7 @@ class board
         // --
         piece* get_board_piece(position pos){return board_matrix[make_index_8(pos)];}
         void set_board_piece(position pos, piece* p){board_matrix[make_index_8(pos)] = p;}
+        std::vector<position> get_player_pieces_positions(int player);
         
         static const int board_size {8};
         static const int PLAYER_1{0}; //fare un enum?
@@ -36,12 +37,21 @@ class board
         /*
             Costanti relative al numero di pezzi di ogni giocatore.
         */
-        const int PAWN_NUMBER{8}; //fare un enum?
+        /*const int PAWN_NUMBER{8}; //fare un enum?
         const int ROOK_NUMBER{2};
         const int BISHOP_NUMBER{2};
         const int KING_NUMBER{1};
         const int QUEEN_NUMBER{1};
-        const int KNIGHT_NUMBER{2};
+        const int KNIGHT_NUMBER{2};*/
+        enum piece_numbers
+        {
+            king_number = 1,
+            queen_number = 1,
+            knight_number = 2,
+            bishop_number = 2,
+            rook_number = 2,
+            pawn_number = 8
+        };
     /*
         Variabili membro private
     */
@@ -54,7 +64,6 @@ class board
             In questo modo per accedere ai pezzi del giocatore 2 basta
             la notazione player_pieces[1].
         */
-        //std::vector<piece*> player_pieces[2];
 
         std::vector<pawn> player_pawns[2];
         std::vector<knight> player_knights[2];
