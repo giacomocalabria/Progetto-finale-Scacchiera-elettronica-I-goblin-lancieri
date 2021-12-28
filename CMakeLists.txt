@@ -63,6 +63,7 @@ add_library(player
 add_library(replay_player
     include/video_replay_player.h
     include/file_replay_player.h
+    include/replay.h
     src/file_replay_player.cpp
     src/video_replay_player.cpp
 )
