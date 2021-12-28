@@ -1,4 +1,4 @@
-//Author: 
+//Author: EDDIE CARRARO
 
 #include "queen.h"
 #include "board.h"

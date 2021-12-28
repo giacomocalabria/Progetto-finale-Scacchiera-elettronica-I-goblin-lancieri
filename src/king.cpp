@@ -80,8 +80,6 @@ vector<position> king::get_possible_positions()
 
                 if(possibility.col > -1 && possibility.col < 8 && possibility.row > -1 && possibility.row < 8)
                     {
-                        /*cout << possibility.row << " " << i << "\n";
-                        cout << possibility.col << " " << j << "\n\n";*/
                         possible_pos.push_back(possibility);
                     }
 
@@ -100,20 +98,10 @@ bool king::is_check(const vector<piece*>& board, const position& dest)
     {
         if(board[i] && board[i]->get_player() != this->get_player()) //NOTA: ricordati la condizione (board[i])!
         {
-            /*vector<position> piece_dest = *(board[i]).get_possible_positions();   //posizioni in cui puo' andare la pedina avversaria
-
-            vector<position> king_dest = this->get_possible_positions();    //posizioni in cui puo' andare il re passato come parametro
-
-            while(!(king_dest.empty()))
+            if((*(board[i])).can_eat(dest, board))
             {
-                /*position a_pos = king_dest[king_dest.size() - 1];      //estraggo, una ad una, tutte le posizioni da king_dest
-                king_dest.pop_back();
-            }*/
-
-                if((*(board[i])).can_eat(dest, board))
-                {
-                    return true;
-                }
+                return true;
+            }
         }
     }
 
