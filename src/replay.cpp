@@ -24,7 +24,7 @@ int main(int argc, char* argv[]){
             i++;
         }
         board b;
-        return video_replay(nome_file_log);
+        return video_replay(nome_file_log, &b);
     }
     else{
         if(argv[3] == nullptr){ //non esiste la terza stringa
@@ -44,6 +44,6 @@ int main(int argc, char* argv[]){
             i++;
         }
         board b;
-        return file_replay(nome_file_log, nome_file_output_replay);
+        return file_replay(nome_file_log, nome_file_output_replay, &b);
     }
 }

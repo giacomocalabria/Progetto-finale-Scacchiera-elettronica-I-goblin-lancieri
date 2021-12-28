@@ -23,6 +23,8 @@ class board
     
     public:
         void print_board();
+        //std::ostream& operator<<(std::ostream& os);
+        //std::ifstream& operator<<(std::ostream& os);
         // --
         piece* get_board_piece(position pos){return board_matrix[make_index_8(pos)];}
         void set_board_piece(position pos, piece* p){board_matrix[make_index_8(pos)] = p;}
