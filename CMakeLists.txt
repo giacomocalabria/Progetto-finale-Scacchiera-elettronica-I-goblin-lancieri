@@ -61,8 +61,10 @@ add_library(player
 )
 
 add_library(replay_player
-    include/replay_player.h
-    src/replay_player.cpp
+    include/video_replay_player.h
+    include/file_replay_player.h
+    src/file_replay_player.cpp
+    src/video_replay_player.cpp
 )
 
 #executable scacchiera
@@ -109,7 +111,8 @@ add_executable(replay
     src/king.cpp
     src/bishop.cpp
     src/rook.cpp
-    src/replay_player.cpp
+    src/video_replay_player.cpp
+    src/file_replay_player.cpp
 )
 
 target_link_libraries(replay
