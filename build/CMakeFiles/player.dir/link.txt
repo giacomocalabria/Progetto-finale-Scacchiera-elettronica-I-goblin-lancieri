@@ -1,2 +1,0 @@
-C:\PROGRA~2\Dev-Cpp\MinGW64\bin\ar.exe qc libplayer.a CMakeFiles/player.dir/src/player.cpp.obj CMakeFiles/player.dir/src/human_player.cpp.obj CMakeFiles/player.dir/src/computer_player.cpp.obj
-C:\PROGRA~2\Dev-Cpp\MinGW64\bin\ranlib.exe libplayer.a
