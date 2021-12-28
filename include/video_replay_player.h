@@ -21,6 +21,4 @@ class video_replay_player{
         bool move(std::string& mossa);
 };
 
-int video_replay(const std::string& _nome_file_log);
-
 #endif

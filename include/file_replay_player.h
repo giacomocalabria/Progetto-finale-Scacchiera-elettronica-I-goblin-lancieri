@@ -21,6 +21,4 @@ class file_replay_player{
         bool move(std::string& mossa);
 };
 
-int file_replay(const std::string& _nome_file_log, const std::string& _nome_file_output_replay);
-
 #endif
