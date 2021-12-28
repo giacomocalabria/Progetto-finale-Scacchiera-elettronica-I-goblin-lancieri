@@ -23,8 +23,7 @@ int main(int argc, char* argv[]){
             nome_file_log.push_back(argv[2][i]);
             i++;
         }
-        board b;
-        return video_replay(nome_file_log, &b);
+        return video_replay(nome_file_log);
     }
     else{
         if(argv[3] == nullptr){ //non esiste la terza stringa
@@ -43,7 +42,6 @@ int main(int argc, char* argv[]){
             nome_file_output_replay.push_back(argv[3][i]);
             i++;
         }
-        board b;
-        return file_replay(nome_file_log, nome_file_output_replay, &b);
+        return file_replay(nome_file_log, nome_file_output_replay);
     }
 }

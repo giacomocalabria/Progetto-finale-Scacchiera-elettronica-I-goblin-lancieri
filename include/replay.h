@@ -12,21 +12,22 @@
 
 using namespace std;
 
-int video_replay(const string& _nome_file_log, board* _b){
+int video_replay(const string& _nome_file_log){
+    board b;
     ifstream in_file(_nome_file_log);
     if(in_file.is_open()) {
-        video_replay_player v1 = video_replay_player(_b, 1);
-        video_replay_player v2 = video_replay_player(_b, 2);
-        while(!true){
-            cout << _b;
+        video_replay_player v1 = video_replay_player(&b, 1);
+        video_replay_player v2 = video_replay_player(&b, 2);
+        while(!true){ //DA FARE ************************************
+            b.print_board();
             v1.turn(in_file);
-            cout << _b;
-            if(true){
+            b.print_board();
+            if(true){ //DA FARE ************************************
                 v2.turn(in_file);
-                cout << _b;
+                b.print_board();
             }
             else{
-                break;
+                break; //DA FARE ************************************
             }
         }
         in_file.close();
@@ -39,23 +40,24 @@ int video_replay(const string& _nome_file_log, board* _b){
 }
 
 
-int file_replay(const string& _nome_file_log, const string& _nome_file_output_replay, board* _b){
+int file_replay(const string& _nome_file_log, const string& _nome_file_output_replay){
+    board b;
     ifstream in_file(_nome_file_log);
-    ifstream out_file(_nome_file_output_replay);
+    ofstream out_file(_nome_file_output_replay);
     if(in_file.is_open()) {
         if(out_file.is_open()){
-            video_replay_player v1 = video_replay_player(_b, 1);
-            video_replay_player v2 = video_replay_player(_b, 2);
-            while(!true){
-                out_file << (*_b);
+            video_replay_player v1 = video_replay_player(&b, 1);
+            video_replay_player v2 = video_replay_player(&b, 2);
+            while(!true){ //DA FARE ************************************
+                b.file_print_board(out_file);
                 v1.turn(in_file);
-                out_file << (*_b);
-                if(true){
+                b.file_print_board(out_file);
+                if(true){ //DA FARE ************************************
                     v2.turn(in_file);
-                    out_file << _b;
+                    b.file_print_board(out_file);
                 }
-                else{
-                    break;
+                else{ 
+                    break; //DA FARE ************************************
                 }
             }
         } else {
