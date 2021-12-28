@@ -1,3 +1,0 @@
-"C:\Users\utente\Desktop\Lab di Programmazione\cmake-3.22.0-windows-x86_64\bin\cmake.exe" -E rm -f CMakeFiles\replay.dir/objects.a
-C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\ar.exe qc CMakeFiles\replay.dir/objects.a @CMakeFiles\replay.dir\objects1.rsp
-C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE -Wl,--whole-archive CMakeFiles\replay.dir/objects.a -Wl,--no-whole-archive -o replay.exe -Wl,--out-implib,libreplay.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\replay.dir\linklibs.rsp
