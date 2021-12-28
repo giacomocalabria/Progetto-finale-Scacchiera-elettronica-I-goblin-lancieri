@@ -89,6 +89,27 @@ int main(int argc, char* argv[])
     space
     b.print_board();*/
 
+
+    b.move_piece(position(6, 4), position(4, 2));
+    space
+    b.print_board();
+
+    b.move_piece(position(1, 5), position(3, 5));
+    space
+    b.print_board();
+
+    b.move_piece(position(3, 5), position(4, 5));
+    space
+    b.print_board();
+
+    b.move_piece(position(4, 5), position(5, 5));
+    space
+    b.print_board();
+
+    b.move_piece(position(7, 4), position(6, 4));
+    space
+    b.print_board();
+
     std::cout << "main ended correctly.\n";
     return 0;
 } 

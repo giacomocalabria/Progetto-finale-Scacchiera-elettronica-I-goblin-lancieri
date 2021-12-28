@@ -1,4 +1,4 @@
-//Author:
+//Author: EDDIE CARRARO
 
 #include "king.h"
 #include "board.h"
@@ -13,10 +13,17 @@ bool king::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     vector<position> possible_pos = get_possible_positions();
     //vector<position>::iterator it;
     auto it = find(possible_pos.begin(), possible_pos.end(), dest);
-    if (it == possible_pos.end()) 
+    if (it == possible_pos.end())
+    {
         return false;
+    }
     
-    return false;
+    return !(is_check(board_pieces, dest));
+}
+
+bool king::can_eat(const position& dest, const vector<piece*>& board_pieces)
+{
+    return this->can_move_to(dest, board_pieces);
 }
 
 inline char king::symbol(){
@@ -71,11 +78,34 @@ vector<position> king::get_possible_positions()
             {
                 possibility.row += i;
                 possibility.col += j;
-                possible_pos.push_back(possibility);
-            }
-            
+
+
+                if(possibility.col > -1 && possibility.col < 8 && possibility.row > -1 && possibility.row < 8)
+                    {
+                        possible_pos.push_back(possibility);
+                    }
+
+                possibility.row = pos.row;
+                possibility.col = pos.col;
+            }  
         }
     }
 
     return possible_pos;
+}
+
+bool king::is_check(const vector<piece*>& board, const position& dest)
+{
+    for(int i = 0; i < 64; i++)
+    {
+        if(board[i] && board[i]->get_player() != this->get_player()) //NOTA: ricordati la condizione (board[i])!
+        {
+            if((*(board[i])).can_eat(dest, board))
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }

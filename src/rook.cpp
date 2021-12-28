@@ -87,6 +87,11 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     return true;
 }
 
+bool rook::can_eat(const position& dest, const vector<piece*>& board_pieces)
+{
+    return this->can_move_to(dest, board_pieces);
+}
+
 inline char rook::symbol()
 {
     return player == board::PLAYER_1 ? 't' : 'T';

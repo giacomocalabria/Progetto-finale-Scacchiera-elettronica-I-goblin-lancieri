@@ -24,9 +24,8 @@ bool board::move_piece(const position& from, const position& to)
     }
 
     piece* p = board_matrix[make_index_8(from)];
-    if (p->can_move_to(to, board_matrix))
+    if (p->can_move_to(to, board_matrix) || p->can_eat(to, board_matrix))   //migliora
     {
-
         // MOMENTANEO WORK IN PROGRESS
         // aggiornare posizione in p
         p->set_position(to);

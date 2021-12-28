@@ -23,6 +23,11 @@ bool knight::can_move_to(const position& dest, const vector<piece*>& board_piece
     return true;
 }
 
+bool knight::can_eat(const position& dest, const vector<piece*>& board_pieces)
+{
+    return this->can_move_to(dest, board_pieces);
+}
+
 inline char knight::symbol(){
     return player == board::PLAYER_1 ? 'c' : 'C';
 }
