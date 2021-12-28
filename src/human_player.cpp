@@ -3,35 +3,40 @@
 
 using namespace std;
 
-/*void human_player::turn(){
-    move();
-}*/
+void human_player::turn(){
+    bool success = false;
+    while(!success){
+        if(move()){
+            success = true;
+        }
+    }
+}
 
 bool human_player::move(){
-    bool success = false;
-    string in1, in2;
-    while(!success){
-        cout << "Inserisci mossa tramite coordinate di partenza e arrivo nel formato XX XX " << endl;
-        cin >> in1 >> in2; // altrimenti getline(ostream, string)
-        /*if(input.length() > 5){
-            cout << "Comando non valido ! Troppo lungo" << endl;
-            continue;
-        }*/
+    string in1, in2, input;
+    cout << "Inserisci mossa tramite coordinate di partenza e arrivo nel formato 'XX XX' " << endl;
+    cin >> in1 >> in2; 
+    getline(cin, input);
+    if(input.length() > 5){
+        cout << "Comando non valido ! Troppo lungo" << endl;
+        return false;
+    }
 
-        position from = position(in1);
-        position to = position(input.substr(2,2));
-        
-        if(is_valid_range_position(from) && is_valid_range_position(to)){
-            cout << "Comando non valido !  La posizione non è nella scacchiera" << endl;
-            continue;
-        }
+    position from = position(in1);
+    position to = position(in2);
+    position from = position(input.substr(0,2));
+    position to = position(input.substr(2,2));
+    
+    if(is_valid_position_8(from) && is_valid_position_8(to)){
+        cout << "Comando non valido !  La posizione non è nella scacchiera" << endl;
+        return false;
+    }
 
-        if((*b).move_piece(from, to)){
-            return;
-        }
-        else{
-            cout << "Comando non valido ! Non puoi muovere quella pedina";
-            continue;
-        }
+    if(b->move_piece(from, to)){
+        return true;
+    }
+    else{
+        cout << "Comando non valido! Non puoi muovere quella pedina";
+        return false;
     }
 }

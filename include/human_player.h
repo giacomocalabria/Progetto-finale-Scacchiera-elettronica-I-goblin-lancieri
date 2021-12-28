@@ -7,12 +7,13 @@
 
 class human_player : public player{
     public:
-        void turn() override;
         human_player(board* _b, int _player_number)
             :player(_b, _player_number) {}
+        void turn() override;
+    
     private:
-        bool is_valid_range_position(position& _pos);
-        bool move() override;   
+        bool move() override;  
+        bool is_valid_range_position(position& _pos); 
 };
 
 #endif

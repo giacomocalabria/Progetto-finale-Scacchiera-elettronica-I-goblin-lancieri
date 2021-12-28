@@ -1,5 +1,13 @@
 #include "position.h"
 #include <iostream>
+#include <string>
+
+position::position(std::string& pos){
+    char c_col = pos.at(0);
+    char c_row = pos.at(1);
+    col = c_col - 'A';
+    row = c_row - '0';
+}
 
 position operator+(position p1, position p2)
 {
@@ -37,4 +45,11 @@ int make_index_8(position p)
 int make_index_8(int row, int col)
 {
     return make_index_8(position(row, col));
+}
+
+bool is_valid_position_8(const position& pos)
+{
+    //constexpr int pos_max{8};
+
+    return pos.row < max_position && pos.col < max_position && pos.row >= min_position && pos.col >= min_position;
 }
