@@ -7,6 +7,9 @@
 
 using namespace std;
 
+int video_replay(string& _nome_file_log);
+int file_replay(string& _nome_file_log, string& _nome_file_output_replay);
+
 int main(int argc, char* argv[]){
     /*
     argomento v [nome_file_log]: stampa a video il replay del file di log indicato;
