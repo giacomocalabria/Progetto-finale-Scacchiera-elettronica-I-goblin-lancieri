@@ -18,7 +18,6 @@ class replay_player{
     private:
         board* b;
         int player_number;
-        bool move(std::string& mossa);
 };
 
 #endif
