@@ -1,10 +1,10 @@
 //Author:: GIACOMO CALABRIA
 
-#include "video_replay_player.h"
+#include "replay_player.h"
 
 using namespace std;
 
-void video_replay_player::turn(ifstream& elenco_mosse){
+void replay_player::turn(ifstream& elenco_mosse){
     string mossa;
     bool success = false;
     while(!success){
@@ -15,7 +15,7 @@ void video_replay_player::turn(ifstream& elenco_mosse){
     }
 }
 
-bool video_replay_player::move(std::string& mossa){
+bool replay_player::move(std::string& mossa){
     if(mossa.length() != 5){
         cout << "Mossa "<< mossa << " non valida! " << endl;
         return false;
