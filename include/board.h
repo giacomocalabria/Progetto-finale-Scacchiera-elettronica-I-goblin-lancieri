@@ -4,6 +4,7 @@
 #define BOARD_H
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include "pawn.h"
 #include "king.h"
@@ -23,6 +24,9 @@ class board
     
     public:
         void print_board();
+        void file_print_board(std::ofstream& _out_file);
+        //std::ostream& operator<<(std::ostream& os);
+        //std::ifstream& operator<<(std::ostream& os);
         // --
         piece* get_board_piece(position pos){return board_matrix[make_index_8(pos)];}
         void set_board_piece(position pos, piece* p){board_matrix[make_index_8(pos)] = p;}

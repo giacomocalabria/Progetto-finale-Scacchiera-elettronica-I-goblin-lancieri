@@ -6,28 +6,48 @@ include_directories(include)
 project("scacchiera_elettronica")
 
 # librerie del progetto
+add_library(position
+    include/position.h
+    src/position.cpp
+)
 
 add_library(board
-    include/position.h
     include/board.h
-    src/position.cpp
     src/board.cpp
 )
 
-add_library(pieces
+add_library(piece
     include/piece.h
     src/piece.cpp
-    include/pawn.h      #pedone
+)
+
+add_library(pawn        #pedone
+    include/pawn.h
     src/pawn.cpp
-    include/knight.h    #cavallo
+)
+
+add_library(knight      #cavallo
+    include/knight.h
     src/knight.cpp
-    include/queen.h     #regina
+)
+
+add_library(queen       #regina
+    include/queen.h
     src/queen.cpp
-    include/rook.h      #torre
+)
+
+add_library(rook        #torre
+    include/rook.h
     src/rook.cpp
-    include/king.h      #re
+)
+
+add_library(king        #re
+    include/king.h
     src/king.cpp
-    include/bishop.h    #alfiere
+)
+
+add_library(bishop       #alfiere
+    include/bishop.h
     src/bishop.cpp
 )
 
@@ -41,9 +61,11 @@ add_library(player
 )
 
 add_library(replay_player
-    include/replay_player.h
+    include/video_replay_player.h
+    include/file_replay_player.h
     include/replay.h
-    src/replay_player.cpp
+    src/file_replay_player.cpp
+    src/video_replay_player.cpp
 )
 
 #executable scacchiera
@@ -65,8 +87,15 @@ add_executable(scacchiera
 )
 
 target_link_libraries(scacchiera
+    position
     board
-    pieces	
+    piece	
+    pawn
+    knight
+    rook
+    king
+    queen
+    bishop
     player
 )
 
@@ -83,11 +112,19 @@ add_executable(replay
     src/king.cpp
     src/bishop.cpp
     src/rook.cpp
-    src/replay_player.cpp
+    src/video_replay_player.cpp
+    src/file_replay_player.cpp
 )
 
 target_link_libraries(replay
+    position
     board
-    pieces	
+    piece	
+    pawn
+    knight
+    rook
+    king
+    queen
+    bishop
     replay_player
 )

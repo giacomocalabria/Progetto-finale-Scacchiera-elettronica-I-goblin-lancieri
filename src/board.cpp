@@ -228,3 +228,19 @@ void board::print_board()
    std::cout << "  ABCDEFGH\n";
 
 }
+
+void board::file_print_board(ofstream& _out_file){
+    for (int i = 0; i < board_size; i++){
+        _out_file << board_size - i << " ";
+        for (int j = 0; j < board_size; j++){
+            piece* p = board_matrix[make_index_8(i, j)];
+            if (p == nullptr){
+                _out_file << "/";
+            } else {
+                _out_file << p->symbol();
+            }
+        }
+        _out_file << std::endl;
+    }
+    _out_file << "  ABCDEFGH\n";
+}
