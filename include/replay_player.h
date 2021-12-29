@@ -1,7 +1,7 @@
 //author: GIACOMO CALABRIA
 
-#ifndef FILE_REPLAY_PLAYER_H
-#define FILE_REPLAY_PLAYER_H
+#ifndef REPLAY_PLAYER_H
+#define REPLAY_PLAYER_H
 
 #include "board.h"
 #include "position.h"
@@ -9,9 +9,9 @@
 #include <string>
 #include <fstream>
 
-class file_replay_player{
+class replay_player{
     public:
-        file_replay_player(board* _b, int _player_number) : b{_b}, player_number{_player_number}{};
+        replay_player(board* _b, int _player_number) : b{_b}, player_number{_player_number}{};
         void turn(std::ifstream& elenco_mosse);
         int get_player_number(){return player_number;}
     

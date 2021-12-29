@@ -5,8 +5,7 @@
 
 #include <iostream>
 #include "board.h"
-#include "video_replay_player.h"
-#include "file_replay_player.h"
+#include "replay_player.h"
 #include <string>
 #include <fstream>
 
@@ -16,8 +15,8 @@ int video_replay(const string& _nome_file_log){
     board b;
     ifstream in_file(_nome_file_log);
     if(in_file.is_open()) {
-        video_replay_player v1 = video_replay_player(&b, 1);
-        video_replay_player v2 = video_replay_player(&b, 2);
+        replay_player v1 = replay_player(&b, 1);
+        replay_player v2 = replay_player(&b, 2);
         while(!true){ //DA FARE ************************************
             b.print_board();
             v1.turn(in_file);
@@ -46,8 +45,8 @@ int file_replay(const string& _nome_file_log, const string& _nome_file_output_re
     ofstream out_file(_nome_file_output_replay);
     if(in_file.is_open()) {
         if(out_file.is_open()){
-            video_replay_player v1 = video_replay_player(&b, 1);
-            video_replay_player v2 = video_replay_player(&b, 2);
+            replay_player v1 = replay_player(&b, 1);
+            replay_player v2 = replay_player(&b, 2);
             while(!true){ //DA FARE ************************************
                 b.file_print_board(out_file);
                 v1.turn(in_file);
