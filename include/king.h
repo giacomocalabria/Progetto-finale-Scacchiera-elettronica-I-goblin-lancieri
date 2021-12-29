@@ -12,6 +12,7 @@ class king : public piece
         bool can_eat(const position& dest, const std::vector<piece*>& board_pieces) override;
         std::vector<position> get_possible_positions() override;
         bool is_check(const std::vector<piece*>& board, const position& dest);
+        bool is_checkmate(const std::vector<piece*>& board, const position& dest);
 };
 
 #endif //KING_H

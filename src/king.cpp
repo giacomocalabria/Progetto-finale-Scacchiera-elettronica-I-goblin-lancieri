@@ -18,7 +18,7 @@ bool king::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         return false;
     }
     
-    return !(is_check(board_pieces, dest));
+    return !(is_check(board_pieces, dest));                                               //MODIFICAAAA
 }
 
 bool king::can_eat(const position& dest, const vector<piece*>& board_pieces)
@@ -80,7 +80,7 @@ vector<position> king::get_possible_positions()
                 possibility.col += j;
 
 
-                if(possibility.col > -1 && possibility.col < 8 && possibility.row > -1 && possibility.row < 8)
+                if(possibility.col >= min_position && possibility.col < max_position && possibility.row >= min_position && possibility.row < max_position)
                     {
                         possible_pos.push_back(possibility);
                     }
@@ -94,18 +94,3 @@ vector<position> king::get_possible_positions()
     return possible_pos;
 }
 
-bool king::is_check(const vector<piece*>& board, const position& dest)
-{
-    for(int i = 0; i < 64; i++)
-    {
-        if(board[i] && board[i]->get_player() != this->get_player()) //NOTA: ricordati la condizione (board[i])!
-        {
-            if((*(board[i])).can_eat(dest, board))
-            {
-                return true;
-            }
-        }
-    }
-
-    return false;
-}

@@ -107,7 +107,7 @@ inline char pawn::symbol()
     return player == board::PLAYER_1 ? 'p' : 'P';
 }
 
-std::vector<position> pawn::get_possible_positions()
+vector<position> pawn::get_possible_positions()
 {
     std::vector<position> possible_positions;
     int sign = player == board::PLAYER_1 ? -1 : 1;  // orientazione

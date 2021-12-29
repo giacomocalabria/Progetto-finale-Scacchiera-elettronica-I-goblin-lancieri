@@ -32,6 +32,10 @@ class board
         static const int PLAYER_1{0}; //fare un enum?
         static const int PLAYER_2{1};
 
+    public:
+        bool is_check(const position& dest, player pl);
+        bool is_checkmate(player pl);
+
     
     private:
         /*

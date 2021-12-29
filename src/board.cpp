@@ -23,24 +23,117 @@ bool board::move_piece(const position& from, const position& to)
         return false; // da def, forse eccezione o altro
     }
 
+    // MOMENTANEO E WORK IN PROGRESS
+
     piece* p = board_matrix[make_index_8(from)];
-    if (p->can_move_to(to, board_matrix) || p->can_eat(to, board_matrix))   //migliora
+    player pl = (*from).get_player();
+
+    if((*from) == player_king[pl])//controlla
     {
-        // MOMENTANEO WORK IN PROGRESS
-        // aggiornare posizione in p
-        p->set_position(to);
-        board_matrix[make_index_8(to)] = p;
-        board_matrix[make_index_8(from)] = nullptr;
-        //p->move(position(to));
-        return true;
-    }
-    else
-    {
-        //cout << "Mossa non valida. Da " << from << " a " << to << endl;
-        return false;
+        if(is_check((*from), pl))  //controllo se il re e' "in pericolo". Il pezzo presente in from e' per forza del giocatore interessato, in quanto e' gia' stato fatto il controllo necessario in player
+        {
+            //----- muovo il re ----- (sposta in king.cpp)
+            vector<position> king_possible_positions = (player_king[pl]).get_possible_positions();
+            auto it = find(king_possible_positions.begin(), king_possible_positions.end(), to);
+            if(it == king_possible_positions.end() && p == player_king[pl])         //e' giusto??
+            {
+                return false;
+            }
+            else if(it != king_possible_positions.end() && p == player_king[pl])
+            {
+                if(p->can_move_to(to, board_matrix) )
+                p->set_position(to);
+            }
+        }
+
+            //----- mangio la pedina minacciosa -----
+
+
+
+            //----- muovo una medina nella traiettoria fra il re e la pedina minacciosa---------
+        
+
+
+
+        //FINE WORK IN PROGRESS
+
+        if (p->can_move_to(to, board_matrix) || p->can_eat(to, board_matrix))   //migliora
+        {
+            // MOMENTANEO WORK IN PROGRESS
+            // aggiornare posizione in p
+            p->set_position(to);
+            board_matrix[make_index_8(to)] = p;
+            board_matrix[make_index_8(from)] = nullptr;
+
+            //p->move(position(to));
+            return true;
+        }
+        else
+        {
+            //cout << "Mossa non valida. Da " << from << " a " << to << endl;
+            return false;
+        }
     }
     
+    
 }
+
+void board::avoid_check(player pl)
+{
+    piece* king = player_king[pl];
+    vector<position> possible_positions = player_king[pl].get_possible_positions();
+    position possibility;
+
+    while(!possible_positions.empty())
+    {
+        possibility = possible_positions[possible_positions.size() - 1];  //esamino ogni position di possible_pos
+        possible_positions.pop_back();
+
+        if(is_check(possibility, pl))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+bool board::is_check(const position& dest, player pl)
+{
+    for(int i = 0; i < board_size*board_size; i++)
+    {
+        if(board_matrix[i] && board_matrix[i]->get_player() != pl) //NOTA: ricordati la condizione (board[i])!
+        {
+            if((*(board_matrix[i])).can_capture(player_king[pl].get_position(), board_matrix))
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool board::is_checkmate(const player pl)   //rivedi
+{
+    vector<position> possible_positions = player_king[pl].get_possible_positions();
+    position possibility;
+
+    while(!possible_positions.empty())
+    {
+        possibility = possible_positions[possible_positions.size() - 1];  //esamino ogni position di possible_pos
+        possible_positions.pop_back();
+
+        if(!is_check(possibility, pl))
+        {
+            return false;                   //basta che vi sia una posizione valida perche' non vi sia scacco matto
+        }
+    }
+
+    return true;
+}
+
 
 void board::to_empty()
 {
@@ -228,3 +321,4 @@ void board::print_board()
    std::cout << "  ABCDEFGH\n";
 
 }
+
