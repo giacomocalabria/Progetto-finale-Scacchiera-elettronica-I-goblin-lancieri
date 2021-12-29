@@ -30,7 +30,7 @@ bool human_player::move(){
     position from = position(input.substr(0,2));
     position to = position(input.substr(2,2));
     
-    if(is_valid_position_8(from) && is_valid_position_8(to)){
+    if(!is_valid_position_8(from) && !is_valid_position_8(to)){
         cout << "Comando non valido! La posizione non è nella scacchiera" << endl;
         return false;
     }
