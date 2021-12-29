@@ -98,7 +98,7 @@ char bishop::symbol()
 	return player == board::PLAYER_1 ? 'a' : 'A';
 }
 
-bool bishop::can_eat(const position& dest, const vector<piece*>& board_pieces)
+bool bishop::can_capture(const position& dest, const vector<piece*>& board_pieces)
 {
 	return this->can_move_to(dest, board_pieces);
 }

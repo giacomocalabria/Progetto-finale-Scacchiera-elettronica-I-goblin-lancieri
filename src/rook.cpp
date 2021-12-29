@@ -11,6 +11,13 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
     vector<position> possible_positions = get_possible_positions();
     //std::cout << "Positions generated (Rook).\n";
+    
+    /*
+        Ricerca della posizione di destinazione all'interno
+        delle posizioni possibili. Chiaramente se non è
+        presente allora non si può muovere su quella posizione
+        a prescindere.
+    */
     vector<position>::iterator it;
     it = find(possible_positions.begin(), possible_positions.end(), dest);
     if (it == possible_positions.end())
@@ -20,6 +27,13 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     position cursor = pos;
     piece* other;
     
+    /*
+        La scansione avviene solamente lungo una direzione: dipende
+        da dove si trova dest rispetto a pos. Ad esempio, se la riga
+        di dest è maggiore di pos, allora la scansione avviene solo
+        verso il basso.
+    */
+
     // ----------- scansione in basso -----------  
     if (dest.row > pos.row)
     {
@@ -28,6 +42,12 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         while (cursor.row < piece::max_position && cursor.row < dest.row)
         {
             other = board_pieces[make_index_8(cursor)];
+            /*
+                other restituisce true se la pedina
+                "andrebbe a sbattere" prima di raggiungere
+                la posizione di destinazione. Ragionamento
+                analogo per le 4 diagonali.
+            */
             if (other)
                 return false;
             cursor = cursor + position(1, 0);
@@ -87,7 +107,7 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     return true;
 }
 
-bool rook::can_eat(const position& dest, const vector<piece*>& board_pieces)
+bool rook::can_capture(const position& dest, const vector<piece*>& board_pieces)
 {
     return this->can_move_to(dest, board_pieces);
 }
@@ -138,6 +158,12 @@ std::vector<position> rook::get_possible_positions()
         cursor = cursor - position(1, 0);
         possible_positions.push_back(cursor);
     }
+
+    /*
+        Ora possible_positions contiene tutte le posizioni
+        possibili (anche non raggiungibili effettivamente)
+        che sono quelle lungo la stessa riga e colonna di pos.
+    */
 
     return possible_positions;
 }

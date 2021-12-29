@@ -1,8 +1,5 @@
 // Author: NICOLA MARITAN
 
-/*
-*/
-
 #ifndef COMPUTER_PLAYER_H
 #define COMPUTER_PLAYER_H
 
@@ -10,6 +7,13 @@
 #include <random>
 #include <ctime>
 #include <chrono>
+
+/*
+    ----------------------------------------------------
+    La classe computer_player si interfaccia con la board
+    in modo tale da operare su di essa in modo casuale.
+    ----------------------------------------------------
+*/
 
 class computer_player : public player
 {

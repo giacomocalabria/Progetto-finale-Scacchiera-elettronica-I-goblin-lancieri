@@ -21,7 +21,7 @@ bool king::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     return !(is_check(board_pieces, dest));
 }
 
-bool king::can_eat(const position& dest, const vector<piece*>& board_pieces)
+bool king::can_capture(const position& dest, const vector<piece*>& board_pieces)
 {
     return this->can_move_to(dest, board_pieces);
 }
@@ -100,7 +100,7 @@ bool king::is_check(const vector<piece*>& board, const position& dest)
     {
         if(board[i] && board[i]->get_player() != this->get_player()) //NOTA: ricordati la condizione (board[i])!
         {
-            if((*(board[i])).can_eat(dest, board))
+            if((*(board[i])).can_capture(dest, board))
             {
                 return true;
             }

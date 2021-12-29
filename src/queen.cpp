@@ -20,7 +20,7 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
     return false;
 }
 
-bool queen::can_eat(const position& dest, const vector<piece*>& board_pieces)
+bool queen::can_capture(const position& dest, const vector<piece*>& board_pieces)
 {
     return this->can_move_to(dest, board_pieces);
 }
@@ -36,7 +36,13 @@ vector<position> queen::get_possible_positions(){
     position dest; //position(riga, colonna)
     
     //riga intera e colonna intera
-    for(int i = 0; i < 7; i++){
+    //for(int i = 0; i < 7; i++){     // modificato da 7 a 8: perché può andare anche nella riga/colonna di indice 7
+    
+    /*
+        
+    */
+    for (int i = min_position; i < max_position; i++)
+    {
         dest = position(i, pos.col);
         if(!(dest == pos))
             possible_pos.push_back(dest);

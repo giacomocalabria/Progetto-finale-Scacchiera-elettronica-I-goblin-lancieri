@@ -8,12 +8,10 @@ using namespace std;
 
 /*
     Costruttore della classe pawn. Essa semplicemente richiama il
-    costruttore della base class piece.
+    costruttore della base class piece. Ciò avviene in modo totalmente
+    analogo nelle altre classi derivate da piece.
 */
-//pawn::pawn(const position& _pos, int _player, board* _running_board) : piece(_pos, _player, _running_board)
 pawn::pawn(const position& _pos, int _player) : piece(_pos, _player) {}
-
-
 
 bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
@@ -64,7 +62,7 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     return false;
 }
 
-bool pawn::can_eat(const position& dest, const vector<piece*>& board_pieces)
+bool pawn::can_capture(const position& dest, const vector<piece*>& board_pieces)
 {
     int sign = player == board::PLAYER_1 ? -1 : 1;  // orientazione
 
@@ -107,10 +105,18 @@ inline char pawn::symbol()
     return player == board::PLAYER_1 ? 'p' : 'P';
 }
 
+/*  
+    Il pawn ha come possibili posizioni principali le sue tre
+    celle frontali. Se si trova nella posizione iniziale allora
+    ha la possibilità di fare un salto in avanti di 2.
+*/
+
 std::vector<position> pawn::get_possible_positions()
 {
     std::vector<position> possible_positions;
     int sign = player == board::PLAYER_1 ? -1 : 1;  // orientazione
+    
+    // Se si trova nella posizione iniziale
     if (is_init_pos)
     {
         possible_positions.push_back(pos + (sign * position(2, 0)));
