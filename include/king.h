@@ -11,7 +11,9 @@ class king : public piece
         bool can_move_to(const position& dest, const std::vector<piece*>& board_pieces) override;
         bool can_capture(const position& dest, const std::vector<piece*>& board_pieces) override;
         std::vector<position> get_possible_positions() override;
-        bool is_check(const std::vector<piece*>& board, const position& dest);
+         
+    public:
+        bool is_check(const std::vector<piece*>& board_pieces);
 };
 
 #endif //KING_H

@@ -18,7 +18,8 @@ bool king::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         return false;
     }
     
-    return !(is_check(board_pieces, dest));
+    //return !(is_check(board_pieces, dest));
+    return true;
 }
 
 bool king::can_capture(const position& dest, const vector<piece*>& board_pieces)
@@ -94,18 +95,17 @@ vector<position> king::get_possible_positions()
     return possible_pos;
 }
 
-bool king::is_check(const vector<piece*>& board, const position& dest)
+bool king::is_check(const std::vector<piece*>& board_pieces)
 {
-    for(int i = 0; i < 64; i++)
+    for(int i = 0; i < board::board_size * board::board_size; i++)
     {
-        if(board[i] && board[i]->get_player() != this->get_player()) //NOTA: ricordati la condizione (board[i])!
+        if(board_pieces[i] && board_pieces[i]->get_player() != get_player()) //NOTA: ricordati la condizione (board[i])!
         {
-            if((*(board[i])).can_capture(dest, board))
+            if((*(board_pieces[i])).can_capture(get_position(), board_pieces))
             {
                 return true;
             }
         }
     }
-
     return false;
 }

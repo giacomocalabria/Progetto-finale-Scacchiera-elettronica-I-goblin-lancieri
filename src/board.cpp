@@ -28,6 +28,7 @@ bool board::move_piece(const position& from, const position& to)
     {
         // MOMENTANEO WORK IN PROGRESS
         // aggiornare posizione in p
+
         p->set_position(to);
         board_matrix[make_index_8(to)] = p;
         board_matrix[make_index_8(from)] = nullptr;
@@ -44,7 +45,9 @@ bool board::move_piece(const position& from, const position& to)
 
 bool board::is_check(int player_number)
 {
-    int other = player_number == PLAYER_1 ? PLAYER_2 : PLAYER_1;    // ottengo l'altro player
+    return player_king[player_number].front().is_check(board_matrix);
+
+    /*int other = player_number == PLAYER_1 ? PLAYER_2 : PLAYER_1;    // ottengo l'altro player
     king player_number_king = player_king[player_number].front();
     position king_pos{player_number_king.get_position()};
 
@@ -60,6 +63,7 @@ bool board::is_check(int player_number)
     }
     std::cout << "No check mate.\n";
     return false;
+    */
 }
 
 bool board::is_checkmate(int player_number)
@@ -68,28 +72,42 @@ bool board::is_checkmate(int player_number)
     king player_number_king = player_king[player_number].front();
     position king_pos{player_number_king.get_position()};
 
+    // Per ogni pezzo della board
     for (auto p : board_matrix)
     {
-        if (p->get_player() == player_number)
+        // Se è un puntatore valido e se è dello stesso tipo del giocatore
+        if (p && p->get_player() == player_number)
         {
+            // Considero tutte le possibili mosse per tale pezzo
             vector<position> possible_positions = p->get_possible_positions();
             for (auto pos : possible_positions)
             {
+                /*
+                    Mossa fittizia: avviene concretamente solo per
+                    valutare se tale mossa può risolvere la
+                    situazione di check. Una volta controllato il
+                    check la situazione precedente viene ripristinata.
+                */
+
                 // Salvataggio dei dati vecchi
                 position prev_p_pos{p->get_position()};
                 piece* prev_piece_in_pos{get_board_piece(pos)};
                 
+
+                // Mossa fittizia
                 p->set_position(pos);
                 board_matrix[make_index_8(pos)] = p;
                 board_matrix[make_index_8(prev_p_pos)] = nullptr;
 
+                // L'elaborazione del check dopo la mossa fittizia viene salvata nella var
                 bool is_check_bool {is_check(player_number)};
 
                 // Ripristino
                 p->set_position(prev_p_pos);
                 board_matrix[make_index_8(pos)] = prev_piece_in_pos;
                 board_matrix[make_index_8(prev_p_pos)] = p;
-
+                
+                // Se compiendo tale mossa ci si libera dal check -> restituisce falso (non è scacco matto)
                 if (!is_check_bool)
                 {
                     return false;
