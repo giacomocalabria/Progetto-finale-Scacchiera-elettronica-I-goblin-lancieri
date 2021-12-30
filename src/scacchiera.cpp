@@ -10,8 +10,13 @@
 
 using namespace std; // ./scacchiera singi ginsgo
 
+void test_1_checkmate();
+
 int main(int argc, char* argv[])
 {
+    test_1_checkmate();
+    return 0;
+
     if(argv[1][1] != 'c' || argv[1][0] != 'c' && argv[1][0] != 'p'){ // se l'argomento non è nè pc nè cc allora il programma termina
         clog << "[ERROR] Parametri da riga di comando non corretti !!" << endl;
         return -1;
@@ -112,4 +117,33 @@ int main(int argc, char* argv[])
 
     std::cout << "main ended correctly.\n";
     return 0;
-} 
+}
+
+void test_1_checkmate()
+{
+    board b;
+    #define p(x, y) position(x, y)
+
+    //std::cout << "bruh\n";
+    b.move_piece(p(6, 4), p(4, 4));
+
+    std::cout << "Checking check.\n";
+    //std::cout << b.is_check(board::PLAYER_1) << std::endl;
+
+    // muovo il re in A4
+    b.move_piece(p(7, 4), p(6, 4));
+    b.move_piece(p(6, 4), p(5, 4));
+    b.move_piece(p(5, 4), p(5, 5));
+    b.move_piece(p(5, 5), p(4, 5));
+
+    // pawn dx giù
+    b.move_piece(p(1, 7), p(3, 7));
+
+    //
+    b.move_piece(p(0, 7), p(2, 7));
+    b.move_piece(p(2, 7), p(2, 5));
+
+    b.is_check(board::PLAYER_1);
+
+    b.print_board();
+}

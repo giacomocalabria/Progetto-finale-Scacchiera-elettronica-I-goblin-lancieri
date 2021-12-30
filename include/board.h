@@ -36,6 +36,9 @@ class board
         static const int PLAYER_1{0}; //fare un enum?
         static const int PLAYER_2{1};
 
+        bool is_check(int player_number);
+        bool is_checkmate(int player_number);
+
     
     private:
         /*

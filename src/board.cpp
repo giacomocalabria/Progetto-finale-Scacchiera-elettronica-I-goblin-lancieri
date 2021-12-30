@@ -42,6 +42,66 @@ bool board::move_piece(const position& from, const position& to)
     
 }
 
+bool board::is_check(int player_number)
+{
+    int other = player_number == PLAYER_1 ? PLAYER_2 : PLAYER_1;    // ottengo l'altro player
+    king player_number_king = player_king[player_number].front();
+    position king_pos{player_number_king.get_position()};
+
+    for (auto p : board_matrix)
+    {
+        //std::cout << "Checking if " << p->symbol() << " can check king.\n";
+        if (p && (p->get_player() != player_number && p->can_capture(king_pos, board_matrix)))
+        {
+            std::cout << "Piece " << p->symbol() << " checks king.\n";
+            return true;
+        }
+        //std::cout << "Cannot check king.\n";
+    }
+    std::cout << "No check mate.\n";
+    return false;
+}
+
+bool board::is_checkmate(int player_number)
+{
+    int other = player_number == PLAYER_1 ? PLAYER_2 : PLAYER_1;    // ottengo l'altro player
+    king player_number_king = player_king[player_number].front();
+    position king_pos{player_number_king.get_position()};
+
+    for (auto p : board_matrix)
+    {
+        if (p->get_player() == player_number)
+        {
+            vector<position> possible_positions = p->get_possible_positions();
+            for (auto pos : possible_positions)
+            {
+                // Salvataggio dei dati vecchi
+                position prev_p_pos{p->get_position()};
+                piece* prev_piece_in_pos{get_board_piece(pos)};
+                
+                p->set_position(pos);
+                board_matrix[make_index_8(pos)] = p;
+                board_matrix[make_index_8(prev_p_pos)] = nullptr;
+
+                bool is_check_bool {is_check(player_number)};
+
+                // Ripristino
+                p->set_position(prev_p_pos);
+                board_matrix[make_index_8(pos)] = prev_piece_in_pos;
+                board_matrix[make_index_8(prev_p_pos)] = p;
+
+                if (!is_check_bool)
+                {
+                    return false;
+                }
+            }
+        }
+    }
+
+    // Nessuna possibile soluzione: check mate
+    return true;
+}
+
 void board::to_empty()
 {
     for (int i = 0; i < board_size; i++)
