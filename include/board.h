@@ -21,6 +21,13 @@ class board
         bool move_piece(const position& from, const position& to);
         void init_game();
         void init_board();
+
+        // Cheat della board, setup pre impostati
+        void setup_1();
+        void setup_2();
+        void setup_3();
+        void setup_4();
+        void setup_5();
     
     public:
         void print_board();
@@ -39,6 +46,7 @@ class board
         //void check_king_movement();
         bool is_check(int player_number);
         bool is_checkmate(int player_number);
+        bool is_checkmate2(int player_number);
 
     
     private:

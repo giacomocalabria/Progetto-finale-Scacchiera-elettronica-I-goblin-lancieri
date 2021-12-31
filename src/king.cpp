@@ -100,11 +100,14 @@ bool king::is_check(const std::vector<piece*>& board_pieces)
     for(int i = 0; i < board::board_size * board::board_size; i++)
     {
         if(board_pieces[i] && board_pieces[i]->get_player() != get_player()) //NOTA: ricordati la condizione (board[i])!
-        {
+        { 
+            cout << board_pieces[i]->symbol() << ", " << board_pieces[i]->get_position();
             if((*(board_pieces[i])).can_capture(get_position(), board_pieces))
             {
+                cout << "CHEKS\n";
                 return true;
             }
+            cout << "NOT CHECKS\n";
         }
     }
     return false;

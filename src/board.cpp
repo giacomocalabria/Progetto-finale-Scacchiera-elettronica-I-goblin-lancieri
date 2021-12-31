@@ -11,9 +11,165 @@ board::board()
     //std::cout << "Game initialized.\n";
     //to_empty();
     //std::cout << "Emptied.\n";
+    
     init_board();
-    init_player_pieces();
+
+    #define SETUP 1
+    #if SETUP
+        setup_5();
+    #else
+        init_player_pieces();
+    #endif
     std::cout << "Board initializated.\n";
+}
+
+/*
+    Setup 1:
+     01234567
+    0/A//T///
+    1//////A/
+    2////r//T
+    3////////
+    4////////
+    5////////
+    6////////
+    7////////
+
+    Test: Verificare la condizione di scacco matto.
+*/
+void board::setup_1()
+{
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 2), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(0, 4), PLAYER_2));
+    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 6), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(2, 7), PLAYER_2));
+
+
+    board_matrix[make_index_8(0, 2)] = &player_bishops[PLAYER_2][0];
+    board_matrix[make_index_8(0, 4)] = &player_rooks[PLAYER_2][0];
+    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
+    board_matrix[make_index_8(0, 6)] = &player_bishops[PLAYER_2][1];
+    board_matrix[make_index_8(2, 7)] = &player_rooks[PLAYER_2][1];
+
+}
+
+/*
+    Setup 2:
+     01234567
+    0/A//T///
+    1//////A/
+    2///Pr//T
+    3////////
+    4////////
+    5////////
+    6////////
+    7////////
+
+    Test: Verificare la condizione di scacco matto.
+*/
+void board::setup_2()
+{
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 2), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(0, 4), PLAYER_2));
+    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 6), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(2, 7), PLAYER_2));
+    player_pawns[PLAYER_2].push_back(pawn(position(2, 3), PLAYER_2));
+
+
+    board_matrix[make_index_8(0, 2)] = &player_bishops[PLAYER_2][0];
+    board_matrix[make_index_8(0, 4)] = &player_rooks[PLAYER_2][0];
+    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
+    board_matrix[make_index_8(0, 6)] = &player_bishops[PLAYER_2][1];
+    board_matrix[make_index_8(2, 7)] = &player_rooks[PLAYER_2][1];
+    board_matrix[make_index_8(2, 3)] = &player_pawns[PLAYER_2][0];
+}
+
+/*
+    Setup 3:
+     01234567
+    0////////
+    1/////P//
+    2////r///
+    3////////
+    4////////
+    5////////
+    6////////
+    7////////
+
+    Test: Verificare la condizione di scacco matto.
+*/
+void board::setup_3()
+{
+    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
+    player_pawns[PLAYER_2].push_back(pawn(position(1, 5), PLAYER_2));
+
+    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
+    board_matrix[make_index_8(1, 5)] = &player_pawns[PLAYER_2][0];
+}
+
+/*
+    Setup 4:
+     01234567
+    0////T///
+    1////////
+    2////r/a/
+    3////////
+    4////////
+    5////////
+    6////////
+    7////////
+
+    Test: Verificare la condizione di scacco matto.
+*/
+void board::setup_4()
+{
+    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
+    player_rooks[PLAYER_2].push_back(rook(position(0, 4), PLAYER_2));
+    player_bishops[PLAYER_1].push_back(bishop(position(2, 6), PLAYER_1));
+
+    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
+    board_matrix[make_index_8(0, 4)] = &player_rooks[PLAYER_2][0];
+    board_matrix[make_index_8(2, 6)] = & player_bishops[PLAYER_1][0];
+}
+
+/*
+    Setup 5:
+     01234567
+    0///////A
+    1T///////
+    2////r///
+    3T///////
+    4///T/T//
+    5////////
+    6////////
+    7////////
+
+    Test: Verificare la condizione di scacco matto.
+*/
+void board::setup_5()
+{
+    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
+
+    player_rooks[PLAYER_2].push_back(rook(position(4, 3), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(3, 0), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(1, 0), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(4, 5), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(4, 4), PLAYER_2));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 7), PLAYER_2));
+
+    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
+    board_matrix[make_index_8(4, 3)] = &player_rooks[PLAYER_2][0];
+    board_matrix[make_index_8(3, 0)] = &player_rooks[PLAYER_2][1];
+    board_matrix[make_index_8(1, 0)] = &player_rooks[PLAYER_2][2];
+    board_matrix[make_index_8(4, 5)] = &player_rooks[PLAYER_2][3];
+    board_matrix[make_index_8(4, 4)] = &player_rooks[PLAYER_2][4];
+    board_matrix[make_index_8(0, 7)] = &player_bishops[PLAYER_2][0];
+
+    //move_piece(position(3, 0), position(2, 0));
+
+
 }
 
 bool board::move_piece(const position& from, const position& to)
@@ -68,55 +224,118 @@ bool board::is_check(int player_number)
 
 bool board::is_checkmate(int player_number)
 {
-    int other = player_number == PLAYER_1 ? PLAYER_2 : PLAYER_1;    // ottengo l'altro player
-    king player_number_king = player_king[player_number].front();
-    position king_pos{player_number_king.get_position()};
-
-    // Per ogni pezzo della board
     for (auto p : board_matrix)
     {
-        // Se è un puntatore valido e se è dello stesso tipo del giocatore
-        if (p && p->get_player() == player_number)
+        if (!p || p->get_player() != player_number)
+            continue;
+
+        for (auto dest : p->get_possible_positions())
         {
-            // Considero tutte le possibili mosse per tale pezzo
-            vector<position> possible_positions = p->get_possible_positions();
-            for (auto pos : possible_positions)
+            if (!p->can_move_to(dest, board_matrix) && !p->can_capture(dest, board_matrix))
+                continue;
+            
+            
+            // Mossa fittizia
+
+            // init
+            piece* prev_in_dest = board_matrix[make_index_8(dest)];
+            position prev_p_pos = p->get_position();
+
+            board_matrix[make_index_8(dest)] = p;
+            board_matrix[make_index_8(p->get_position())] = nullptr;
+            p->set_position(dest);
+
+
+            bool is_check_bool = is_check(player_number);
+
+            print_board();
+            if (is_check(player_number))
             {
-                /*
-                    Mossa fittizia: avviene concretamente solo per
-                    valutare se tale mossa può risolvere la
-                    situazione di check. Una volta controllato il
-                    check la situazione precedente viene ripristinata.
-                */
-
-                // Salvataggio dei dati vecchi
-                position prev_p_pos{p->get_position()};
-                piece* prev_piece_in_pos{get_board_piece(pos)};
-                
-
-                // Mossa fittizia
-                p->set_position(pos);
-                board_matrix[make_index_8(pos)] = p;
-                board_matrix[make_index_8(prev_p_pos)] = nullptr;
-
-                // L'elaborazione del check dopo la mossa fittizia viene salvata nella var
-                bool is_check_bool {is_check(player_number)};
-
-                // Ripristino
-                p->set_position(prev_p_pos);
-                board_matrix[make_index_8(pos)] = prev_piece_in_pos;
-                board_matrix[make_index_8(prev_p_pos)] = p;
-                
-                // Se compiendo tale mossa ci si libera dal check -> restituisce falso (non è scacco matto)
-                if (!is_check_bool)
-                {
-                    return false;
-                }
+                cout << "check\n";
             }
+            else
+            {
+                cout << "NOT check\n";
+            }
+
+            board_matrix[make_index_8(dest)] = prev_in_dest;
+            board_matrix[make_index_8(prev_p_pos)] = p;
+            p->set_position(prev_p_pos);
+
+            if (!is_check_bool)
+                return false;
+
         }
     }
 
-    // Nessuna possibile soluzione: check mate
+    return true;
+}
+
+bool board::is_checkmate2(int player_number)
+{
+    /*
+        Controllo se il re, muovendosi, può risolvere la situazione
+        di scacco.
+    */
+    
+    king k = player_king[player_number].front();
+    position k_pos{k.get_position()};
+    vector<position> king_possible_positions = k.get_possible_positions();
+    
+    for (auto dest : king_possible_positions)
+    {
+        
+        cout << "---------------------------\n";
+        cout << "move: " << dest << endl;
+        
+        bool can_escape_this_way = true;
+
+        if (!k.can_move_to(dest, board_matrix))
+        {
+            continue;
+        }
+
+        // Mossa fittizia
+        piece* prev_in_dest = board_matrix[make_index_8(dest)];
+        board_matrix[make_index_8(dest)] = &k;
+        board_matrix[make_index_8(k_pos)] = nullptr;
+
+        print_board();
+
+        // Per ogni pezzo della board
+        for (auto p : board_matrix)
+        {
+            if (!p || p->get_player() == k.get_player()) continue;
+
+            cout << "Can " << p->symbol() << p->get_position() << " eat king?\n";
+            if (p->can_capture(dest, board_matrix))
+            {
+                can_escape_this_way = false;
+                cout << "Yes.\n";
+            }
+            else
+            {
+                cout << "No.\n";
+            }
+        }
+
+        board_matrix[make_index_8(k_pos)] = &k;
+        board_matrix[make_index_8(dest)] = prev_in_dest;
+
+        if (can_escape_this_way)
+        {
+            return false;
+        }
+    }
+
+    /*
+        A questo il punto allora il re, muovendosi, non può risolvere la situazione
+        di scacco. E' necessario controllare se muovendo qualunque altra dello
+        stesso colore del re sotto scacco si riesce a risolvere lo scacco.
+    */
+
+
+
     return true;
 }
 
@@ -297,6 +516,7 @@ void board::print_board()
            else
            {
                std::cout << p->symbol();
+               //std::cout << p->get_position();
                //std::cout << "*";
            }
            
