@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <stdlib.h> 
 #include "pawn.h"
 #include "king.h"
 #include "queen.h"
@@ -36,11 +37,10 @@ class board
         static const int PLAYER_1{0}; //fare un enum?
         static const int PLAYER_2{1};
 
+        bool is_castling(const position& from, const position& to);
     
+    // Costanti relative al numero di pezzi di ogni giocatore.
     private:
-        /*
-            Costanti relative al numero di pezzi di ogni giocatore.
-        */
         /*const int PAWN_NUMBER{8}; //fare un enum?
         const int ROOK_NUMBER{2};
         const int BISHOP_NUMBER{2};
@@ -60,13 +60,11 @@ class board
         Variabili membro private
     */
     private:
-        // piece* board_matrix[board_size][board_size];
         std::vector<piece*> board_matrix;
         
         /* 
             Array di dimensione 2, contenenti i vector dei pezzi dei giocatori 1 e 2.
-            In questo modo per accedere ai pezzi del giocatore 2 basta
-            la notazione player_pieces[1].
+            In questo modo per accedere ai pezzi del giocatore 2 basta la notazione player_pieces[1].
         */
 
         std::vector<pawn> player_pawns[2];
@@ -80,6 +78,7 @@ class board
     */   
     private:   
         void init_player_pieces();
+
 };
 
 #endif

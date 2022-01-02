@@ -19,8 +19,8 @@ class pawn : public piece
         inline char symbol() override;
         std::vector<position> get_possible_positions() override;
 
-    private:
-        bool is_init_pos {true};
+    /*private:
+        bool is_init_pos {true};*/
         
 };
 

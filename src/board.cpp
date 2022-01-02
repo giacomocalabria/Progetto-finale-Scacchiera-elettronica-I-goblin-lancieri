@@ -1,5 +1,4 @@
 #include "board.h"
-#include <vector>
 
 using namespace std;
 
@@ -23,6 +22,30 @@ bool board::move_piece(const position& from, const position& to)
         return false; // da def, forse eccezione o altro
     }
 
+    if(is_castling(from, to)){
+        piece* _king = board_matrix[make_index_8(from)];
+        _king->set_position(to);
+        board_matrix[make_index_8(to)] = _king;
+        board_matrix[make_index_8(from)] = nullptr;
+        if(from.col > to.col){
+            position rook_from = position(from.row, 0);
+            position rook_to = position(from.row,to.col + 1);
+            piece* _rook = board_matrix[make_index_8(rook_from)];
+            _rook->set_position(rook_to);
+            board_matrix[make_index_8(rook_to)] = _rook;
+            board_matrix[make_index_8(rook_from)] = nullptr;
+        }
+        else{
+            position rook_from = position(from.row, 7);
+            position rook_to = position(from.row, to.col - 1);
+            piece* _rook = board_matrix[make_index_8(rook_from)];
+            _rook->set_position(rook_to);
+            board_matrix[make_index_8(rook_to)] = _rook;
+            board_matrix[make_index_8(rook_from)] = nullptr;
+        }
+        return true;
+    }
+
     piece* p = board_matrix[make_index_8(from)];
     if (p->can_move_to(to, board_matrix) || p->can_capture(to, board_matrix))   //migliora
     {
@@ -40,6 +63,27 @@ bool board::move_piece(const position& from, const position& to)
         return false;
     }
     
+}
+
+bool board::is_castling(const position& from, const position& to){
+    piece* _king = board_matrix[make_index_8(from)];
+    if(!_king->is_the_king() && abs(from.col - to.col) != 2){
+        return false;
+    }
+    position rook_from = position(from.row, 0);
+    position rook_to = position(from.row, 0);
+    if(from.col > to.col){
+        rook_from = position(from.row, 0);
+        rook_to = position(from.row,to.col + 1);
+    } else {
+        rook_from = position(from.row, 7);
+        rook_to = position(from.row, to.col - 1);
+    }
+    piece* _rook = board_matrix[make_index_8(rook_from)];
+    if(!_rook->get_init_pos() && !_king->get_init_pos()){
+        return false;
+    }
+    if
 }
 
 void board::to_empty()
