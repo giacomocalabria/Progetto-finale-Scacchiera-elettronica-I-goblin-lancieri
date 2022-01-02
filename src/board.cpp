@@ -180,55 +180,37 @@ bool board::move_piece(const position& from, const position& to)
     }
 
     piece* p = board_matrix[make_index_8(from)];
-
-    //if(can_avoid_check(from, to))       
-    //{
-        if (p->can_move_to(to, board_matrix) || p->can_capture(to, board_matrix))   //SERVE ??? migliore!
-        {
-            // MOMENTANEO WORK IN PROGRESS
-            // aggiornare posizione in p
-            p->set_position(to);
-
-        //    king vec_king[] = player_king[p->get_player()];
-        //    king* pl_king = vec_king[0];
-            
-            if(pl_king->is_check(pl_king->get_position(), board_matrix))        //se la condizione di check non e' stata risolta completamente...
-            {
-                p->set_position(from);
-                return false;
-            }
-
-            board_matrix[make_index_8(to)] = p;
-            board_matrix[make_index_8(from)] = nullptr;
-
-            //p->move(position(to));
-            return true;
-        }
-        else
-        {
-            //cout << "Mossa non valida. Da " << from << " a " << to << endl;
-            return false;
-        }
-    //}
-    //else
-    //    return false;
+    if (p->can_move_to(to, board_matrix) || p->can_capture(to, board_matrix))   //migliora
+    {
+        // MOMENTANEO WORK IN PROGRESS
+        // aggiornare posizione in p
+        p->set_position(to);
+        board_matrix[make_index_8(to)] = p;
+        board_matrix[make_index_8(from)] = nullptr;
+        //p->move(position(to));
+        return true;
+    }
+    else
+    {
+        //cout << "Mossa non valida. Da " << from << " a " << to << endl;
+        return false;
+    }
+    
 }
 
 bool board::can_avoid_check(const position& from, const position& to)
 {
     piece* p = board_matrix[make_index_8(from)];    //prendo la pedina situata in from
 
-    king vec_king[] = player_king[p->get_player()];
-    king* pl_king = vec_king[0];
+    vector<king> vec_king = player_king[p->get_player()];
+    king pl_king = vec_king[0];
 
-    piece* threat = pl_king->is_check(pl_king->get_position(), board_matrix);
-
-    if(threat)  //controllo se il re e' "in pericolo". Il pezzo presente in from e' per forza del giocatore interessato, in quanto e' gia' stato fatto il controllo necessario in player.cpp
+    if(pl_king.is_check(board_matrix))  //controllo se il re e' "in pericolo". Il pezzo presente in from e' per forza del giocatore interessato, in quanto e' gia' stato fatto il controllo necessario in player.cpp
     {
         //------------ muovo il re ------------
-        if(p.get_position() == pl_king.get_position())            //ovviamente controllo se la pedina che il giocatore vuole muovere e' il re
+        if(p->get_position() == pl_king.get_position())     //ovviamente controllo se la pedina che il giocatore vuole muovere e' il re
         {
-            if(pl_king.can_move_to(to))     //controlla se in "to" il re e' ancora in scacco (in quel caso andrebbe in contro ad uno scacco matto!)
+            if(pl_king.can_move_to(to, board_matrix))     //controlla se in "to" il re e' ancora in scacco (in quel caso andrebbe in contro ad uno scacco matto!)
             {
                 return true;
             }
@@ -240,14 +222,14 @@ bool board::can_avoid_check(const position& from, const position& to)
 
         //---------- mangio la pedina minacciosa ----------
         //il caso in cui il re del player puo' mangiare la pedina avversaria e' gia' stato incluso nel caso precedente (viene ritornato true)
-        if(p->can_capture(threat))       //in questo caso p NON e' il re
+        /*if(p->can_capture(threat))       //in questo caso p NON e' il re
         {
             return true;
         }
         else
         {
 
-        }
+        }*/
 
 
 
@@ -256,6 +238,10 @@ bool board::can_avoid_check(const position& from, const position& to)
 
 
     }
+    else
+        return true;
+
+    return true;
 
 }
 

@@ -18,8 +18,8 @@ bool king::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         return false;
     }
     
-    //return !(is_check(board_pieces, dest));
-    return true;
+    return !(is_check(board_pieces));
+    //return true;
 }
 
 bool king::can_capture(const position& dest, const vector<piece*>& board_pieces)
