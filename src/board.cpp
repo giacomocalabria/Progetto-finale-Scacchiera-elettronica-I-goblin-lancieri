@@ -16,7 +16,7 @@ board::board()
 
     #define SETUP 1
     #if SETUP
-        setup_5();
+        setup_6();
     #else
         init_player_pieces();
     #endif
@@ -172,7 +172,99 @@ void board::setup_5()
 
 }
 
+
+/*
+    Setup 6:
+     01234567
+    0///////A
+    1////////
+    2////r///
+    3T///////
+    4///T/T//
+    5////////
+    6////////
+    7////////
+
+    Test: Verificare la condizione di scacco matto.
+*/
+void board::setup_6()
+{
+    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
+
+    player_rooks[PLAYER_2].push_back(rook(position(4, 3), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(3, 0), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(4, 5), PLAYER_2));
+    //player_rooks[PLAYER_2].push_back(rook(position(4, 4), PLAYER_2));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 7), PLAYER_2));
+
+    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
+    board_matrix[make_index_8(4, 3)] = &player_rooks[PLAYER_2][0];
+    board_matrix[make_index_8(3, 0)] = &player_rooks[PLAYER_2][1];
+    board_matrix[make_index_8(4, 5)] = &player_rooks[PLAYER_2][2];
+    //board_matrix[make_index_8(4, 4)] = &player_rooks[PLAYER_2][3];
+    board_matrix[make_index_8(0, 7)] = &player_bishops[PLAYER_2][0];
+
+    //move_piece(position(3, 0), position(2, 0));
+
+
+}
+
 bool board::move_piece(const position& from, const position& to)
+{
+    if (board_matrix[make_index_8(from)] == nullptr)   // non c'è una pedina nella casella from
+    {
+        return false; // da def, forse eccezione o altro
+    }
+
+    piece* p = board_matrix[make_index_8(from)];
+
+    /*
+    if (condizione di en passant)
+        en_passant();
+
+    if (condizione di arrocco)
+        arrocco();
+    
+    */
+
+    // ----------------------- Sezione mossa normale -----------------------
+    if (p->can_move_to(to, board_matrix) || p->can_capture(to, board_matrix))   //migliora
+    {
+        // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
+        piece* prev_in_dest{board_matrix[make_index_8(to)]};
+
+        p->set_position(to);
+        board_matrix[make_index_8(to)] = p;
+        board_matrix[make_index_8(from)] = nullptr;
+
+        // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
+        if (is_check(p->get_player()))
+        {
+            // Ritorna alla situazione iniziale
+            board_matrix[make_index_8(from)] = p;
+            p->set_position(from);
+            board_matrix[make_index_8(to)] = prev_in_dest;
+            cout << "Mossa non valida. La mossa porta ad uno scacco del proprio re.\n";
+            return false;
+        }
+        
+        /*
+        if (può_promuovere)
+            promuovi();
+        */
+
+        // Mossa lecita
+        return true;
+    }
+    else    // Allora la destinazione non è nelle possibili posizioni.
+    {
+        cout << "Mossa non valida. Da " << from << " a " << to << endl;
+        return false;
+    }
+    
+}
+
+/*bool board::move_piece_2(const position& from, const position& to)
 {
     if (board_matrix[make_index_8(from)] == nullptr)   // non c'è una pedina nella casella from
     {
@@ -198,6 +290,7 @@ bool board::move_piece(const position& from, const position& to)
     }
     
 }
+*/
 
 bool board::is_check(int player_number)
 {
@@ -224,20 +317,22 @@ bool board::is_check(int player_number)
 
 bool board::is_checkmate(int player_number)
 {
+    // Per ogni pezzo della board
     for (auto p : board_matrix)
     {
+        // Il puntatore deve essere valido ed avere numero di giocatore uguale a player_number
         if (!p || p->get_player() != player_number)
             continue;
 
+        // Per ogni possibile posizione del pezzo
         for (auto dest : p->get_possible_positions())
         {
+            // Controlla se può raggiungere tale posizione
             if (!p->can_move_to(dest, board_matrix) && !p->can_capture(dest, board_matrix))
                 continue;
             
             
             // Mossa fittizia
-
-            // init
             piece* prev_in_dest = board_matrix[make_index_8(dest)];
             position prev_p_pos = p->get_position();
 
@@ -245,9 +340,10 @@ bool board::is_checkmate(int player_number)
             board_matrix[make_index_8(p->get_position())] = nullptr;
             p->set_position(dest);
 
-
+            // Controllo se in tale configurazione è scaco
             bool is_check_bool = is_check(player_number);
 
+            // debug
             print_board();
             if (is_check(player_number))
             {
@@ -258,16 +354,19 @@ bool board::is_checkmate(int player_number)
                 cout << "NOT check\n";
             }
 
+            // Ripristino della configurazione iniziale
             board_matrix[make_index_8(dest)] = prev_in_dest;
             board_matrix[make_index_8(prev_p_pos)] = p;
             p->set_position(prev_p_pos);
 
+            // Se eseguendo tale mossa non vi è più lo scacco al re allora non è scacco matto
             if (!is_check_bool)
                 return false;
 
         }
     }
 
+    // Altrimenti è necessariamente scacco matto
     return true;
 }
 
@@ -353,6 +452,26 @@ void board::to_empty()
 void board::init_board()
 {
     board_matrix.resize(board_size * board_size);
+
+    // King
+    player_king[PLAYER_1].reserve(piece_numbers::king_number);
+    player_king[PLAYER_2].reserve(piece_numbers::king_number);
+    // Knights
+    player_knights[PLAYER_1].reserve(piece_numbers::knight_number);
+    player_knights[PLAYER_2].reserve(piece_numbers::knight_number);
+    // Bishops
+    player_bishops[PLAYER_1].reserve(piece_numbers::bishop_number);
+    player_bishops[PLAYER_2].reserve(piece_numbers::bishop_number);
+    // Pawns
+    player_pawns[PLAYER_1].reserve(piece_numbers::pawn_number);
+    player_pawns[PLAYER_2].reserve(piece_numbers::pawn_number);
+    // Rooks
+    player_rooks[PLAYER_1].reserve(piece_numbers::rook_number);
+    player_rooks[PLAYER_2].reserve(piece_numbers::rook_number);
+    // Queens
+    player_queen[PLAYER_1].reserve(piece_numbers::queen_number + piece_numbers::pawn_number);
+    player_queen[PLAYER_2].reserve(piece_numbers::queen_number + piece_numbers::pawn_number);
+    
     to_empty();
 }
 

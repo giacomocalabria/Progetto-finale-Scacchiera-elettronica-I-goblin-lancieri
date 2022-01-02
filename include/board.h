@@ -19,6 +19,7 @@ class board
         board();
         void to_empty();    // rende la board priva di pezzi
         bool move_piece(const position& from, const position& to);
+        //bool move_piece_2(const position& from, const position& to);
         void init_game();
         void init_board();
 
@@ -28,6 +29,7 @@ class board
         void setup_3();
         void setup_4();
         void setup_5();
+        void setup_6();
     
     public:
         void print_board();

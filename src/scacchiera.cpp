@@ -17,11 +17,19 @@ int main(int argc, char* argv[])
     board b;
     b.print_board();
 
-    //cout << b.is_check(board::PLAYER_1) << endl;
-    if (b.is_checkmate(board::PLAYER_1))
-        cout << "checkmate";
+    b.move_piece(position(2, 4), position(3, 4));
+    b.move_piece(position(2, 4), position(3, 5));
+    b.move_piece(position(2, 4), position(1, 4));
 
     b.print_board();
+    //cout << b.is_check(board::PLAYER_1) << endl;
+    
+    /*if (b.is_checkmate(board::PLAYER_1))
+        cout << "checkmate";
+    */
+
+    b.print_board();
+    
 }
 
 
