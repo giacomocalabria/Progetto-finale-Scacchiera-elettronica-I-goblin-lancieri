@@ -48,6 +48,8 @@ class board
         bool is_checkmate(int player_number);
         bool is_checkmate2(int player_number);
 
+        bool can_avoid_check(const position& from, const position& to);
+
     
     private:
         /*
