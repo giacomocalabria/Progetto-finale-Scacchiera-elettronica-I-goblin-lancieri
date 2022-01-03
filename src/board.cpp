@@ -28,6 +28,21 @@ bool board::move_piece(const position& from, const position& to)
     {
         // MOMENTANEO WORK IN PROGRESS
         // aggiornare posizione in p
+        
+
+        int sign = p->get_player() == board::PLAYER_1 ? -1 : 1;  // orientazione (serve?)
+
+        //----------------------- en passant ----------------------- 
+        position pos_to_pass = to;
+        pos_to_pass.row -= sign;     //posizione della pedina da catturare "in passant". Rispetto a to, in base al player la position di passed sara' di un posto in indietro (va bene?)
+        piece* to_pass = board_matrix[make_index_8(pos_to_pass)];
+
+        if(can_en_passant(p, to_pass))
+        {
+            board_matrix[make_index_8(pos_to_pass)] = nullptr;   //pongo a null il pedone mangiato "in passant"
+        }
+
+
         p->set_position(to);
         board_matrix[make_index_8(to)] = p;
         board_matrix[make_index_8(from)] = nullptr;
@@ -39,7 +54,40 @@ bool board::move_piece(const position& from, const position& to)
         //cout << "Mossa non valida. Da " << from << " a " << to << endl;
         return false;
     }
-    
+}
+
+bool board::can_en_passant(piece* pce, piece* pce_to_pass)
+{
+    vector<pawn> pl_pawns = player_pawns[pce->get_player()];
+    for(int i = 0; i < pl_pawns.size(); i++)         //di fatto, controllo se pce punta ad un pedone o meno...
+    {
+        if(pl_pawns[i].get_position() == pce->get_position())  
+        {
+            pawn* pw = (pawn*)pce;    //ufficiale: pce e' un pawn
+
+            for(int j = 0; j < pl_pawns.size(); j++) //di fatto, controllo se pce_to_pass punta ad un pedone o meno...
+            {
+                if(pl_pawns[j].get_position() == pce_to_pass->get_position())
+                {
+                    pawn* pw_to_pass = (pawn*)pce_to_pass;   //ufficiale: pce_to_pass e' un pawn
+
+                    if(pw_to_pass->get_can_be_passed())
+                    {
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+            }
+
+            /*position right = pw->get_position();
+            right.col++;
+            position left = pw->get_position();
+            left.col--;*/
+            //break;      //le altre iterazioni del for sono riempitive, in quanto non ci possono essere altre pedine con la stessa position di quella considerata ora
+        }
+    }
+    return false;
 }
 
 void board::to_empty()
