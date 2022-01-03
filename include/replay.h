@@ -4,14 +4,20 @@
 #define REPLAY_H
 
 #include <iostream>
-#include "board.h"
-#include "replay_player.h"
 #include <string>
 #include <fstream>
+#include <chrono>
+#include <thread>
+#include "board.h"
+#include "replay_player.h"
 
 using namespace std;
 
 int video_replay(const string& _nome_file_log){
+    using namespace this_thread; // sleep_for
+    using namespace chrono; // seconds
+
+    sleep_for(seconds(1));
     board b;
     ifstream in_file(_nome_file_log);
     if(in_file.is_open()) {
@@ -20,9 +26,11 @@ int video_replay(const string& _nome_file_log){
         while(!true){ //DA FARE ************************************
             b.print_board();
             v1.turn(in_file);
+            sleep_for(seconds(1));
             b.print_board();
             if(true){ //DA FARE ************************************
                 v2.turn(in_file);
+                sleep_for(seconds(1));
                 b.print_board();
             }
             else{
