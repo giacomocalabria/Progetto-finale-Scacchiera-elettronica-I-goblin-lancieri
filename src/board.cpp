@@ -9,11 +9,6 @@ using namespace std;
 board::board()
 {
     std::cout << "Board Initialization.\n";
-    //init_game();
-    //std::cout << "Game initialized.\n";
-    //to_empty();
-    //std::cout << "Emptied.\n";
-    
     init_board();
 
     #define SETUP 1
@@ -25,6 +20,12 @@ board::board()
     std::cout << "Board initializated.\n";
 }
 
+/*
+    La funzione membro move_piece rappresenta l'interfaccia fra
+    il player e la board concreta. Essa chiama per un determinato
+    pezzo le funzioni membro virtuali can_move_to, can_capture, ecc
+    di piece. Essa modifica concretamente la board.
+*/
 bool board::move_piece(const position& from, const position& to)
 {
     if (board_matrix[make_index_8(from)] == nullptr)   // non c'è una pedina nella casella from
@@ -119,29 +120,20 @@ bool board::move_piece(const position& from, const position& to)
 }
 */
 
+/*
+    Si limita a chiamare is_check del re del proprio giocatore.
+*/
 bool board::is_check(int player_number)
 {
     return player_king[player_number].front().is_check(board_matrix);
-
-    /*int other = player_number == PLAYER_1 ? PLAYER_2 : PLAYER_1;    // ottengo l'altro player
-    king player_number_king = player_king[player_number].front();
-    position king_pos{player_number_king.get_position()};
-
-    for (auto p : board_matrix)
-    {
-        //std::cout << "Checking if " << p->symbol() << " can check king.\n";
-        if (p && (p->get_player() != player_number && p->can_capture(king_pos, board_matrix)))
-        {
-            std::cout << "Piece " << p->symbol() << " checks king.\n";
-            return true;
-        }
-        //std::cout << "Cannot check king.\n";
-    }
-    std::cout << "No check mate.\n";
-    return false;
-    */
 }
 
+/*
+    Si occupa di determinare lo stato di check_mate per un determinato
+    giocatore. Se ogni mossa possibile del giocare non risolve la situazione
+    di scacco, allora è necessariamente scacco matto. Se esiste anche solamente
+    una mossa che lo evita allora restituisce false.
+*/
 bool board::is_checkmate(int player_number)
 {
     // Per ogni pezzo della board
@@ -197,12 +189,11 @@ bool board::is_checkmate(int player_number)
     return true;
 }
 
+// Inutile, da eliminare
+/*
 bool board::is_checkmate2(int player_number)
 {
-    /*
-        Controllo se il re, muovendosi, può risolvere la situazione
-        di scacco.
-    */
+
     
     king k = player_king[player_number].front();
     position k_pos{k.get_position()};
@@ -254,17 +245,17 @@ bool board::is_checkmate2(int player_number)
         }
     }
 
-    /*
-        A questo il punto allora il re, muovendosi, non può risolvere la situazione
-        di scacco. E' necessario controllare se muovendo qualunque altra dello
-        stesso colore del re sotto scacco si riesce a risolvere lo scacco.
-    */
 
 
 
     return true;
 }
+*/
 
+/*
+    Rende vuota la board inizializzando a nullptr ogni riferimento
+    in board_matrix.
+*/
 void board::to_empty()
 {
     for (int i = 0; i < board_size; i++)

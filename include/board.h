@@ -42,7 +42,9 @@ class board
         //void check_king_movement();
         bool is_check(int player_number);
         bool is_checkmate(int player_number);
-        bool is_checkmate2(int player_number);
+        
+        
+        //bool is_checkmate2(int player_number);
 
     
     private:
@@ -73,16 +75,26 @@ class board
         
         /* 
             Array di dimensione 2, contenenti i vector dei pezzi dei giocatori 1 e 2.
-            In questo modo per accedere ai pezzi del giocatore 2 basta
-            la notazione player_pieces[1].
+            In questo modo per accedere ai pezzi del giocatore X basta
+            la notazione player_piece[PLAYER_X].
+            
+            Essi sono di fatto dei contenitore statici dei pezzi della board:
+            la loro capacità non cambia durante l'esecuzione del programma,
+            poiché in init_board per ognuno di questi vector vi è un reserve
+            della memoria necessaria. La staticità dei vector è indispensabile
+            in quanto una riallocazione della memoria nel freestore di un vector
+            rende in generale invalidi i riferimenti nella board. In questo modo
+            si evita ogni tipo di memory leak in quanto l'allocazione dinamica
+            della memoria è gestita dai vector stessi della STL, e si dispone
+            di un modo molto comodo per avere a disposizione i vari pezzi.  
         */
-
         std::vector<pawn> player_pawns[2];
         std::vector<knight> player_knights[2];
         std::vector<rook> player_rooks[2];
         std::vector<bishop> player_bishops[2];
         std::vector<king> player_king[2];
         std::vector<queen> player_queen[2];
+    
     /*
         Funzioni membro privato.
     */   
