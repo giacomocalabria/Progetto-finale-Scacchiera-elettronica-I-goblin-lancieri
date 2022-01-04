@@ -14,6 +14,7 @@
 //classe virtuale pura
 #include "position.h"
 #include <vector>
+#include "player_id.h"
 
 class piece
 {
@@ -22,7 +23,7 @@ class piece
         static constexpr int min_position {0};
 
     public:
-        piece(const position& _pos, int _player) : pos{_pos}, player{_player}{};
+        piece(const position& _pos, player_id _player) : pos{_pos}, player{_player}{};
 
         virtual bool can_move_to(const position& dest, const std::vector<piece*>& board_pieces) = 0;
         virtual bool can_capture(const position& dest, const std::vector<piece*>& board_pieces) = 0;
@@ -35,11 +36,11 @@ class piece
 
         position get_position(){return pos;}
         void set_position(position new_pos){pos = new_pos;}
-        int get_player(){return player;}
+        player_id get_player(){return player;}
         
     protected:
         // variabili di esemplare
-        int player; // 1 o 2 - tipo di dato da definire
+        player_id player; // 1 o 2 - tipo di dato da definire
         position pos;
         
 };

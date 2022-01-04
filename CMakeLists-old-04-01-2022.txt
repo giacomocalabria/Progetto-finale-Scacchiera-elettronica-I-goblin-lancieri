@@ -35,7 +35,6 @@ add_library(player
     include/player.h
     include/human_player.h
     include/computer_player.h
-    include/player_id.h
     src/player.cpp
     src/human_player.cpp
     src/computer_player.cpp

@@ -11,7 +11,7 @@ using namespace std;
     costruttore della base class piece. Ciò avviene in modo totalmente
     analogo nelle altre classi derivate da piece.
 */
-pawn::pawn(const position& _pos, int _player) : piece(_pos, _player) {}
+pawn::pawn(const position& _pos, player_id _player) : piece(_pos, _player) {}
 
 bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {

@@ -19,18 +19,12 @@ class board
         board();
         void to_empty();    // rende la board priva di pezzi
         bool move_piece(const position& from, const position& to);
-        //bool move_piece_2(const position& from, const position& to);
         void init_game();
         void init_board();
-
-
     
     public:
         void print_board();
         void file_print_board(std::ofstream& _out_file);
-        //std::ostream& operator<<(std::ostream& os);
-        //std::ifstream& operator<<(std::ostream& os);
-        // --
         piece* get_board_piece(position pos){return board_matrix[make_index_8(pos)];}
         void set_board_piece(position pos, piece* p){board_matrix[make_index_8(pos)] = p;}
         std::vector<position> get_player_pieces_positions(int player);
@@ -40,8 +34,8 @@ class board
         static const int PLAYER_2{1};
 
         //void check_king_movement();
-        bool is_check(int player_number);
-        bool is_checkmate(int player_number);
+        bool is_check(player_id player_number);
+        bool is_checkmate(player_id player_number);
         
         
         //bool is_checkmate2(int player_number);
@@ -88,12 +82,12 @@ class board
             della memoria è gestita dai vector stessi della STL, e si dispone
             di un modo molto comodo per avere a disposizione i vari pezzi.  
         */
-        std::vector<pawn> player_pawns[2];
-        std::vector<knight> player_knights[2];
-        std::vector<rook> player_rooks[2];
-        std::vector<bishop> player_bishops[2];
-        std::vector<king> player_king[2];
-        std::vector<queen> player_queen[2];
+        std::vector<pawn> player_pawns[player_id::player_count];
+        std::vector<knight> player_knights[player_id::player_count];
+        std::vector<rook> player_rooks[player_id::player_count];
+        std::vector<bishop> player_bishops[player_id::player_count];
+        std::vector<king> player_king[player_id::player_count];
+        std::vector<queen> player_queen[player_id::player_count];
     
     /*
         Funzioni membro privato.

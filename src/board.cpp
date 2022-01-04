@@ -2,6 +2,7 @@
 
 #include "board.h"
 #include <vector>
+#include "player_id.h"
 
 using namespace std;
 
@@ -92,38 +93,10 @@ bool board::move_piece(const position& from, const position& to)
     
 }
 
-/*bool board::move_piece_2(const position& from, const position& to)
-{
-    if (board_matrix[make_index_8(from)] == nullptr)   // non c'è una pedina nella casella from
-    {
-        return false; // da def, forse eccezione o altro
-    }
-
-    piece* p = board_matrix[make_index_8(from)];
-    if (p->can_move_to(to, board_matrix) || p->can_capture(to, board_matrix))   //migliora
-    {
-        // MOMENTANEO WORK IN PROGRESS
-        // aggiornare posizione in p
-
-        p->set_position(to);
-        board_matrix[make_index_8(to)] = p;
-        board_matrix[make_index_8(from)] = nullptr;
-        //p->move(position(to));
-        return true;
-    }
-    else
-    {
-        //cout << "Mossa non valida. Da " << from << " a " << to << endl;
-        return false;
-    }
-    
-}
-*/
-
 /*
     Si limita a chiamare is_check del re del proprio giocatore.
 */
-bool board::is_check(int player_number)
+bool board::is_check(player_id player_number)
 {
     return player_king[player_number].front().is_check(board_matrix);
 }
@@ -134,7 +107,7 @@ bool board::is_check(int player_number)
     di scacco, allora è necessariamente scacco matto. Se esiste anche solamente
     una mossa che lo evita allora restituisce false.
 */
-bool board::is_checkmate(int player_number)
+bool board::is_checkmate(player_id player_number)
 {
     // Per ogni pezzo della board
     for (auto p : board_matrix)
@@ -269,8 +242,15 @@ void board::to_empty()
 
 void board::init_board()
 {
+    // Resize del vector di puntatori: chiaramente ha 64 elementi
     board_matrix.resize(board_size * board_size);
 
+    /*
+        Reserve dei vector dei pezzi, in quanto una riallocazione
+        dinamica della memoria da parte di ognuno di essi in genere
+        renderebbe invalidi i puntatori in board_matrix. La loro
+        dimensione non è variata durante l'esecuzione.
+    */
     // King
     player_king[PLAYER_1].reserve(piece_numbers::king_number);
     player_king[PLAYER_2].reserve(piece_numbers::king_number);
@@ -293,6 +273,12 @@ void board::init_board()
     to_empty();
 }
 
+/*
+    Promote viene chiamata quando quando una cella si ritrova
+    dalla parte opposta della board, tenendo conto del colore
+    del giocatore: se il pezzo può pruomovere allora viene sostituito
+    da una regina.
+*/
 bool board::promote(const position& pos)
 {
     piece* p{board_matrix[make_index_8(pos)]};
@@ -300,7 +286,13 @@ bool board::promote(const position& pos)
 
     if (p->can_promote())
     {
-        int player_num{p->get_player()};
+        player_id player_num{p->get_player()};
+        /*
+            Il pezzo viene inserito nel vector dei pezzi in quanto nuovo pezzo concreto.
+            Ciò NON causa la riallocazione dei vector poiché avviene il reserve della
+            memoria del vector di 1 (la regina iniziale) + 8 (i pedoni iniziali, che
+            possono promuovere).
+        */
         player_queen[player_num].push_back(queen(p->get_position(), player_num));
         board_matrix[make_index_8(pos)] = &player_queen[player_num].back();
         return true;
@@ -367,8 +359,8 @@ void board::init_player_pieces()
 
     for (int i = 0; i < piece_numbers::pawn_number; i++)
     {
-        player_pawns[PLAYER_1].push_back(pawn(position(PAWN_ROW_PLAYER_1, i), PLAYER_1));
-        player_pawns[PLAYER_2].push_back(pawn(position(PAWN_ROW_PLAYER_2, i), PLAYER_2));
+        player_pawns[PLAYER_1].push_back(pawn(position(PAWN_ROW_PLAYER_1, i), player_id::player_1));
+        player_pawns[PLAYER_2].push_back(pawn(position(PAWN_ROW_PLAYER_2, i), player_id::player_2));
         
     }
     for (int i = 0; i < piece_numbers::pawn_number; i++)
@@ -376,17 +368,17 @@ void board::init_player_pieces()
         //board_matrix[PAWN_ROW_PLAYER_2][i] = &player_pawns[PLAYER_2][i];
         //board_matrix[PAWN_ROW_PLAYER_1][i] = &player_pawns[PLAYER_1][i];
 
-        board_matrix[make_index_8(PAWN_ROW_PLAYER_2, i)] = &player_pawns[PLAYER_2][i];
-        board_matrix[make_index_8(PAWN_ROW_PLAYER_1, i)] = &player_pawns[PLAYER_1][i];
+        board_matrix[make_index_8(PAWN_ROW_PLAYER_2, i)] = &player_pawns[player_id::player_2][i];
+        board_matrix[make_index_8(PAWN_ROW_PLAYER_1, i)] = &player_pawns[player_id::player_1][i];
     }
 
 
     // ----------- Inserimento knights ----------- 
 
-    player_knights[PLAYER_1].push_back(knight(position(7, 1), PLAYER_1));
-    player_knights[PLAYER_2].push_back(knight(position(0, 1), PLAYER_2));
-    player_knights[PLAYER_1].push_back(knight(position(7, 6), PLAYER_1));
-    player_knights[PLAYER_2].push_back(knight(position(0, 6), PLAYER_2));
+    player_knights[PLAYER_1].push_back(knight(position(7, 1), player_id::player_1));
+    player_knights[PLAYER_2].push_back(knight(position(0, 1), player_id::player_2));
+    player_knights[PLAYER_1].push_back(knight(position(7, 6), player_id::player_1));
+    player_knights[PLAYER_2].push_back(knight(position(0, 6), player_id::player_2));
     
     /*board_matrix[7][1] = &player_knights[PLAYER_1][0];
     board_matrix[0][1] = &player_knights[PLAYER_2][0];
@@ -400,10 +392,10 @@ void board::init_player_pieces()
 
     // ----------- Inserimento bishop ----------- 
 
-    player_bishops[PLAYER_1].push_back(bishop(position(7, 2), PLAYER_1));
-    player_bishops[PLAYER_2].push_back(bishop(position(0, 2), PLAYER_2));
-    player_bishops[PLAYER_1].push_back(bishop(position(7, 5), PLAYER_1));
-    player_bishops[PLAYER_2].push_back(bishop(position(0, 5), PLAYER_2));
+    player_bishops[PLAYER_1].push_back(bishop(position(7, 2), player_id::player_1));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 2), player_id::player_2));
+    player_bishops[PLAYER_1].push_back(bishop(position(7, 5), player_id::player_1));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 5), player_id::player_2));
     
     board_matrix[make_index_8(7, 2)] = &player_bishops[PLAYER_1][0];
     board_matrix[make_index_8(0, 2)] = &player_bishops[PLAYER_2][0];
@@ -412,33 +404,33 @@ void board::init_player_pieces()
 
     // ----------- Inserimento rook ----------- 
 
-    player_rooks[PLAYER_1].push_back(rook(position(7, 0), PLAYER_1));
-    player_rooks[PLAYER_2].push_back(rook(position(0, 0), PLAYER_2));
-    player_rooks[PLAYER_1].push_back(rook(position(7, 7), PLAYER_1));
-    player_rooks[PLAYER_2].push_back(rook(position(0, 7), PLAYER_2));
+    player_rooks[PLAYER_1].push_back(rook(position(7, 0), player_id::player_1));
+    player_rooks[PLAYER_2].push_back(rook(position(0, 0), player_id::player_2));
+    player_rooks[PLAYER_1].push_back(rook(position(7, 7), player_id::player_1));
+    player_rooks[PLAYER_2].push_back(rook(position(0, 7), player_id::player_2));
     
     /*board_matrix[7][0] = &player_rooks[PLAYER_1][0];
     board_matrix[0][0] = &player_rooks[PLAYER_2][0];
     board_matrix[7][7] = &player_rooks[PLAYER_1][1];
     board_matrix[0][7] = &player_rooks[PLAYER_2][1];
     */
-    board_matrix[make_index_8(7, 0)] = &player_rooks[PLAYER_1][0];
-    board_matrix[make_index_8(0, 0)] = &player_rooks[PLAYER_2][0];
-    board_matrix[make_index_8(7, 7)] = &player_rooks[PLAYER_1][1];
-    board_matrix[make_index_8(0, 7)] = &player_rooks[PLAYER_2][1];
+    board_matrix[make_index_8(7, 0)] = &player_rooks[player_id::player_1][0];
+    board_matrix[make_index_8(0, 0)] = &player_rooks[player_id::player_2][0];
+    board_matrix[make_index_8(7, 7)] = &player_rooks[player_id::player_1][1];
+    board_matrix[make_index_8(0, 7)] = &player_rooks[player_id::player_2][1];
 
     // ----------- Inserimento queen -----------
 
-    player_queen[PLAYER_1].push_back(queen(position(7, 3), PLAYER_1));
-    player_queen[PLAYER_2].push_back(queen(position(0, 3), PLAYER_2));
+    player_queen[PLAYER_1].push_back(queen(position(7, 3), player_id::player_1));
+    player_queen[PLAYER_2].push_back(queen(position(0, 3), player_id::player_2));
 
     board_matrix[make_index_8(0, 3)] = &player_queen[PLAYER_2][0];
     board_matrix[make_index_8(7, 3)] = &player_queen[PLAYER_1][0];
 
     // ----------- Inserimento king -----------
 
-    player_king[PLAYER_1].push_back(king(position(7, 4), PLAYER_1));
-    player_king[PLAYER_2].push_back(king(position(0, 4), PLAYER_2));
+    player_king[PLAYER_1].push_back(king(position(7, 4), player_id::player_1));
+    player_king[PLAYER_2].push_back(king(position(0, 4), player_id::player_2));
 
     board_matrix[make_index_8(7, 4)] = &player_king[PLAYER_1][0];
     board_matrix[make_index_8(0, 4)] = &player_king[PLAYER_2][0];
@@ -516,11 +508,11 @@ void board::file_print_board(ofstream& _out_file){
 */
 void board::setup_1()
 {
-    player_bishops[PLAYER_2].push_back(bishop(position(0, 2), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(0, 4), PLAYER_2));
-    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
-    player_bishops[PLAYER_2].push_back(bishop(position(0, 6), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(2, 7), PLAYER_2));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 2), player_id::player_2));
+    player_rooks[PLAYER_2].push_back(rook(position(0, 4), player_id::player_2));
+    player_king[PLAYER_1].push_back(king(position(2, 4), player_id::player_1));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 6), player_id::player_2));
+    player_rooks[PLAYER_2].push_back(rook(position(2, 7), player_id::player_2));
 
 
     board_matrix[make_index_8(0, 2)] = &player_bishops[PLAYER_2][0];
@@ -547,12 +539,12 @@ void board::setup_1()
 */
 void board::setup_2()
 {
-    player_bishops[PLAYER_2].push_back(bishop(position(0, 2), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(0, 4), PLAYER_2));
-    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
-    player_bishops[PLAYER_2].push_back(bishop(position(0, 6), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(2, 7), PLAYER_2));
-    player_pawns[PLAYER_2].push_back(pawn(position(2, 3), PLAYER_2));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 2), player_id::player_2));
+    player_rooks[PLAYER_2].push_back(rook(position(0, 4), player_id::player_2));
+    player_king[PLAYER_1].push_back(king(position(2, 4), player_id::player_1));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 6), player_id::player_2));
+    player_rooks[PLAYER_2].push_back(rook(position(2, 7), player_id::player_2));
+    player_pawns[PLAYER_2].push_back(pawn(position(2, 3), player_id::player_2));
 
 
     board_matrix[make_index_8(0, 2)] = &player_bishops[PLAYER_2][0];
@@ -579,8 +571,8 @@ void board::setup_2()
 */
 void board::setup_3()
 {
-    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
-    player_pawns[PLAYER_2].push_back(pawn(position(1, 5), PLAYER_2));
+    player_king[PLAYER_1].push_back(king(position(2, 4), player_id::player_1));
+    player_pawns[PLAYER_2].push_back(pawn(position(1, 5), player_id::player_2));
 
     board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
     board_matrix[make_index_8(1, 5)] = &player_pawns[PLAYER_2][0];
@@ -602,9 +594,9 @@ void board::setup_3()
 */
 void board::setup_4()
 {
-    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
-    player_rooks[PLAYER_2].push_back(rook(position(0, 4), PLAYER_2));
-    player_bishops[PLAYER_1].push_back(bishop(position(2, 6), PLAYER_1));
+    player_king[PLAYER_1].push_back(king(position(2, 4), player_id::player_1));
+    player_rooks[PLAYER_2].push_back(rook(position(0, 4), player_id::player_2));
+    player_bishops[PLAYER_1].push_back(bishop(position(2, 6), player_id::player_1));
 
     board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
     board_matrix[make_index_8(0, 4)] = &player_rooks[PLAYER_2][0];
@@ -627,14 +619,14 @@ void board::setup_4()
 */
 void board::setup_5()
 {
-    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
+    player_king[PLAYER_1].push_back(king(position(2, 4), player_id::player_1));
 
-    player_rooks[PLAYER_2].push_back(rook(position(4, 3), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(3, 0), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(1, 0), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(4, 5), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(4, 4), PLAYER_2));
-    player_bishops[PLAYER_2].push_back(bishop(position(0, 7), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(4, 3), player_id::player_2));
+    player_rooks[PLAYER_2].push_back(rook(position(3, 0), player_id::player_2));
+    player_rooks[PLAYER_2].push_back(rook(position(1, 0), player_id::player_2));
+    player_rooks[PLAYER_2].push_back(rook(position(4, 5), player_id::player_2));
+    player_rooks[PLAYER_2].push_back(rook(position(4, 4), player_id::player_2));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 7), player_id::player_2));
 
     board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
     board_matrix[make_index_8(4, 3)] = &player_rooks[PLAYER_2][0];
@@ -666,13 +658,13 @@ void board::setup_5()
 */
 void board::setup_6()
 {
-    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
+    player_king[PLAYER_1].push_back(king(position(2, 4), player_id::player_1));
 
-    player_rooks[PLAYER_2].push_back(rook(position(4, 3), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(3, 0), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(4, 5), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(4, 3), player_id::player_2));
+    player_rooks[PLAYER_2].push_back(rook(position(3, 0), player_id::player_2));
+    player_rooks[PLAYER_2].push_back(rook(position(4, 5), player_id::player_2));
     //player_rooks[PLAYER_2].push_back(rook(position(4, 4), PLAYER_2));
-    player_bishops[PLAYER_2].push_back(bishop(position(0, 7), PLAYER_2));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 7), player_id::player_2));
 
     board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
     board_matrix[make_index_8(4, 3)] = &player_rooks[PLAYER_2][0];
@@ -703,6 +695,6 @@ void board::setup_6()
 */
 void board::setup_7()
 {
-    player_pawns[PLAYER_1].push_back(pawn(position(2, 5), PLAYER_1));
+    player_pawns[PLAYER_1].push_back(pawn(position(2, 5), player_id::player_1));
     board_matrix[make_index_8(position(2, 5))] = &player_pawns[PLAYER_1][0];
 }

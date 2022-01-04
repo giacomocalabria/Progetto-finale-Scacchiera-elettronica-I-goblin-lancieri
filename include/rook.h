@@ -12,7 +12,7 @@
 class rook : public piece
 {
     public:
-        rook(const position& _pos, int _player) : piece(_pos, _player){}
+        rook(const position& _pos, player_id _player) : piece(_pos, _player){}
         bool can_move_to(const position& dest, const std::vector<piece*>& board_pieces) override;
         bool can_capture(const position& dest, const std::vector<piece*>& board_pieces) override;
         inline char symbol() override;

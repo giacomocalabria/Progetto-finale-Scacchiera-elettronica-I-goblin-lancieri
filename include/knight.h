@@ -13,7 +13,7 @@
 
 class knight : public piece{
     public:
-        knight(const position& _pos, int _player) : piece(_pos, _player){}
+        knight(const position& _pos, player_id _player) : piece(_pos, _player){}
         bool can_move_to(const position& dest, const std::vector<piece*>& board_pieces) override;
         bool can_capture(const position& dest, const std::vector<piece*>& board_pieces) override;
         bool can_promote() override;

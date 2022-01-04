@@ -4,6 +4,7 @@
 #include "board.h"
 #include <string>
 #include "computer_player.h"
+#include "player_id.h"
 
 #define space std::cout << "\n------------------------\n";
 #define pause system("pause"); system("cls"); 
@@ -14,6 +15,10 @@ void test_1_checkmate();
 
 int main()
 {
+    cout << player_id::player_1 << "\n" << player_id::player_2 << "\n";
+    int x1 {player_id::player_1};
+    int x2 {player_id::player_2};
+    cout << player_id::player_1 << "\n" << player_id::player_2 << "\n";
     board b;
     b.print_board();
     b.move_piece(position(2, 5), position(1, 5));
@@ -176,7 +181,7 @@ void test_1_checkmate()
     b.move_piece(p(0, 7), p(2, 7));
     b.move_piece(p(2, 7), p(2, 5));
 
-    b.is_check(board::PLAYER_1);
+    b.is_check(player_id::player_1);
 
     b.print_board();
 }
