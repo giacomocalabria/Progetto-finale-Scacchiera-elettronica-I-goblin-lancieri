@@ -12,7 +12,18 @@ using namespace std; // ./scacchiera singi ginsgo
 
 void test_1_checkmate();
 
-int main(int argc, char* argv[])
+int main()
+{
+    board b;
+    b.print_board();
+    b.move_piece(position(2, 5), position(1, 5));
+    b.print_board();
+    b.move_piece(position(1, 5), position(0, 5));
+    b.print_board();
+
+}
+
+int ex_main_2(int argc, char* argv[])
 {
     board b;
     b.print_board();

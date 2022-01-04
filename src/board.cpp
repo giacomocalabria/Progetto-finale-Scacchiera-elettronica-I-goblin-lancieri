@@ -1,3 +1,5 @@
+// Author: NICOLA MARITAN
+
 #include "board.h"
 #include <vector>
 
@@ -16,197 +18,11 @@ board::board()
 
     #define SETUP 1
     #if SETUP
-        setup_6();
+        setup_7();
     #else
         init_player_pieces();
     #endif
     std::cout << "Board initializated.\n";
-}
-
-/*
-    Setup 1:
-     01234567
-    0/A//T///
-    1//////A/
-    2////r//T
-    3////////
-    4////////
-    5////////
-    6////////
-    7////////
-
-    Test: Verificare la condizione di scacco matto.
-*/
-void board::setup_1()
-{
-    player_bishops[PLAYER_2].push_back(bishop(position(0, 2), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(0, 4), PLAYER_2));
-    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
-    player_bishops[PLAYER_2].push_back(bishop(position(0, 6), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(2, 7), PLAYER_2));
-
-
-    board_matrix[make_index_8(0, 2)] = &player_bishops[PLAYER_2][0];
-    board_matrix[make_index_8(0, 4)] = &player_rooks[PLAYER_2][0];
-    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
-    board_matrix[make_index_8(0, 6)] = &player_bishops[PLAYER_2][1];
-    board_matrix[make_index_8(2, 7)] = &player_rooks[PLAYER_2][1];
-
-}
-
-/*
-    Setup 2:
-     01234567
-    0/A//T///
-    1//////A/
-    2///Pr//T
-    3////////
-    4////////
-    5////////
-    6////////
-    7////////
-
-    Test: Verificare la condizione di scacco matto.
-*/
-void board::setup_2()
-{
-    player_bishops[PLAYER_2].push_back(bishop(position(0, 2), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(0, 4), PLAYER_2));
-    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
-    player_bishops[PLAYER_2].push_back(bishop(position(0, 6), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(2, 7), PLAYER_2));
-    player_pawns[PLAYER_2].push_back(pawn(position(2, 3), PLAYER_2));
-
-
-    board_matrix[make_index_8(0, 2)] = &player_bishops[PLAYER_2][0];
-    board_matrix[make_index_8(0, 4)] = &player_rooks[PLAYER_2][0];
-    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
-    board_matrix[make_index_8(0, 6)] = &player_bishops[PLAYER_2][1];
-    board_matrix[make_index_8(2, 7)] = &player_rooks[PLAYER_2][1];
-    board_matrix[make_index_8(2, 3)] = &player_pawns[PLAYER_2][0];
-}
-
-/*
-    Setup 3:
-     01234567
-    0////////
-    1/////P//
-    2////r///
-    3////////
-    4////////
-    5////////
-    6////////
-    7////////
-
-    Test: Verificare la condizione di scacco matto.
-*/
-void board::setup_3()
-{
-    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
-    player_pawns[PLAYER_2].push_back(pawn(position(1, 5), PLAYER_2));
-
-    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
-    board_matrix[make_index_8(1, 5)] = &player_pawns[PLAYER_2][0];
-}
-
-/*
-    Setup 4:
-     01234567
-    0////T///
-    1////////
-    2////r/a/
-    3////////
-    4////////
-    5////////
-    6////////
-    7////////
-
-    Test: Verificare la condizione di scacco matto.
-*/
-void board::setup_4()
-{
-    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
-    player_rooks[PLAYER_2].push_back(rook(position(0, 4), PLAYER_2));
-    player_bishops[PLAYER_1].push_back(bishop(position(2, 6), PLAYER_1));
-
-    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
-    board_matrix[make_index_8(0, 4)] = &player_rooks[PLAYER_2][0];
-    board_matrix[make_index_8(2, 6)] = & player_bishops[PLAYER_1][0];
-}
-
-/*
-    Setup 5:
-     01234567
-    0///////A
-    1T///////
-    2////r///
-    3T///////
-    4///T/T//
-    5////////
-    6////////
-    7////////
-
-    Test: Verificare la condizione di scacco matto.
-*/
-void board::setup_5()
-{
-    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
-
-    player_rooks[PLAYER_2].push_back(rook(position(4, 3), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(3, 0), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(1, 0), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(4, 5), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(4, 4), PLAYER_2));
-    player_bishops[PLAYER_2].push_back(bishop(position(0, 7), PLAYER_2));
-
-    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
-    board_matrix[make_index_8(4, 3)] = &player_rooks[PLAYER_2][0];
-    board_matrix[make_index_8(3, 0)] = &player_rooks[PLAYER_2][1];
-    board_matrix[make_index_8(1, 0)] = &player_rooks[PLAYER_2][2];
-    board_matrix[make_index_8(4, 5)] = &player_rooks[PLAYER_2][3];
-    board_matrix[make_index_8(4, 4)] = &player_rooks[PLAYER_2][4];
-    board_matrix[make_index_8(0, 7)] = &player_bishops[PLAYER_2][0];
-
-    //move_piece(position(3, 0), position(2, 0));
-
-
-}
-
-
-/*
-    Setup 6:
-     01234567
-    0///////A
-    1////////
-    2////r///
-    3T///////
-    4///T/T//
-    5////////
-    6////////
-    7////////
-
-    Test: Verificare la condizione di scacco matto.
-*/
-void board::setup_6()
-{
-    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
-
-    player_rooks[PLAYER_2].push_back(rook(position(4, 3), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(3, 0), PLAYER_2));
-    player_rooks[PLAYER_2].push_back(rook(position(4, 5), PLAYER_2));
-    //player_rooks[PLAYER_2].push_back(rook(position(4, 4), PLAYER_2));
-    player_bishops[PLAYER_2].push_back(bishop(position(0, 7), PLAYER_2));
-
-    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
-    board_matrix[make_index_8(4, 3)] = &player_rooks[PLAYER_2][0];
-    board_matrix[make_index_8(3, 0)] = &player_rooks[PLAYER_2][1];
-    board_matrix[make_index_8(4, 5)] = &player_rooks[PLAYER_2][2];
-    //board_matrix[make_index_8(4, 4)] = &player_rooks[PLAYER_2][3];
-    board_matrix[make_index_8(0, 7)] = &player_bishops[PLAYER_2][0];
-
-    //move_piece(position(3, 0), position(2, 0));
-
-
 }
 
 bool board::move_piece(const position& from, const position& to)
@@ -248,10 +64,21 @@ bool board::move_piece(const position& from, const position& to)
             return false;
         }
         
-        /*
-        if (può_promuovere)
-            promuovi();
-        */
+        // -------------- Promozione -----------------
+        if (p->get_player() == PLAYER_1)
+        {
+            if (p->get_position().row == 0)
+            {
+                promote(p->get_position());
+            }
+        }
+        else    // se no a ze pan a ze polenta
+        {
+            if (p->get_position().row == 7)
+            {
+                promote(p->get_position());
+            }
+        }
 
         // Mossa lecita
         return true;
@@ -475,6 +302,20 @@ void board::init_board()
     to_empty();
 }
 
+bool board::promote(const position& pos)
+{
+    piece* p{board_matrix[make_index_8(pos)]};
+    if (!p) return false;
+
+    if (p->can_promote())
+    {
+        int player_num{p->get_player()};
+        player_queen[player_num].push_back(queen(p->get_position(), player_num));
+        board_matrix[make_index_8(pos)] = &player_queen[player_num].back();
+        return true;
+    }
+}
+
 std::vector<position> board::get_player_pieces_positions(int player)
 {
     vector<position> player_pieces_positions;
@@ -660,4 +501,217 @@ void board::file_print_board(ofstream& _out_file){
         _out_file << std::endl;
     }
     _out_file << "  ABCDEFGH\n";
+}
+
+/*
+    Setup pre impostati, utilizzati per debug. Per tale motivo
+    sono funzioni membro private. Ancora non sicuro se presenti
+    nella vers. finale del sorgente.
+*/
+
+/*
+    Setup 1:
+     01234567
+    0/A//T///
+    1//////A/
+    2////r//T
+    3////////
+    4////////
+    5////////
+    6////////
+    7////////
+
+    Test: Verificare la condizione di scacco matto.
+*/
+void board::setup_1()
+{
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 2), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(0, 4), PLAYER_2));
+    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 6), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(2, 7), PLAYER_2));
+
+
+    board_matrix[make_index_8(0, 2)] = &player_bishops[PLAYER_2][0];
+    board_matrix[make_index_8(0, 4)] = &player_rooks[PLAYER_2][0];
+    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
+    board_matrix[make_index_8(0, 6)] = &player_bishops[PLAYER_2][1];
+    board_matrix[make_index_8(2, 7)] = &player_rooks[PLAYER_2][1];
+
+}
+
+/*
+    Setup 2:
+     01234567
+    0/A//T///
+    1//////A/
+    2///Pr//T
+    3////////
+    4////////
+    5////////
+    6////////
+    7////////
+
+    Test: Verificare la condizione di scacco matto.
+*/
+void board::setup_2()
+{
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 2), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(0, 4), PLAYER_2));
+    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 6), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(2, 7), PLAYER_2));
+    player_pawns[PLAYER_2].push_back(pawn(position(2, 3), PLAYER_2));
+
+
+    board_matrix[make_index_8(0, 2)] = &player_bishops[PLAYER_2][0];
+    board_matrix[make_index_8(0, 4)] = &player_rooks[PLAYER_2][0];
+    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
+    board_matrix[make_index_8(0, 6)] = &player_bishops[PLAYER_2][1];
+    board_matrix[make_index_8(2, 7)] = &player_rooks[PLAYER_2][1];
+    board_matrix[make_index_8(2, 3)] = &player_pawns[PLAYER_2][0];
+}
+
+/*
+    Setup 3:
+     01234567
+    0////////
+    1/////P//
+    2////r///
+    3////////
+    4////////
+    5////////
+    6////////
+    7////////
+
+    Test: Verificare la condizione di scacco matto.
+*/
+void board::setup_3()
+{
+    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
+    player_pawns[PLAYER_2].push_back(pawn(position(1, 5), PLAYER_2));
+
+    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
+    board_matrix[make_index_8(1, 5)] = &player_pawns[PLAYER_2][0];
+}
+
+/*
+    Setup 4:
+     01234567
+    0////T///
+    1////////
+    2////r/a/
+    3////////
+    4////////
+    5////////
+    6////////
+    7////////
+
+    Test: Verificare la condizione di scacco matto.
+*/
+void board::setup_4()
+{
+    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
+    player_rooks[PLAYER_2].push_back(rook(position(0, 4), PLAYER_2));
+    player_bishops[PLAYER_1].push_back(bishop(position(2, 6), PLAYER_1));
+
+    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
+    board_matrix[make_index_8(0, 4)] = &player_rooks[PLAYER_2][0];
+    board_matrix[make_index_8(2, 6)] = & player_bishops[PLAYER_1][0];
+}
+
+/*
+    Setup 5:
+     01234567
+    0///////A
+    1T///////
+    2////r///
+    3T///////
+    4///T/T//
+    5////////
+    6////////
+    7////////
+
+    Test: Verificare la condizione di scacco matto.
+*/
+void board::setup_5()
+{
+    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
+
+    player_rooks[PLAYER_2].push_back(rook(position(4, 3), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(3, 0), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(1, 0), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(4, 5), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(4, 4), PLAYER_2));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 7), PLAYER_2));
+
+    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
+    board_matrix[make_index_8(4, 3)] = &player_rooks[PLAYER_2][0];
+    board_matrix[make_index_8(3, 0)] = &player_rooks[PLAYER_2][1];
+    board_matrix[make_index_8(1, 0)] = &player_rooks[PLAYER_2][2];
+    board_matrix[make_index_8(4, 5)] = &player_rooks[PLAYER_2][3];
+    board_matrix[make_index_8(4, 4)] = &player_rooks[PLAYER_2][4];
+    board_matrix[make_index_8(0, 7)] = &player_bishops[PLAYER_2][0];
+
+    //move_piece(position(3, 0), position(2, 0));
+
+
+}
+
+
+/*
+    Setup 6:
+     01234567
+    0///////A
+    1////////
+    2////r///
+    3T///////
+    4///T/T//
+    5////////
+    6////////
+    7////////
+
+    Test: Verificare la condizione di scacco matto.
+*/
+void board::setup_6()
+{
+    player_king[PLAYER_1].push_back(king(position(2, 4), PLAYER_1));
+
+    player_rooks[PLAYER_2].push_back(rook(position(4, 3), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(3, 0), PLAYER_2));
+    player_rooks[PLAYER_2].push_back(rook(position(4, 5), PLAYER_2));
+    //player_rooks[PLAYER_2].push_back(rook(position(4, 4), PLAYER_2));
+    player_bishops[PLAYER_2].push_back(bishop(position(0, 7), PLAYER_2));
+
+    board_matrix[make_index_8(2, 4)] = &player_king[PLAYER_1][0];
+    board_matrix[make_index_8(4, 3)] = &player_rooks[PLAYER_2][0];
+    board_matrix[make_index_8(3, 0)] = &player_rooks[PLAYER_2][1];
+    board_matrix[make_index_8(4, 5)] = &player_rooks[PLAYER_2][2];
+    //board_matrix[make_index_8(4, 4)] = &player_rooks[PLAYER_2][3];
+    board_matrix[make_index_8(0, 7)] = &player_bishops[PLAYER_2][0];
+
+    //move_piece(position(3, 0), position(2, 0));
+
+
+}
+
+
+/*
+    Setup 7:
+     01234567
+    0////////
+    1////////
+    2/////p//
+    3////////
+    4////////
+    5////////
+    6////////
+    7////////
+
+    Test: Verificare la promozione.
+*/
+void board::setup_7()
+{
+    player_pawns[PLAYER_1].push_back(pawn(position(2, 5), PLAYER_1));
+    board_matrix[make_index_8(position(2, 5))] = &player_pawns[PLAYER_1][0];
 }

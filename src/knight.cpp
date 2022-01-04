@@ -32,6 +32,8 @@ inline char knight::symbol(){
     return player == board::PLAYER_1 ? 'c' : 'C';
 }
 
+bool knight::can_promote(){return false;}
+
 vector<position> knight::get_possible_positions(){
     vector<position> possible_pos;
 

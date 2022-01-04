@@ -62,6 +62,8 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     return false;
 }
 
+bool pawn::can_promote(){return true;}
+
 bool pawn::can_capture(const position& dest, const vector<piece*>& board_pieces)
 {
     int sign = player == board::PLAYER_1 ? -1 : 1;  // orientazione

@@ -23,13 +23,7 @@ class board
         void init_game();
         void init_board();
 
-        // Cheat della board, setup pre impostati
-        void setup_1();
-        void setup_2();
-        void setup_3();
-        void setup_4();
-        void setup_5();
-        void setup_6();
+
     
     public:
         void print_board();
@@ -94,6 +88,20 @@ class board
     */   
     private:   
         void init_player_pieces();
+        bool promote(const position& pos);
+
+    // -------------- setup di debug --------------
+    private:
+        // Cheat della board, setup pre impostati
+        void setup_1();
+        void setup_2();
+        void setup_3();
+        void setup_4();
+        void setup_5();
+        void setup_6();
+        void setup_7();
+    
+
 };
 
 #endif

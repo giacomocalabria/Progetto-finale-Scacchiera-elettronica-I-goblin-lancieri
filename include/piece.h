@@ -26,6 +26,7 @@ class piece
 
         virtual bool can_move_to(const position& dest, const std::vector<piece*>& board_pieces) = 0;
         virtual bool can_capture(const position& dest, const std::vector<piece*>& board_pieces) = 0;
+        virtual bool can_promote() = 0;
         virtual char symbol() = 0;
         virtual std::vector<position> get_possible_positions() = 0;
         

@@ -103,6 +103,11 @@ bool bishop::can_capture(const position& dest, const vector<piece*>& board_piece
 	return this->can_move_to(dest, board_pieces);
 }
 
+bool bishop::can_promote()
+{
+	return false;
+}
+
 vector<position> bishop::get_possible_positions()
 {
 	vector<position> possible_positions;

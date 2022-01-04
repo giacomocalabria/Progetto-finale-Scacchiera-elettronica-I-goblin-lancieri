@@ -112,6 +112,8 @@ bool rook::can_capture(const position& dest, const vector<piece*>& board_pieces)
     return this->can_move_to(dest, board_pieces);
 }
 
+bool rook::can_promote(){return false;}
+
 inline char rook::symbol()
 {
     return player == board::PLAYER_1 ? 't' : 'T';
