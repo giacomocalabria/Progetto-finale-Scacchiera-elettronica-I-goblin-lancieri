@@ -6,7 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <stdlib.h> 
+//#include <stdlib.h> 
 #include "pawn.h"
 #include "king.h"
 #include "queen.h"

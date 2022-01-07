@@ -11,8 +11,8 @@
 #ifndef PIECE_H
 #define PIECE_H
 
-#include "position.h"
 #include <vector>
+#include "position.h"
 #include "player_id.h"
 
 class piece

@@ -1,8 +1,8 @@
 // Author: NICOLA MARITAN
 
+#include <algorithm>
 #include "pawn.h"
 #include "board.h"
-#include <algorithm>
 
 using namespace std;
 

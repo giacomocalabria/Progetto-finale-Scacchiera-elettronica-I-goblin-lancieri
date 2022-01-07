@@ -2,7 +2,6 @@
 
 #include "board.h"
 #include <vector>
-#include "player_id.h"
 
 using namespace std;
 

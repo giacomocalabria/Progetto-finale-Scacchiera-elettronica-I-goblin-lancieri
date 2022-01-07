@@ -1,10 +1,10 @@
 //Author: 
 
 #include <iostream>
-#include "board.h"
 #include <string>
+#include "board.h"
 #include "computer_player.h"
-#include "player_id.h"
+#include "human_player.h"
 
 using namespace std; // ./scacchiera singi ginsgo
 
@@ -12,7 +12,7 @@ using namespace std; // ./scacchiera singi ginsgo
 int main(int argc, char *argv[])
 {
     if(argv[1][1] != 'c' || argv[1][0] != 'c' && argv[1][0] != 'p'){ // se l'argomento non è nè pc nè cc allora il programma termina
-        clog << "[ERROR] Parametri da riga di comando non corretti !!" << endl;
+        cerr << "[ERROR] Parametri da riga di comando non corretti !!" << endl;
         return -1;
     }
 
