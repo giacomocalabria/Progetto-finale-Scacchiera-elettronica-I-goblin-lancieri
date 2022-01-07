@@ -125,6 +125,8 @@ std::vector<position> pawn::get_possible_positions()
     {
         possible_positions.push_back(pos + (sign * position(2, 0)));
     }
+
+    //FARE IL RANGE CHECK DI STA ROBA !!
     possible_positions.push_back(pos + (sign * position(1, 0)));    // avanza di una casa in verticale
     possible_positions.push_back(pos + (sign * position(1, 1)));    // avanza di una casa in verticale e orizzontale
     possible_positions.push_back(pos + (sign * position(1, -1)));   

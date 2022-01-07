@@ -10,14 +10,13 @@ using namespace std;
 
 bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
-    return false;   // temporaneoooooooooooooo per usare computer_player
+    return false;   // temporaneo per usare computer_player
 
     vector<position> possible_pos = get_possible_positions();
-    //vector<position>::iterator it;
     auto it = find(possible_pos.begin(), possible_pos.end(), dest);
     if (it == possible_pos.end()) 
         return false;
-    //...
+    //...  ASSOLUTAMENTE DA FARE ATTENZIONE ******
 
     return false;
 }
@@ -35,16 +34,13 @@ inline char queen::symbol(){
 
 vector<position> queen::get_possible_positions(){
     vector<position> possible_pos;
-    return possible_pos;    // temporaneo
+    return possible_pos;    // temporaneo ASSOLUTAMENTE DA FARE ATTENZIONE ******
 
     position dest; //position(riga, colonna)
     
     //riga intera e colonna intera
     //for(int i = 0; i < 7; i++){     // modificato da 7 a 8: perché può andare anche nella riga/colonna di indice 7
     
-    /*
-        
-    */
     for (int i = min_position; i < max_position; i++)
     {
         dest = position(i, pos.col);
@@ -55,7 +51,6 @@ vector<position> queen::get_possible_positions(){
             possible_pos.push_back(dest);
     }
 
-    
     if(pos.col >= pos.row ){
         //diagonale secondaria
         for(int i = 0; i < 7 - (pos.col - pos.row - 1); i++){ 

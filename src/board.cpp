@@ -150,10 +150,8 @@ bool board::is_checkmate(player_id player_number)
             // Se eseguendo tale mossa non vi è più lo scacco al re allora non è scacco matto
             if (!is_check_bool)
                 return false;
-
         }
     }
-
     // Altrimenti è necessariamente scacco matto
     return true;
 }
@@ -178,6 +176,8 @@ bool board::is_castling(const position& from, const position& to){
             if(!board_matrix[make_index_8(from.row,i)])
                 return false;
         }
+        position temp_pos = position(from.row,from.col+1);
+        
         //qui verificare che il re non vada in scacco muovendosi in ciascuna delle due caselle     
     } else {
         rook_from = position(from.row, 7);

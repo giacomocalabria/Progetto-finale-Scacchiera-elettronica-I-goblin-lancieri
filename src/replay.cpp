@@ -6,8 +6,10 @@ using namespace std;
 
 int main(int argc, char* argv[]){
     /*
+
     argomento v [nome_file_log]: stampa a video il replay del file di log indicato;
     argomento f [nome_file_log] [nome_file_output_replay]: scrive su file il replay delfile di log indicato.
+    
     */
     if(argv[1][0] != 'v' && argv[1][0] != 'f' || argv[2] == nullptr){
         cerr << "[ERROR] Parametri da riga di comando non corretti !!" << endl;
