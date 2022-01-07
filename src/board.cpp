@@ -59,7 +59,6 @@ bool board::move_piece(const position& from, const position& to)
     }
     else
     {
-        //cout << "Mossa non valida. Da " << from << " a " << to << endl;
         return false;
     }
     
@@ -68,12 +67,13 @@ bool board::move_piece(const position& from, const position& to)
 bool board::is_castling(const position& from, const position& to){
     piece* _king = board_matrix[make_index_8(from)];
     if(true && true && abs(from.col - to.col) != 2){ //qui devo verificare se il piece king è effettivamente un Re e che il dato re non sia già sotto scacco
-    if(!from == position(7, 4) && !from == position(0, 4)){
+    if(from == position(7, 4) || from == position(0, 4)){
         return false;
     }
     //if(!_king.is_check(board_matrix) && abs(from.col - to.col) != 2){
         return false;
     }
+
     position rook_from = position(from.row, 0);
     position rook_to = position(from.row, 0);
     if(from.col > to.col){
@@ -83,7 +83,7 @@ bool board::is_castling(const position& from, const position& to){
             if(!board_matrix[make_index_8(from.row,i)])
                 return false;
         }
-        
+                
     } else {
         rook_from = position(from.row, 7);
         rook_to = position(from.row, to.col - 1);
