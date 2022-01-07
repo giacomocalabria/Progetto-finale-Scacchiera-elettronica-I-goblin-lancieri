@@ -24,6 +24,9 @@ bool board::move_piece(const position& from, const position& to)
     }
 
 //-------------------- en passant --------------------
+
+    //metti dentro a can_en_passant !!!!
+    
     piece* p = board_matrix[make_index_8(from)];
 
     int sign = p->get_player() == board::PLAYER_1 ? -1 : 1;  // orientazione (serve?)
@@ -64,6 +67,9 @@ bool board::can_en_passant(piece* pce, piece* pce_to_pass)
     {
         return false; // da def, forse eccezione o altro
     }
+
+    //usa is_pawn() invece di sta merda
+
 
     vector<pawn> pl_pawns = player_pawns[pce->get_player()];
     for(int i = 0; i < pl_pawns.size(); i++)         //di fatto, controllo se pce punta ad un pedone o meno...
