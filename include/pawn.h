@@ -27,7 +27,7 @@ class pawn : public piece
         bool can_be_passed {false};
 
     public:
-        bool get_can_be_passed() {return can_be_passed;}
+        bool get_can_be_passed() override {return can_be_passed;}
         
 };
 

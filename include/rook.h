@@ -17,6 +17,7 @@ class rook : public piece
         bool can_capture(const position& dest, const std::vector<piece*>& board_pieces) override;
         inline char symbol() override;
         bool can_promote() override;
+        bool get_can_be_passed() override {return false;}
         std::vector<position> get_possible_positions() override;
 };
 

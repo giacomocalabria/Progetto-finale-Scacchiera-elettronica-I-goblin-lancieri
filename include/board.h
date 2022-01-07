@@ -24,8 +24,6 @@ class board
         void init_game();
         void init_board();
 
-    public:
-        bool can_en_passant(piece* pce, piece* pce_to_pass);
     
     public:
         void print_board();
@@ -46,6 +44,8 @@ class board
         //bool is_checkmate2(int player_number);
 
         bool is_castling(const position& from, const position& to);
+        bool can_en_passant(const position& passing, const position& to_pass);
+        //bool can_en_passant(piece* pce, piece* pce_to_pass);
     
     // Costanti relative al numero di pezzi di ogni giocatore.
     private:

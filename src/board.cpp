@@ -27,6 +27,7 @@ bool board::move_piece(const position& from, const position& to)
     {
         return false; // Restituisce false
     }
+    piece* p = board_matrix[make_index_8(from)];
 
     // ----------------- Arrocco -----------------
     if(is_castling(from, to)){
@@ -51,9 +52,28 @@ bool board::move_piece(const position& from, const position& to)
             board_matrix[make_index_8(rook_from)] = nullptr;
         }
         return true;
+
+        // AGGIUNGERE ANNULLAMENTO MOSSA SE DOPO QUESTA MOSSA IL RE E' SOTTO SCACCO
     }
 
-    piece* p = board_matrix[make_index_8(from)];
+    // ----------------- En passant -----------------
+    
+
+    int sign = p->get_player() == board::PLAYER_1 ? -1 : 1;  // orientazione (serve?)
+    position pos_to_pass = to;
+    pos_to_pass.row -= sign; 
+    if(can_en_passant(from, pos_to_pass))
+    {
+        board_matrix[make_index_8(pos_to_pass)] = nullptr;   //pongo a null il pedone mangiato "in passant"
+        p->set_position(to);
+        board_matrix[make_index_8(to)] = p;
+        board_matrix[make_index_8(from)] = nullptr;
+
+        // AGGIUNGERE ANNULLAMENTO MOSSA SE DOPO QUESTA MOSSA IL RE E' SOTTO SCACCO
+        return true;
+    }
+
+    //piece* p = board_matrix[make_index_8(from)];
 
     // ----------------------- Sezione mossa normale -----------------------
     if (p->can_move_to(to, board_matrix) || p->can_capture(to, board_matrix))   //migliora
@@ -61,31 +81,6 @@ bool board::move_piece(const position& from, const position& to)
         // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
         piece* prev_in_dest{board_matrix[make_index_8(to)]};
 
-//-------------------- en passant --------------------
-
-    //metti dentro a can_en_passant !!!!
-    
-    piece* p = board_matrix[make_index_8(from)];
-
-    int sign = p->get_player() == board::PLAYER_1 ? -1 : 1;  // orientazione (serve?)
-    position pos_to_pass = to;
-    pos_to_pass.row -= sign;     //rispetto a to, in base al player la position del piece da catturare sara' di un posto in indietro (va bene?)
-    piece* to_pass = board_matrix[make_index_8(pos_to_pass)];
-
-    if (p->can_move_to(to, board_matrix) || p->can_capture(to, board_matrix))   //migliora
-    {
-        // MOMENTANEO WORK IN PROGRESS
-        // aggiornare posizione in p
-
-        p->set_position(to);
-        board_matrix[make_index_8(to)] = p;
-        board_matrix[make_index_8(from)] = nullptr;
-        //p->move(position(to));
-        return true;
-    }
-    else if(can_en_passant(p, to_pass))
-    {
-        board_matrix[make_index_8(pos_to_pass)] = nullptr;   //pongo a null il pedone mangiato "in passant"
         p->set_position(to);
         board_matrix[make_index_8(to)] = p;
         board_matrix[make_index_8(from)] = nullptr;
@@ -107,7 +102,6 @@ bool board::move_piece(const position& from, const position& to)
         //cout << "Mossa non valida. Da " << from << " a " << to << endl;
         return false;
     }
-<<<<<<< HEAD
 
     // -------------- Promozione -----------------
     if (p->get_player() == PLAYER_1)
@@ -128,20 +122,34 @@ bool board::move_piece(const position& from, const position& to)
     // Mossa lecita
     return true;    
     
-=======
 }
 
-bool board::can_en_passant(piece* pce, piece* pce_to_pass)
+bool board::can_en_passant(const position& passing, const position& to_pass)
 {
-    if (pce_to_pass == nullptr)   // non c'è una pedina in pos_to_pass
+    piece* pce{board_matrix[make_index_8(passing)]};
+    piece* pce_to_pass{board_matrix[make_index_8(to_pass)]};
+
+    if (!pce_to_pass || !pce)   // non c'è una pedina in pos_to_pass
     {
         return false; // da def, forse eccezione o altro
     }
 
-    //usa is_pawn() invece di sta merda
+    if (pce->can_promote()) // in generale se è un pedone
+    {
+        //ufficiale: pce e' un pawn
 
+        if(pce_to_pass->get_can_be_passed())
+        {
+            return true;
+        }
+            else
+        return false;        
 
-    vector<pawn> pl_pawns = player_pawns[pce->get_player()];
+    }
+    
+    return false;
+
+    /*vector<pawn> pl_pawns = player_pawns[pce->get_player()];
     for(int i = 0; i < pl_pawns.size(); i++)         //di fatto, controllo se pce punta ad un pedone o meno...
     {
         if(pl_pawns[i].get_position() == pce->get_position())  
@@ -165,15 +173,9 @@ bool board::can_en_passant(piece* pce, piece* pce_to_pass)
             }
             cout << "\n";
 
-            /*position right = pw->get_position();
-            right.col++;
-            position left = pw->get_position();
-            left.col--;*/
-            //break;      //le altre iterazioni del for sono riempitive, in quanto non ci possono essere altre pedine con la stessa position di quella considerata ora
         }
     }
-    return false;
->>>>>>> parent of 86ea422 (Revert "Merge branch 'Eddie_6'")
+    return false;*/
 }
 
 /*
