@@ -54,6 +54,38 @@ int ex_main_1()
     test_1_checkmate();
     return 0;
 
+int main()
+{
+    board b;
+    b.print_board();
+    space;
+
+    b.move_piece(position(1, 1), position(3, 1));
+    b.print_board();
+    space;
+
+    b.move_piece(position(3, 1), position(4, 1));
+    b.print_board();
+    space;
+
+    b.move_piece(position(6, 2), position(5, 2));
+    b.print_board();
+    space;
+
+    b.move_piece(position(5, 2), position(4, 2));
+    b.print_board();
+    space;
+
+    b.move_piece(position(4, 1), position(5, 2));
+    b.print_board();
+    space;
+
+    return 0;
+}
+
+
+int ex_main()
+{
     /*if(argv[1][1] != 'c' || argv[1][0] != 'c' && argv[1][0] != 'p'){ // se l'argomento non è nè pc nè cc allora il programma termina
         clog << "[ERROR] Parametri da riga di comando non corretti !!" << endl;
         return -1;
@@ -61,6 +93,7 @@ int ex_main_1()
 
     bool type_of_match = (argv[1][0] == 'p'); //questa variabile è vera se la partita è del tipo giocatore vs computer. E' falsa nel caso contrario ovvero se è del tipo  computer vs computer
 */
+    */
     board b;
     computer_player cp1(&b, 0);
     computer_player cp2(&b, 1);
