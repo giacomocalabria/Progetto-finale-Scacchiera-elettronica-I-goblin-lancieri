@@ -18,8 +18,6 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     if (!is_valid_position_8(dest))
         return false;
 
-    can_be_passed = false;
-
     vector<position> possible_positions = get_possible_positions();
     vector<position>::iterator it;
     it = find(possible_positions.begin(), possible_positions.end(), dest);
@@ -35,7 +33,6 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
             return false;
         }
         is_init_pos = false;
-        can_be_passed = false;
         return true;
     }
 
@@ -47,7 +44,6 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
             return false;
         }
         is_init_pos = false;
-        can_be_passed = true;
         return true;
     }
 
@@ -59,7 +55,6 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         if (player != other->get_player())
         {
             is_init_pos = false;
-            can_be_passed = false;
             return true;
         }
     }
@@ -69,15 +64,12 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 
 bool pawn::can_promote(){return true;}
 
-bool pawn::can_capture(const position& dest, const vector<piece*>& board_pieces)   //serve per definire la condizione di scacco del re avversario
+bool pawn::can_capture(const position& dest, const vector<piece*>& board_pieces)
 {
-
     int sign = player == board::PLAYER_1 ? -1 : 1;  // orientazione
 
-    if(board_pieces[make_index_8(dest)] && (dest == pos + (sign * position(1, 1)) || dest == pos + (sign * position(1, -1))))
+    if(dest == pos + (sign * position(1, 1)) || dest == pos + (sign * position(1, -1)))
     {
-        is_init_pos = false;    //potremmo metterlo in set_position di piece.....
-        can_be_passed = false;
         return true;
     }
 

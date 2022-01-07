@@ -22,9 +22,6 @@ class board
         bool move_piece(const position& from, const position& to);
         void init_game();
         void init_board();
-
-    public:
-        bool can_en_passant(piece* pce, piece* pce_to_pass);
     
     public:
         void print_board();

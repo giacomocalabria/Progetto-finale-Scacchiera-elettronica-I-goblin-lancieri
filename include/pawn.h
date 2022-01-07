@@ -22,12 +22,6 @@ class pawn : public piece
 
     /*private:
         bool is_init_pos {true};*/
-    private:
-        bool is_init_pos {true};
-        bool can_be_passed {false};
-
-    public:
-        bool get_can_be_passed() {return can_be_passed;}
         
 };
 
