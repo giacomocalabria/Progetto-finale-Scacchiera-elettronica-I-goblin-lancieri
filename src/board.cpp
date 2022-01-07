@@ -27,9 +27,15 @@ bool board::move_piece(const position& from, const position& to)
     {
         return false; // Restituisce false
     }
+    // Se non è una posizione logicamente valida:
+    if (!is_valid_position_8(from) || !is_valid_position_8(to))
+    {
+        return false;
+    }
 
     // ----------------- Arrocco -----------------
-    if(is_castling(from, to)){
+    
+    /*if(is_castling(from, to)){
         piece* _king = board_matrix[make_index_8(from)];
         _king->set_position(to);
         board_matrix[make_index_8(to)] = _king;
@@ -51,12 +57,12 @@ bool board::move_piece(const position& from, const position& to)
             board_matrix[make_index_8(rook_from)] = nullptr;
         }
         return true;
-    }
+    }*/
 
     piece* p = board_matrix[make_index_8(from)];
 
     // ----------------------- Sezione mossa normale -----------------------
-    if (p->can_move_to(to, board_matrix) || p->can_capture(to, board_matrix))   //migliora
+    if (p->can_move_to(to, board_matrix) || p->can_capture(to, board_matrix))
     {
         // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
         piece* prev_in_dest{board_matrix[make_index_8(to)]};
@@ -66,22 +72,24 @@ bool board::move_piece(const position& from, const position& to)
         board_matrix[make_index_8(from)] = nullptr;
 
         // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
+        cout << "Chiamata a is_check.\n";
         if (is_check(p->get_player()))
         {
             // Ritorna alla situazione iniziale
             board_matrix[make_index_8(from)] = p;
             p->set_position(from);
             board_matrix[make_index_8(to)] = prev_in_dest;
-            //cout << "Mossa non valida. La mossa porta ad uno scacco del proprio re.\n";
+            cout << "Mossa non valida. La mossa porta ad uno scacco del proprio re.\n";
             return false;
         }
 
     }
     else    // Allora la destinazione non è nelle possibili posizioni.
     {
-        //cout << "Mossa non valida. Da " << from << " a " << to << endl;
+        cout << "Mossa non valida. Da " << from << " a " << to << endl;
         return false;
     }
+    cout << "Nessun scacco.\n";
 
     // -------------- Promozione -----------------
     if (p->get_player() == PLAYER_1)
@@ -328,6 +336,19 @@ std::vector<position> board::get_player_pieces_positions(player_id player)
 
 }
 
+std::vector<position> board::get_player_in_board_pieces_positions(player_id player)
+{
+    vector<position> player_in_board_pieces_positions;
+    for (piece* pce : board_matrix)
+    {
+        if (pce && pce->get_player() == player)
+        {
+            player_in_board_pieces_positions.push_back(pce->get_position());
+        }
+    }
+    return player_in_board_pieces_positions;
+}
+
 void board::init_player_pieces()
 {
     /*
@@ -425,7 +446,7 @@ void board::print_board()
            piece* p = board_matrix[make_index_8(i, j)];
            if (p == nullptr)
            {
-               std::cout << "/";
+               std::cout << " ";
            }
            else
            {

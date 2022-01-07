@@ -4,13 +4,21 @@
 #include <string>
 
 position::position(const std::string& pos){
-    char c_col = pos.at(0);
+    /*char c_col = pos.at(0);
     char c_row = pos.at(1);
     if(c_col < 'a') //lettera maiuscola
         col = c_col - 'A';
     else            //lettera minuscola
         col = c_col - 'a';
     row = c_row - '0';
+    */
+    char c_col = pos.at(0);
+    char c_row = pos.at(1);
+    if(c_col < 'a') //lettera maiuscola
+        col = c_col - 'A';
+    else            //lettera minuscola
+        col = c_col - 'a';
+    row = '8' - c_row;
 }
 
 position operator+(position p1, position p2)

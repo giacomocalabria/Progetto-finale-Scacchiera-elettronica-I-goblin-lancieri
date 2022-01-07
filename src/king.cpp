@@ -20,7 +20,19 @@ bool king::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         return false;
     }
     
-    //return !(is_check(board_pieces, dest));
+    piece* dest_pce{board_pieces[make_index_8(dest)]};
+    /*
+        Se è presente un pezzo nella posizione di destinazione
+        e se questo ha id giocatore uguale a quella di questo pezzo,
+        allora non può muoversi sopra in quanto pedina propria.
+        Se dest_pce è false per corto circuito non verrà chiamata
+        la funzione membro non causando alcun accesso a nullptr.
+    */
+    if (dest_pce && dest_pce->get_player() == get_player())
+    {
+        return false;
+    }
+
     return true;
 }
 
@@ -89,9 +101,9 @@ vector<position> king::get_possible_positions()
 
 
                 if(possibility.col > -1 && possibility.col < 8 && possibility.row > -1 && possibility.row < 8)
-                    {
-                        possible_pos.push_back(possibility);
-                    }
+                {
+                    possible_pos.push_back(possibility);
+                }
 
                 possibility.row = pos.row;
                 possibility.col = pos.col;
@@ -108,13 +120,14 @@ bool king::is_check(const std::vector<piece*>& board_pieces)
     {
         if(board_pieces[i] && board_pieces[i]->get_player() != get_player()) //NOTA: ricordati la condizione (board[i])!
         { 
-            cout << board_pieces[i]->symbol() << ", " << board_pieces[i]->get_position();
+            // Commenti UTILISSIMI per debug: non eliminare pls
+            //cout << board_pieces[i]->symbol() << ", " << board_pieces[i]->get_position();
             if((*(board_pieces[i])).can_capture(get_position(), board_pieces))
             {
-                cout << "CHEKS\n";
+                //cout << "CHEKS\n";
                 return true;
             }
-            cout << "NOT CHECKS\n";
+            //cout << "NOT CHECKS\n";
         }
     }
     return false;
