@@ -18,7 +18,7 @@
 class computer_player : public player
 {
     public:
-        computer_player(board* _b, int _player_number) : player(_b, _player_number), generator(std::chrono::system_clock::now().time_since_epoch().count() * 5 * player_number){};
+        computer_player(board* _b, player_id _id) : player(_b, id), generator(std::chrono::system_clock::now().time_since_epoch().count() * 5 * id){};
         void turn() override;
     protected:
         bool move() override;

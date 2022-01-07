@@ -7,8 +7,8 @@
 
 class human_player : public player{
     public:
-        human_player(board* _b, int _player_number)
-            :player(_b, _player_number) {}
+        human_player(board* _b, player_id _id)
+            :player(_b, id) {}
         void turn() override;
     
     private:

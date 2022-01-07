@@ -28,7 +28,7 @@ class board
         void file_print_board(std::ofstream& _out_file);
         piece* get_board_piece(position pos){return board_matrix[make_index_8(pos)];}
         void set_board_piece(position pos, piece* p){board_matrix[make_index_8(pos)] = p;}
-        std::vector<position> get_player_pieces_positions(int player);
+        std::vector<position> get_player_pieces_positions(player_id player);
         
         static const int board_size {8};
         static const int PLAYER_1{0}; //fare un enum?

@@ -23,7 +23,7 @@ void computer_player::turn()
 bool computer_player::move()
 {
     // Ottengo tutti i pezzi di questo giocatore in un vector
-    vector<position> player_pieces_positions = b->get_player_pieces_positions(player_number);
+    vector<position> player_pieces_positions = b->get_player_pieces_positions(id);
 
     /*std::cout << "\n-------------------\n"; 
     for (auto p : player_pieces_positions)
