@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 set (CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_FLAGS "-O2")
 
 include_directories(include)
 
-project("scacchiera_elettronica")
+project("Scacchiera_elettronica")
 
 # librerie del progetto
-
 add_library(board
     include/position.h
     include/board.h
@@ -49,7 +49,6 @@ add_library(replay_player
 
 #executable scacchiera
 add_executable(scacchiera
-    #susmake lists
 	src/scacchiera.cpp
     src/position.cpp
     src/pawn.cpp
