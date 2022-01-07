@@ -68,6 +68,10 @@ bool board::move_piece(const position& from, const position& to)
 bool board::is_castling(const position& from, const position& to){
     piece* _king = board_matrix[make_index_8(from)];
     if(true && true && abs(from.col - to.col) != 2){ //qui devo verificare se il piece king è effettivamente un Re e che il dato re non sia già sotto scacco
+    if(!from == position(7, 4) && !from == position(0, 4)){
+        return false;
+    }
+    //if(!_king.is_check(board_matrix) && abs(from.col - to.col) != 2){
         return false;
     }
     position rook_from = position(from.row, 0);
@@ -92,6 +96,7 @@ bool board::is_castling(const position& from, const position& to){
     if(!_rook->get_init_pos() && !_king->get_init_pos()){
         return false;
     }
+
     //qui verificare che il re non vada in scacco muovendosi in ciascuna delle due caselle
     return true;
 }
