@@ -36,4 +36,4 @@ class player{
         virtual bool move() = 0;
 };
 
-#endif
+#endif // PLAYER_H

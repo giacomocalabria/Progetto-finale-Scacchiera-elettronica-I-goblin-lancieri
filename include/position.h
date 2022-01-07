@@ -35,4 +35,4 @@ constexpr int max_position {8};
 constexpr int min_position {0};
 
 
-#endif
+#endif // POSITION_H

@@ -15,4 +15,4 @@ class human_player : public player{
         bool move() override;  
 };
 
-#endif
+#endif // HUMAN_PLAYER_H

@@ -16,4 +16,4 @@ class bishop : public piece
         std::vector<position> get_possible_positions() override;
 };
 
-#endif
+#endif // BISHOP_H

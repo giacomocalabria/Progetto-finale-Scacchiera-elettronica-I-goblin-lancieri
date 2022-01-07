@@ -35,4 +35,4 @@ class computer_player : public player
 
 
 
-#endif
+#endif // COMPUTER_PLAYER_H

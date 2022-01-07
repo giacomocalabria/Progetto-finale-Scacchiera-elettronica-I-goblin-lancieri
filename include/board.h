@@ -102,4 +102,4 @@ class board
         void setup_7();
 };
 
-#endif
+#endif // BOARD_H

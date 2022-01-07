@@ -46,4 +46,4 @@ class piece
         
 };
 
-#endif
+#endif // PIECE_H

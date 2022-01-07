@@ -25,4 +25,4 @@ class pawn : public piece
         
 };
 
-#endif
+#endif // PAWN_H

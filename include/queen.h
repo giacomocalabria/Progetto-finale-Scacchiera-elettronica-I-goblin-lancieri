@@ -14,4 +14,4 @@ class queen : public piece
         std::vector<position> get_possible_positions() override;
 };
 
-#endif
+#endif // QUEEN_H

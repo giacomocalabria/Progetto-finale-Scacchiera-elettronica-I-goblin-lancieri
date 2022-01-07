@@ -16,4 +16,4 @@ enum player_id
     player_2 = 1, 
 };
 
-#endif
+#endif // PLAYER_ID_H

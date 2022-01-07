@@ -20,4 +20,4 @@ class rook : public piece
         std::vector<position> get_possible_positions() override;
 };
 
-#endif
+#endif // ROOK_H

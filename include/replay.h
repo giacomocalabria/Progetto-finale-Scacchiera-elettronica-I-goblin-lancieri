@@ -82,4 +82,4 @@ int file_replay(const string& _nome_file_log, const string& _nome_file_output_re
     return 0;
 }
 
-#endif
+#endif // REPLAY_H

@@ -20,4 +20,4 @@ class replay_player{
         int player_number;
 };
 
-#endif
+#endif // REPLAY_PLAYER_H
