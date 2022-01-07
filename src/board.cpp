@@ -177,38 +177,16 @@ bool board::is_castling(const position& from, const position& to){
                 return false;
         }
         position temp_pos = position(from.row,from.col+1);
-
-        piece* prev_in_dest{board_matrix[make_index_8(to)]};
-        _king->set_position(to);
-        board_matrix[make_index_8(to)] = _king;
-        board_matrix[make_index_8(from)] = nullptr;
-
-        // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
-        if (is_check(p->get_player()))
-        {
-            // Ritorna alla situazione iniziale
-            board_matrix[make_index_8(from)] = _king;
-            p->set_position(from);
-            board_matrix[make_index_8(to)] = prev_in_dest;
-            //cout << "Mossa non valida. La mossa porta ad uno scacco del proprio re.\n";
-            return false;
-        }
-        board_matrix[make_index_8(from)] = _king;
-        _king->set_position(from);
-        board_matrix[make_index_8(to)] = prev_in_dest;
         piece* prev_in_dest{board_matrix[make_index_8(temp_pos)]};
         _king->set_position(temp_pos);
         board_matrix[make_index_8(temp_pos)] = _king;
         board_matrix[make_index_8(from)] = nullptr;
-
         // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
-        if (is_check(p->get_player()))
+        if (is_check(_king->get_player()))
         {
-            // Ritorna alla situazione iniziale
             board_matrix[make_index_8(from)] = _king;
-            p->set_position(from);
+            _king->set_position(from);
             board_matrix[make_index_8(temp_pos)] = prev_in_dest;
-            //cout << "Mossa non valida. La mossa porta ad uno scacco del proprio re.\n";
             return false;
         }
         board_matrix[make_index_8(from)] = _king;
@@ -223,38 +201,16 @@ bool board::is_castling(const position& from, const position& to){
                 return false;
         }
         position temp_pos = position(from.row,from.col-1);
-        piece* prev_in_dest{board_matrix[make_index_8(to)]};
-        _king->set_position(to);
-        board_matrix[make_index_8(to)] = _king;
-        board_matrix[make_index_8(from)] = nullptr;
-
-        // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
-        if (is_check(p->get_player()))
-        {
-            // Ritorna alla situazione iniziale
-            board_matrix[make_index_8(from)] = _king;
-            p->set_position(from);
-            board_matrix[make_index_8(to)] = prev_in_dest;
-            //cout << "Mossa non valida. La mossa porta ad uno scacco del proprio re.\n";
-            return false;
-        }
-        board_matrix[make_index_8(from)] = _king;
-        _king->set_position(from);
-        board_matrix[make_index_8(to)] = prev_in_dest;
-
         piece* prev_in_dest{board_matrix[make_index_8(temp_pos)]};
         _king->set_position(temp_pos);
         board_matrix[make_index_8(temp_pos)] = _king;
         board_matrix[make_index_8(from)] = nullptr;
-
         // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
-        if (is_check(p->get_player()))
+        if (is_check(_king->get_player()))
         {
-            // Ritorna alla situazione iniziale
             board_matrix[make_index_8(from)] = _king;
-            p->set_position(from);
+            _king->set_position(from);
             board_matrix[make_index_8(temp_pos)] = prev_in_dest;
-            //cout << "Mossa non valida. La mossa porta ad uno scacco del proprio re.\n";
             return false;
         }
         board_matrix[make_index_8(from)] = _king;
@@ -262,6 +218,22 @@ bool board::is_castling(const position& from, const position& to){
         board_matrix[make_index_8(temp_pos)] = prev_in_dest;
         //qui verificare che il re non vada in scacco muovendosi in ciascuna delle due caselle
     }
+    piece* prev_in_dest{board_matrix[make_index_8(to)]};
+    _king->set_position(to);
+    board_matrix[make_index_8(to)] = _king;
+    board_matrix[make_index_8(from)] = nullptr;
+    // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
+    if (is_check(_king->get_player()))
+    {
+        board_matrix[make_index_8(from)] = _king;
+        _king->set_position(from);
+        board_matrix[make_index_8(to)] = prev_in_dest;
+        return false;
+    }
+    board_matrix[make_index_8(from)] = _king;
+    _king->set_position(from);
+    board_matrix[make_index_8(to)] = prev_in_dest;
+
     piece* _rook = board_matrix[make_index_8(rook_from)];
     if(!_rook->get_init_pos() && !_king->get_init_pos()){
         return false;
