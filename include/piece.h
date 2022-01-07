@@ -11,7 +11,6 @@
 #ifndef PIECE_H
 #define PIECE_H
 
-//classe virtuale pura
 #include "position.h"
 #include <vector>
 #include "player_id.h"
@@ -30,9 +29,6 @@ class piece
         virtual bool can_promote() = 0;
         virtual char symbol() = 0;
         virtual std::vector<position> get_possible_positions() = 0;
-        
-        // spunti
-        //void eat(const piece& other);
 
         position get_position(){return pos;}
         void set_position(position new_pos){pos = new_pos;}
@@ -44,7 +40,7 @@ class piece
         
     protected:
         // variabili di esemplare
-        player_id player; // 1 o 2 - tipo di dato da definire
+        player_id player; 
         position pos;
         bool is_init_pos {true};
         
