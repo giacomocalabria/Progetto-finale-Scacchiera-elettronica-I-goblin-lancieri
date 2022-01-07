@@ -1,2 +1,0 @@
-C:\PROGRA~2\Dev-Cpp\MinGW64\bin\ar.exe qc libpieces.a CMakeFiles/pieces.dir/src/piece.cpp.obj CMakeFiles/pieces.dir/src/pawn.cpp.obj CMakeFiles/pieces.dir/src/knight.cpp.obj CMakeFiles/pieces.dir/src/queen.cpp.obj CMakeFiles/pieces.dir/src/rook.cpp.obj CMakeFiles/pieces.dir/src/king.cpp.obj CMakeFiles/pieces.dir/src/bishop.cpp.obj
-C:\PROGRA~2\Dev-Cpp\MinGW64\bin\ranlib.exe libpieces.a
