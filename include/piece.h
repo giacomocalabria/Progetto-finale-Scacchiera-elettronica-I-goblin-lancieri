@@ -37,11 +37,15 @@ class piece
         position get_position(){return pos;}
         void set_position(position new_pos){pos = new_pos;}
         player_id get_player(){return player;}
+
+        bool get_init_pos(){return is_init_pos;}
+        void set_init_pos(bool _new_status){is_init_pos = _new_status;}
         
     protected:
         // variabili di esemplare
         player_id player; // 1 o 2 - tipo di dato da definire
         position pos;
+        bool is_init_pos {true};
         
 };
 

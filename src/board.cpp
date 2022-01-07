@@ -34,6 +34,30 @@ bool board::move_piece(const position& from, const position& to)
         return false; // da def, forse eccezione o altro
     }
 
+    if(is_castling(from, to)){
+        piece* _king = board_matrix[make_index_8(from)];
+        _king->set_position(to);
+        board_matrix[make_index_8(to)] = _king;
+        board_matrix[make_index_8(from)] = nullptr;
+        if(from.col > to.col){
+            position rook_from = position(from.row, 0);
+            position rook_to = position(from.row,to.col + 1);
+            piece* _rook = board_matrix[make_index_8(rook_from)];
+            _rook->set_position(rook_to);
+            board_matrix[make_index_8(rook_to)] = _rook;
+            board_matrix[make_index_8(rook_from)] = nullptr;
+        }
+        else{
+            position rook_from = position(from.row, 7);
+            position rook_to = position(from.row, to.col - 1);
+            piece* _rook = board_matrix[make_index_8(rook_from)];
+            _rook->set_position(rook_to);
+            board_matrix[make_index_8(rook_to)] = _rook;
+            board_matrix[make_index_8(rook_from)] = nullptr;
+        }
+        return true;
+    }
+
     piece* p = board_matrix[make_index_8(from)];
 
     /*
@@ -229,6 +253,43 @@ bool board::is_checkmate2(int player_number)
     Rende vuota la board inizializzando a nullptr ogni riferimento
     in board_matrix.
 */
+bool board::is_castling(const position& from, const position& to){
+    piece* _king = board_matrix[make_index_8(from)];
+    if(true && true && abs(from.col - to.col) != 2){ //qui devo verificare se il piece king è effettivamente un Re e che il dato re non sia già sotto scacco
+    if(from == position(7, 4) || from == position(0, 4)){
+        return false;
+    }
+    //if(!_king.is_check(board_matrix) && abs(from.col - to.col) != 2){
+        return false;
+    }
+
+    position rook_from = position(from.row, 0);
+    position rook_to = position(from.row, 0);
+    if(from.col > to.col){
+        rook_from = position(from.row, 0);
+        rook_to = position(from.row,to.col + 1);
+        for(int i = 1; i < from.col; i++){
+            if(!board_matrix[make_index_8(from.row,i)])
+                return false;
+        }
+                
+    } else {
+        rook_from = position(from.row, 7);
+        rook_to = position(from.row, to.col - 1);
+        for(int i = 7; i > from.col; i--){
+            if(!board_matrix[make_index_8(from.row,i)])
+                return false;
+        }
+    }
+    piece* _rook = board_matrix[make_index_8(rook_from)];
+    if(!_rook->get_init_pos() && !_king->get_init_pos()){
+        return false;
+    }
+
+    //qui verificare che il re non vada in scacco muovendosi in ciascuna delle due caselle
+    return true;
+}
+
 void board::to_empty()
 {
     for (int i = 0; i < board_size; i++)

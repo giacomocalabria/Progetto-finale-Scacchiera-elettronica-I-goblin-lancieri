@@ -13,7 +13,7 @@ void human_player::turn(){
 }
 
 bool human_player::move(){
-    cout << "Inserisci mossa tramite coordinate di partenza e arrivo nel formato 'XX XX' " << endl;
+    cout << "Inserisci mossa tramite coordinate di partenza e arrivo nel formato 'A4 T9' oppure comandi speciali" << endl;
 
     /*string in1, in2;
     cin >> in1 >> in2;
@@ -27,6 +27,13 @@ bool human_player::move(){
         cout << "Comando non valido! " << endl;
         return false;
     }
+
+    if(input.substr(0,2) == "XX" && input.substr(2,2) == "XX"){
+        cout << "Visualizzazione della scacchiera" << endl;
+        b->print_board();
+        return false;
+    }
+
     position from = position(input.substr(0,2));
     position to = position(input.substr(2,2));
     

@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <stdlib.h> 
 #include "pawn.h"
 #include "king.h"
 #include "queen.h"
@@ -40,11 +41,10 @@ class board
         
         //bool is_checkmate2(int player_number);
 
+        bool is_castling(const position& from, const position& to);
     
+    // Costanti relative al numero di pezzi di ogni giocatore.
     private:
-        /*
-            Costanti relative al numero di pezzi di ogni giocatore.
-        */
         /*const int PAWN_NUMBER{8}; //fare un enum?
         const int ROOK_NUMBER{2};
         const int BISHOP_NUMBER{2};
@@ -64,7 +64,6 @@ class board
         Variabili membro private
     */
     private:
-        // piece* board_matrix[board_size][board_size];
         std::vector<piece*> board_matrix;
         
         /* 
@@ -81,6 +80,7 @@ class board
             si evita ogni tipo di memory leak in quanto l'allocazione dinamica
             della memoria è gestita dai vector stessi della STL, e si dispone
             di un modo molto comodo per avere a disposizione i vari pezzi.  
+            In questo modo per accedere ai pezzi del giocatore 2 basta la notazione player_pieces[1].
         */
         std::vector<pawn> player_pawns[player_id::player_count];
         std::vector<knight> player_knights[player_id::player_count];
