@@ -3,16 +3,17 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <vector>
 //#include <stdlib.h> 
-#include "pawn.h"
+
+#include "bishop.h"
 #include "king.h"
+#include "knight.h"
+#include "pawn.h"
 #include "queen.h"
 #include "rook.h"
-#include "bishop.h"
-#include "knight.h"
 
 class board
 {

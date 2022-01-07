@@ -3,11 +3,11 @@
 #ifndef REPLAY_PLAYER_H
 #define REPLAY_PLAYER_H
 
-#include "board.h"
-#include "position.h"
-#include "piece.h"
-#include <string>
 #include <fstream>
+#include <string>
+
+#include "board.h"
+#include "piece.h"
 
 class replay_player{
     public:

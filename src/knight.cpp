@@ -1,8 +1,10 @@
 // Author: GIACOMO CALABRIA
 
 #include "knight.h"
-#include "board.h"
+
 #include <algorithm>
+
+#include "board.h"
 
 using namespace std;
 

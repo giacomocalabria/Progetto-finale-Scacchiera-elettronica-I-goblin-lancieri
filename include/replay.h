@@ -3,11 +3,12 @@
 #ifndef REPLAY_H
 #define REPLAY_H
 
+#include <chrono>
+#include <fstream>
 #include <iostream>
 #include <string>
-#include <fstream>
-#include <chrono>
 #include <thread>
+
 #include "board.h"
 #include "replay_player.h"
 

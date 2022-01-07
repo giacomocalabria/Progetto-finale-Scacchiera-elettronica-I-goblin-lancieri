@@ -2,12 +2,12 @@
 
 #include <iostream>
 #include <string>
+
 #include "board.h"
 #include "computer_player.h"
 #include "human_player.h"
 
-using namespace std; // ./scacchiera singi ginsgo
-
+using namespace std;
 
 int main(int argc, char *argv[])
 {

@@ -1,10 +1,11 @@
 //Author: 
 
 #include <iostream>
-#include "board.h"
 #include <string>
+
+#include "board.h"
 #include "computer_player.h"
-#include "player_id.h"
+#include "human_player.h"
 
 #define space std::cout << "\n------------------------\n";
 #define pause system("pause"); system("cls"); 

@@ -2,7 +2,6 @@
 #define PLAYER_H
 
 #include "board.h"
-#include "position.h"
 #include "piece.h"
 #include "player_id.h"
 

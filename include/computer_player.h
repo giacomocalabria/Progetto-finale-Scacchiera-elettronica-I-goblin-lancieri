@@ -3,10 +3,12 @@
 #ifndef COMPUTER_PLAYER_H
 #define COMPUTER_PLAYER_H
 
-#include "player.h"
-#include <random>
-#include <ctime>
 #include <chrono>
+#include <ctime>
+#include <random>
+
+#include "player.h"
+
 
 /*
     ----------------------------------------------------

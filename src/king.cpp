@@ -1,8 +1,10 @@
 //Author: EDDIE CARRARO
 
 #include "king.h"
-#include "board.h"
+
 #include <algorithm>
+
+#include "board.h"
 
 using namespace std;
 

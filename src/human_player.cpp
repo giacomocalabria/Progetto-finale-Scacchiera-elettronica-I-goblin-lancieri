@@ -1,4 +1,7 @@
+// Author: GIACOMO CALABRIA
+
 #include "human_player.h"
+
 #include <string>
 
 using namespace std;

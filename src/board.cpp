@@ -1,6 +1,7 @@
 // Author: NICOLA MARITAN
 
 #include "board.h"
+
 #include <vector>
 
 using namespace std;

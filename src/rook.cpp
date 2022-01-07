@@ -1,8 +1,10 @@
 // Author: NICOLA MARITAN
 
 #include "rook.h"
-#include "board.h"
+
 #include <algorithm>
+
+#include "board.h"
 
 using namespace std;
 

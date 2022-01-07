@@ -1,10 +1,11 @@
 // Author: NICOLA MARITAN
 
 #include "computer_player.h"
+
 #include <algorithm>
+#include <ctime>
 #include <random>
 #include <vector>
-#include <ctime>
 
 using namespace std;
 

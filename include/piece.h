@@ -12,8 +12,9 @@
 #define PIECE_H
 
 #include <vector>
-#include "position.h"
+
 #include "player_id.h"
+#include "position.h"
 
 class piece
 {
