@@ -23,6 +23,7 @@ class board
         bool move_piece(const position& from, const position& to);
         void init_game();
         void init_board();
+        std::vector<string> get_log() {return log;}
     
     public:
         void print_board();
@@ -55,6 +56,8 @@ class board
             rook_number = 2,
             pawn_number = 8
         };
+
+        std::vector<string> log; //Vector per memorizzare tutte le mosse effettuate dai giocatori
     /*
         Variabili membro private
     */

@@ -56,3 +56,10 @@ bool is_valid_position_8(const position& pos)
 {
     return pos.row < max_position && pos.col < max_position && pos.row >= min_position && pos.col >= min_position;
 }
+
+std::string get_string(const position& pos){
+    std::string s;
+    s.push_back((char) (pos.col + 'A'));
+    s.push_back((char) (pos.row + '0'));
+    return s;
+}

@@ -31,6 +31,8 @@ int make_index_8(int row, int col);
 
 bool is_valid_position_8(const position& pos);
 
+std::string get_string(const position& pos);
+
 constexpr int max_position {8};
 constexpr int min_position {0};
 

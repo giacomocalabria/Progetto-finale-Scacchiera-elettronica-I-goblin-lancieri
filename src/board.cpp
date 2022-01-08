@@ -47,6 +47,8 @@ bool board::move_piece(const position& from, const position& to)
             board_matrix[make_index_8(rook_to)] = _rook;
             board_matrix[make_index_8(rook_from)] = nullptr;
         }
+        
+        log.push_back(get_string(from)+" "+get_string(to));
         return true;
     }
 
@@ -97,6 +99,7 @@ bool board::move_piece(const position& from, const position& to)
     }
 
     // Mossa lecita
+    log.push_back(get_string(from)+" "+get_string(to));
     return true;    
     
 }

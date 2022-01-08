@@ -12,7 +12,7 @@
 class replay_player{
     public:
         replay_player(board* _b, int _player_number) : b{_b}, player_number{_player_number}{};
-        void turn(std::ifstream& elenco_mosse);
+        void turn(std::string& mossa);
         int get_player_number(){return player_number;}
     
     private:
