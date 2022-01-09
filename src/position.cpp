@@ -51,6 +51,11 @@ int make_index_8(int row, int col)
     return make_index_8(position(row, col));
 }
 
+position position_from_8(int idx)
+{
+    return position(idx/8, idx - (idx/8)*8);    //idx/8 mi da un int, troncandomi il resto e trovando la riga corrispondente
+}
+
 bool is_valid_position_8(const position& pos)
 {
     //constexpr int pos_max{8};

@@ -29,6 +29,8 @@ int make_index_8(position p);
 
 int make_index_8(int row, int col);
 
+position position_from_8(int idx);
+
 bool is_valid_position_8(const position& pos);
 
 constexpr int max_position {8};

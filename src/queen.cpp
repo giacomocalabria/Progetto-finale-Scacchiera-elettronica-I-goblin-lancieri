@@ -35,7 +35,7 @@ inline char queen::symbol(){
 
 vector<position> queen::get_possible_positions(){
     vector<position> possible_pos;
-    return possible_pos;    // temporaneo
+    //return possible_pos;    // temporaneo
 
     position dest; //position(riga, colonna)
     

@@ -39,6 +39,8 @@ class board
         //void check_king_movement();
         bool is_check(player_id player_number);
         bool is_checkmate(player_id player_number);
+
+        bool is_draw();
         
         
         //bool is_checkmate2(int player_number);
@@ -93,6 +95,14 @@ class board
     private:   
         void init_player_pieces();
         bool promote(const position& pos);
+
+    private:
+        int count_draw = 0;         //tiene conto del numero di mosse fatte da tutti e 2 i giocatori
+        int no_pwn_no_eat = 0;      //tiene conto del numero di mosse senza mangiate e senza movimenti di pawn
+
+    public:
+        int get_count_draw() {return count_draw;}
+        int get_no_pwn_no_eat() {return no_pwn_no_eat;}
 
     // -------------- setup di debug --------------
     private:
