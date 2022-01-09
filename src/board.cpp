@@ -23,17 +23,24 @@ board::board()
 */
 bool board::move_piece(const position& from, const position& to)
 {
-    if(is_draw())
+    if(is_draw(board_matrix[make_index_8(from)]->get_player()))
+    {
         return false;
+    }
 
     if (board_matrix[make_index_8(from)] == nullptr)   // Non c'è una pedina nella casella from
     {
         return false; // Restituisce false
     }
-    piece* p = board_matrix[make_index_8(from)];
+    // Se non è una posizione logicamente valida:
+    if (!is_valid_position_8(from) || !is_valid_position_8(to))
+    {
+        return false;
+    }
 
     // ----------------- Arrocco -----------------
-    if(is_castling(from, to)){
+    
+    /*if(is_castling(from, to)){
         piece* _king = board_matrix[make_index_8(from)];
         _king->set_position(to);
         board_matrix[make_index_8(to)] = _king;
@@ -56,75 +63,40 @@ bool board::move_piece(const position& from, const position& to)
         }
         count_draw++;
         return true;
+    }*/
 
-        // AGGIUNGERE ANNULLAMENTO MOSSA SE DOPO QUESTA MOSSA IL RE E' SOTTO SCACCO
-    }
-
-    // ----------------- En passant -----------------
-
-    int sign = p->get_player() == board::PLAYER_1 ? -1 : 1;  // orientazione (serve?)
-    position pos_to_pass = to;
-    pos_to_pass.row -= sign; 
-    //N.B.! Nella posizione to, in caso di en passant, e' impossibile che vi sia una pedina; se fosse il contrario, il pedone avversario non avrebbe potuto fare 2 passi (nemmeno uno in realta')
-
-    if(can_en_passant(from, pos_to_pass))
-    {
-        // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
-        piece* prev_in_dest{board_matrix[make_index_8(pos_to_pass)]};
-
-        board_matrix[make_index_8(pos_to_pass)] = nullptr;   //pongo a null il pedone mangiato "in passant"
-        p->set_position(to);
-        board_matrix[make_index_8(to)] = p;
-        board_matrix[make_index_8(from)] = nullptr;
-
-        // AGGIUNGERE ANNULLAMENTO MOSSA SE DOPO QUESTA MOSSA IL RE E' SOTTO SCACCO
-
-        if(is_check(p->get_player()))
-        {
-            //Ritorna alla situazione iniziale
-            board_matrix[make_index_8(to)] = nullptr;
-            board_matrix[make_index_8(from)] = p;
-            p->set_position(from);
-            board_matrix[make_index_8(pos_to_pass)] = prev_in_dest;
-            return false;
-        }
-
-        count_draw++;
-        return true;
-    }
-
-
-    //piece* p = board_matrix[make_index_8(from)];
-
-    // ----------------------- Sezione mossa normale -----------------------
-    if (!p->can_move_to(to, board_matrix) && !p->can_capture(to, board_matrix))   //migliora
-    {
-        return false;
-    }
-
-    if(!p->can_capture(to, board_matrix) && !p->can_promote())
-    {
-        no_pwn_no_eat ++;   //en passant e promozione sottintendono il movimento di un pedone (e/o una cattura)
-    }
+    piece* p = board_matrix[make_index_8(from)];
 
     // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
     piece* prev_in_dest{board_matrix[make_index_8(to)]};
 
-    p->set_position(to);
-    board_matrix[make_index_8(to)] = p;
-    board_matrix[make_index_8(from)] = nullptr;
 
-    // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
-    if (is_check(p->get_player()))
+    // ----------------------- Sezione mossa normale -----------------------
+    if (p->can_move_to(to, board_matrix) || p->can_capture(to, board_matrix))
     {
-        // Ritorna alla situazione iniziale
-        board_matrix[make_index_8(from)] = p;
-        p->set_position(from);
-        board_matrix[make_index_8(to)] = prev_in_dest;
-        //cout << "Mossa non valida. La mossa porta ad uno scacco del proprio re.\n";
-        no_pwn_no_eat--;        //la mossa va rifatta
+        p->set_position(to);
+        board_matrix[make_index_8(to)] = p;
+        board_matrix[make_index_8(from)] = nullptr;
+
+        // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
+        cout << "Chiamata a is_check.\n";
+        if (is_check(p->get_player()))
+        {
+            // Ritorna alla situazione iniziale
+            board_matrix[make_index_8(from)] = p;
+            p->set_position(from);
+            board_matrix[make_index_8(to)] = prev_in_dest;
+            cout << "Mossa non valida. La mossa porta ad uno scacco del proprio re.\n";
+            return false;
+        }
+
+    }
+    else    // Allora la destinazione non è nelle possibili posizioni.
+    {
+        cout << "Mossa non valida. Da " << from << " a " << to << endl;
         return false;
     }
+    cout << "Nessun scacco.\n";
 
     // -------------- Promozione -----------------
     if (p->get_player() == PLAYER_1)
@@ -140,6 +112,11 @@ bool board::move_piece(const position& from, const position& to)
         {
             promote(p->get_position());
         }
+    }
+
+    if(!p->can_promote() && !prev_in_dest)
+    {
+        no_pwn_no_eat++;
     }
 
     // Mossa lecita
@@ -555,28 +532,24 @@ void board::file_print_board(ofstream& _out_file){
     _out_file << "  ABCDEFGH\n";
 }
 
-bool board::is_draw()
+bool board::is_draw(player_id pl)
 {
     cout << "Numero di mosse: " << get_no_pwn_no_eat() << "\n";
     piece* p;
 
-    //--------------- patta per mancanza di mosse possibili del player pl ---------------
-    //metti in funz a parte
+    //--------------- patta per mancanza di mosse possibili del player considerato ---------------
     /*for(int i = 0; i < board_size*board_size; i++)
     {
         p = board_matrix[i];
-        position pos;
-        vector<position> possible_pos = p->get_possible_position();
-
-        for(int j = 0; j < possible_pos.size() - 1; j++)    //modifico
+        vector<position> possible_pos = p->get_possible_positions();
+ 
+        if(p->get_player() == pl && p->can_move_to(possible_pos[i], board_matrix) && !is_check(pl))
         {
-            pos = position_from_8(j);
-            if(p->get_player() == pl && !p->can_move_to(pos, board_matrix) && !is_check(pl))
-            {
-                return true;
-            }
-        }
+            return false;
+        }   
     }*/
+
+
 
     //--------------- mancanza di movimenti del pedone e di catture ---------------
     constexpr int limit {3};

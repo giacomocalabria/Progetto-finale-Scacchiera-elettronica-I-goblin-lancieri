@@ -40,7 +40,7 @@ class board
         bool is_check(player_id player_number);
         bool is_checkmate(player_id player_number);
 
-        bool is_draw();
+        bool is_draw(player_id pl);
         
         
         //bool is_checkmate2(int player_number);
