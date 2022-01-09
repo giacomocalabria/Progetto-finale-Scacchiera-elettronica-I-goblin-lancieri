@@ -12,6 +12,7 @@ board::board()
     //std::cout << "Board Initialization.\n";
     init_board();
     init_player_pieces();
+    init_log_file();
     //std::cout << "Board initializated.\n";
 }
 
@@ -60,19 +61,20 @@ bool board::move_piece(const position& from, const position& to)
     }*/
 
     piece* p = board_matrix[make_index_8(from)];
+    piece* prev_in_dest;
 
     // ----------------------- Sezione mossa normale -----------------------
     if (p->can_move_to(to, board_matrix) || p->can_capture(to, board_matrix))
     {
         // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
-        piece* prev_in_dest{board_matrix[make_index_8(to)]};
+        prev_in_dest = board_matrix[make_index_8(to)];
 
         p->set_position(to);
         board_matrix[make_index_8(to)] = p;
         board_matrix[make_index_8(from)] = nullptr;
 
         // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
-        cout << "Chiamata a is_check.\n";
+        //cout << "Chiamata a is_check.\n";
         if (is_check(p->get_player()))
         {
             // Ritorna alla situazione iniziale
@@ -86,10 +88,11 @@ bool board::move_piece(const position& from, const position& to)
     }
     else    // Allora la destinazione non è nelle possibili posizioni.
     {
-        cout << "Mossa non valida. Da " << from << " a " << to << endl;
+        //IMPORTANTE PER IL DEBUG, NON ELIMINARE
+        //cout << "Mossa non valida. Da " << from << " a " << to << endl;
         return false;
     }
-    cout << "Nessun scacco.\n";
+    //cout << "Nessun scacco.\n";
 
     // -------------- Promozione -----------------
     if (p->get_player() == PLAYER_1)
@@ -107,7 +110,21 @@ bool board::move_piece(const position& from, const position& to)
         }
     }
 
-    // Mossa lecita
+    // ALLORA è una mossa lecita
+    
+    // Se c'era un pezzo e se tale pezzo aveva come simbolo k allora ha mangiato il re
+    if (prev_in_dest && prev_in_dest->symbol() == 'k')
+    {
+        king_eaten_player[prev_in_dest->get_player()] = true;
+    }
+
+    /*
+        Scrittura su file
+    */
+    std::ofstream file;
+    file.open(log_file, std::ios_base::app);   // std::ios_base::app indica che il contenuto andrà aggiunto alla fine del file
+    file_print_board(file, from, to);
+
     return true;    
     
 }
@@ -462,7 +479,7 @@ void board::print_board()
 
 }
 
-void board::file_print_board(ofstream& _out_file){
+void board::file_print_board(ofstream& _out_file, const position& from, const position& to){
     for (int i = 0; i < board_size; i++){
         _out_file << board_size - i << " ";
         for (int j = 0; j < board_size; j++){
@@ -476,4 +493,31 @@ void board::file_print_board(ofstream& _out_file){
         _out_file << std::endl;
     }
     _out_file << "  ABCDEFGH\n";
+    _out_file << to_string_move(from, to) << endl;
+}
+
+/*
+    Rende vuoto il file di log.
+*/
+void board::init_log_file()
+{
+    std::ofstream _out_file;
+    _out_file.open(log_file, std::ofstream::out | std::ofstream::trunc);
+    _out_file.close();
+}
+
+/*
+    Verifica se il gioco è terminato: ritorna no_player (-1)
+    se il gioco non è terminato, altrimenti ritorna l'id del
+    giocatore vincitore.
+*/
+player_id board::is_game_ended()
+{
+    if (is_king_eaten(player_1))
+        return player_2;
+    if (is_king_eaten(player_2))
+        return player_1;
+
+
+    return no_player;
 }

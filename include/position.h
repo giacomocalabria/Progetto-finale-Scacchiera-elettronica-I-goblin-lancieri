@@ -29,6 +29,8 @@ int make_index_8(position p);
 
 int make_index_8(int row, int col);
 
+std::string to_string_move(const position& p1, const position& p2);
+
 bool is_valid_position_8(const position& pos);
 
 constexpr int max_position {8};

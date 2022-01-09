@@ -65,3 +65,14 @@ bool is_valid_position_8(const position& pos)
 
     return pos.row < max_position && pos.col < max_position && pos.row >= min_position && pos.col >= min_position;
 }
+
+std::string to_string_move(const position& p1, const position& p2)
+{
+    char p1_row = '8' - p1.row;
+    char p1_col = 'A' + p1.col;
+    char p2_row = '8' - p2.row;
+    char p2_col = 'A' + p2.col;
+
+    std::string str{p1_col, p1_row, ' ', p2_col, p2_row};
+    return str;
+}

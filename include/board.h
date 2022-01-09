@@ -26,11 +26,13 @@ class board
     
     public:
         void print_board();
-        void file_print_board(std::ofstream& _out_file);
+        void file_print_board(std::ofstream& _out_file, const position& from, const position& to);
         piece* get_board_piece(position pos){return board_matrix[make_index_8(pos)];}
         void set_board_piece(position pos, piece* p){board_matrix[make_index_8(pos)] = p;}
         std::vector<position> get_player_pieces_positions(player_id player);
         std::vector<position> get_player_in_board_pieces_positions(player_id player);
+        bool is_king_eaten(player_id id){return king_eaten_player[id];}
+        player_id is_game_ended();
         
         static const int board_size {8};
         static const int PLAYER_1{0}; //fare un enum?
@@ -84,6 +86,9 @@ class board
         std::vector<bishop> player_bishops[player_id::player_count];
         std::vector<king> player_king[player_id::player_count];
         std::vector<queen> player_queen[player_id::player_count];
+
+        const std::string log_file{"log.txt"};
+        bool king_eaten_player[player_id::player_count] = {false, false};
     
     /*
         Funzioni membro privato.
@@ -91,6 +96,7 @@ class board
     private:   
         void init_player_pieces();
         bool promote(const position& pos);
+        void init_log_file();
 
     // -------------- setup di debug --------------
     private:

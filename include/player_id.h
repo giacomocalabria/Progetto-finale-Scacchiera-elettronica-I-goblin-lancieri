@@ -12,6 +12,7 @@
 enum player_id
 {
     player_count = 2,
+    no_player = -1,
     player_1 = 0,
     player_2 = 1, 
 };

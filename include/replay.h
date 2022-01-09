@@ -57,12 +57,12 @@ int file_replay(const string& _nome_file_log, const string& _nome_file_output_re
             replay_player v1 = replay_player(&b, 1);
             replay_player v2 = replay_player(&b, 2);
             while(!true){ //DA FARE ************************************
-                b.file_print_board(out_file);
+                //b.file_print_board(out_file);
                 v1.turn(in_file);
-                b.file_print_board(out_file);
+                //b.file_print_board(out_file);
                 if(true){ //DA FARE ************************************
                     v2.turn(in_file);
-                    b.file_print_board(out_file);
+                    //b.file_print_board(out_file);
                 }
                 else{ 
                     break; //DA FARE ************************************
