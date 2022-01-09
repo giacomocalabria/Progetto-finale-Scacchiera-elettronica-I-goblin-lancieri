@@ -11,8 +11,13 @@ using namespace std;
 
 bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
+    if (!is_valid_position_8(dest))
+    {
+        return false;
+    }
+
     vector<position> possible_positions = get_possible_positions();
-    //std::cout << "Positions generated (Rook).\n";
+    std::cout << "Positions generated (Rook).\n";
     
     /*
         Ricerca della posizione di destinazione all'interno
@@ -41,7 +46,7 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     {
         //std::cout << "Scansione in basso.\n";
         cursor = cursor + position(1, 0);
-        while (cursor.row < piece::max_position && cursor.row < dest.row)
+        while (is_valid_position_8(cursor) && cursor.row < dest.row)
         {
             other = board_pieces[make_index_8(cursor)];
             /*
@@ -60,7 +65,7 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     {
         //std::cout << "Scansione in alto.\n";
         cursor = cursor - position(1, 0);
-        while (cursor.row >= piece::min_position && cursor.row > dest.row)
+        while (is_valid_position_8(cursor) && cursor.row > dest.row)
         {
             other = board_pieces[make_index_8(cursor)];
             if (other)
@@ -76,7 +81,7 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     {
         //std::cout << "Scansione a destra.\n";
         cursor = cursor + position(0, 1);
-        while (cursor.col < piece::max_position && cursor.col < dest.col)
+        while (is_valid_position_8(cursor) && cursor.col < dest.col)
         {    
             other = board_pieces[make_index_8(cursor)];
             if (other)
@@ -89,7 +94,7 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     {
         //std::cout << "Scansione a sinistra.\n";
         cursor = cursor - position(0, 1);
-        while (cursor.col >= piece::min_position && cursor.col > dest.col)
+        while (is_valid_position_8(cursor) && cursor.col > dest.col)
         {
             other = board_pieces[make_index_8(cursor)];
             if (other)
@@ -127,6 +132,7 @@ std::vector<position> rook::get_possible_positions()
 
     position cursor = pos;
 
+    
     // ----------- scansione a destra -----------
     //std::cout << "Scansione a destra.\n";
     cursor = pos;
@@ -162,6 +168,46 @@ std::vector<position> rook::get_possible_positions()
         cursor = cursor - position(1, 0);
         possible_positions.push_back(cursor);
     }
+    
+
+    /*
+    // ----------- scansione a destra -----------
+    //std::cout << "Scansione a destra.\n";
+    cursor = pos + position(0, 1);
+    while (is_valid_position_8(cursor))
+    { 
+        possible_positions.push_back(cursor);
+        cursor = cursor + position(0, 1);
+    }
+
+    // ----------- scansione a sinistra -----------
+    //std::cout << "Scansione a sinistra.\n";
+    cursor = pos - position(0, 1);
+    while (is_valid_position_8(cursor))
+    {
+        possible_positions.push_back(cursor);
+        cursor = cursor - position(0, 1);
+    }
+
+    // ----------- scansione in basso -----------
+    //std::cout << "Scansione in basso.\n";
+    cursor = pos + position(1, 0);
+    while (is_valid_position_8(pos))
+    {
+        possible_positions.push_back(cursor);
+        cursor = cursor + position(1, 0);
+    }
+
+    // ----------- scansione in alto -----------
+    //std::cout << "Scansione in alto.\n";
+    cursor = pos - position(1, 0);
+    while (cursor.row > piece::min_position)
+    {
+        possible_positions.push_back(cursor);
+        cursor = cursor - position(1, 0);
+    }
+    */
+
 
     /*
         Ora possible_positions contiene tutte le posizioni

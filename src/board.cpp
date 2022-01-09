@@ -156,9 +156,14 @@ bool board::is_checkmate(player_id player_number)
         for (auto dest : p->get_possible_positions())
         {
             // Controlla se può raggiungere tale posizione
+            cout << "CHIAMATA A CAN_MOVE_TO e CAN_CAPTURE in is_check_mate per pezzo: " << p->symbol() << " da " << p->get_position() << " a" << dest << endl;
             if (!p->can_move_to(dest, board_matrix) && !p->can_capture(dest, board_matrix))
+            {
+                cout << "NON PUO' MUOVERSI.\n";
                 continue;
-            
+            }
+                
+            cout << "PUO' MUOVERSI.\n";
             
             // Mossa fittizia
             piece* prev_in_dest = board_matrix[make_index_8(dest)];
@@ -169,7 +174,9 @@ bool board::is_checkmate(player_id player_number)
             p->set_position(dest);
 
             // Controllo se in tale configurazione è scaco
+            cout << "CHIAMATA A IS_CHECK\n";
             bool is_check_bool = is_check(player_number);
+            cout << "FINE CHIAMATA A IS_CHECK\n";
 
             // debug
             /*
