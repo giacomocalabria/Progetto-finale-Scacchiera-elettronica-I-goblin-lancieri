@@ -10,10 +10,7 @@ using namespace std;
 
 bool king::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
-    //return false;
-
     vector<position> possible_pos = get_possible_positions();
-    //vector<position>::iterator it;
     auto it = find(possible_pos.begin(), possible_pos.end(), dest);
     if (it == possible_pos.end())
     {
@@ -45,10 +42,7 @@ inline char king::symbol(){
     return player == player_id::player_1 ? 'r' : 'R';
 }
 
-bool king::can_promote()
-{
-    return false;
-}
+bool king::can_promote(){ return false; }
 
 vector<position> king::get_possible_positions()
 {
