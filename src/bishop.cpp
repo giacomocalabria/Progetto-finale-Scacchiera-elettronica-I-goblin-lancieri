@@ -55,8 +55,6 @@ bool bishop::can_move_to(const position& dest, const vector<piece*>& board_piece
 		}
 		else
 			return false;
-
-		return true;
 	}
 	else if(dest.col < pos.col)
 	{

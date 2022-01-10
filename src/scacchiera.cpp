@@ -23,8 +23,11 @@ int main(int argc, char *argv[])
 
 
     board b;
+    space
+    b.print_board();
 
     b.move_piece(position(6, 4), position(4, 4));
+    cout << "porcodio\n";
     space
     b.print_board();
 
@@ -53,6 +56,26 @@ int main(int argc, char *argv[])
     b.print_board();
 
     b.move_piece(position(4, 4), position(4, 3));
+    space
+    b.print_board();
+
+    b.move_piece(position(7, 3), position(6, 4));
+    space
+    b.print_board();
+
+    b.move_piece(position(6, 4), position(4, 4));
+    space
+    b.print_board();
+
+    b.move_piece(position(4, 4), position(3, 4));
+    space
+    b.print_board();
+
+    b.move_piece(position(4, 4), position(4, 3));
+    space
+    b.print_board();
+
+    b.move_piece(position(4, 4), position(3, 3));
     space
     b.print_board();
 

@@ -29,6 +29,8 @@ class board
     
     public:
         std::string row_symbols(int i);
+        std::string all_board_symbols();
+
         void print_board();
         void file_print_board(std::ofstream& _out_file);
 
@@ -105,7 +107,7 @@ class board
         int no_pwn_no_eat = 0;      //tiene conto del numero di mosse senza mangiate e senza movimenti di pawn
 
     private:
-        std::map<std::string, int> check_reps;    //mappa che contiene le varie "posizioni" della scacchiera e il numero di volte che si sono presentate durante una partita
+        std::map<std::string, int> states;    //mappa che contiene le varie "posizioni" della scacchiera e il numero di volte che si sono presentate durante una partita
 
     public:
         bool too_much_reps(std::string str); //controlla il numero di ripetizioni di una singola "posizione" della board

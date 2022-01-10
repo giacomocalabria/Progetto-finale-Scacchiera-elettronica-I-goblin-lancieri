@@ -2,6 +2,7 @@
 
 #include "board.h"
 
+#include <algorithm>
 #include <vector>
 
 using namespace std;
@@ -62,11 +63,50 @@ bool board::move_piece(const position& from, const position& to)
             board_matrix[make_index_8(rook_from)] = nullptr;
         }
         count_draw++;
-        ///////////
+        states[all_board_symbols()]++;
         return true;
     }*/
 
     piece* p = board_matrix[make_index_8(from)];
+
+
+    // ----------------- En passant -----------------
+    int sign = p->get_player() == board::PLAYER_1 ? -1 : 1;  // orientazione (serve?)
+    position pos_to_pass = to;
+    pos_to_pass.row -= sign; 
+    //N.B.! Nella posizione to, in caso di en passant, e' impossibile che vi sia una pedina; se fosse il contrario, il pedone avversario non avrebbe potuto fare 2 passi (nemmeno uno in realta')
+
+    if(can_en_passant(from, pos_to_pass))
+    {
+        // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
+        piece* prev_in_dest{board_matrix[make_index_8(pos_to_pass)]};
+
+        board_matrix[make_index_8(pos_to_pass)] = nullptr;   //pongo a null il pedone mangiato "in passant"
+        p->set_position(to);
+        board_matrix[make_index_8(to)] = p;
+        board_matrix[make_index_8(from)] = nullptr;
+
+        // AGGIUNGERE ANNULLAMENTO MOSSA SE DOPO QUESTA MOSSA IL RE E' SOTTO SCACCO(fatto)
+
+        if(is_check(p->get_player()))
+        {
+            //Ritorna alla situazione iniziale
+            board_matrix[make_index_8(to)] = nullptr;
+            board_matrix[make_index_8(from)] = p;
+            p->set_position(from);
+            board_matrix[make_index_8(pos_to_pass)] = prev_in_dest;
+            return false;
+        }
+
+        count_draw++;
+        cout << all_board_symbols() << "ddddddddd" << std::endl;
+        cout << states[all_board_symbols()];
+        states[all_board_symbols()]++;
+        return true;
+    }
+
+
+    //piece* p = board_matrix[make_index_8(from)];
 
     // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
     piece* prev_in_dest{board_matrix[make_index_8(to)]};
@@ -122,7 +162,20 @@ bool board::move_piece(const position& from, const position& to)
 
     // Mossa lecita
     count_draw++;
-    /////////////
+    cout << all_board_symbols() << endl;
+    
+    /*auto iterator = find(states.begin(), states.end(), all_board_symbols());
+    if(iterator == states.end())
+    {
+        //states[all_board_symbols()] = 0;
+    }
+    else
+    {
+        //states[all_board_symbols()]++;
+    }*/
+    
+    //int& state_num {states[all_board_symbols()]};
+    //cout << state_num;
     return true;    
     
 }
@@ -547,16 +600,30 @@ string board::row_symbols(int i)
     return str_board;
 }
 
+string board::all_board_symbols()
+{
+    string all_symbols;
+
+    for(int i = 0; i < board_size; i++)
+    {
+        //cout << "funziona " << i << std::endl;
+        all_symbols += row_symbols(i);
+    }
+
+    //cout << all_symbols << endl;
+    return all_symbols;
+}
+
 /*
 Ci dice se una certa "posizione" della board (rappresentata dalla stringa str) e' capitata 3 volte nella stessa partita. Se cio' si verifica, la partita termina per patta (facciamo obbligatoriamente?!?!?!)
 */
-bool board::too_much_reps(string str)  
+/*bool board::too_much_reps(string str)  
 {
-    if(check_reps[str] && check_reps[str] == 3)
+    if(states[str] && states[str] == 3)
         return true;
 
     return false;
-}
+}*/
 
 
 /*
@@ -564,21 +631,16 @@ La funzione is_draw ci permette di sapere se, prima della prossima mossa, si e' 
 */
 bool board::is_draw(player_id pl)
 {
-    cout << "Numero di mosse: " << get_no_pwn_no_eat() << "\n";
+    //cout << "Numero di mosse: " << get_no_pwn_no_eat() << "\n";
 
     //--------------- mancanza di movimenti del pedone e di catture ---------------
-    constexpr int limit {3};        //AUMENTAA
+    constexpr int limit {50};
     constexpr int reps_limit {3};
-
-    for(int i = 0; i < board_size; i++)
-        board_state += row_symbols(i);
-
-    if(get_no_pwn_no_eat() == limit || too_much_reps(board_state))
+    if(get_no_pwn_no_eat() == limit /*|| too_much_reps(all_board_symbols())*/)
     {
         cout << "limite superato\n";
         return true;
     }
-
 
     //--------------- patta per mancanza di mosse possibili del player pl ---------------
     piece* p;
@@ -598,9 +660,6 @@ bool board::is_draw(player_id pl)
             return false;
         }   
     }
-
-
-
 
     return false;
 }
