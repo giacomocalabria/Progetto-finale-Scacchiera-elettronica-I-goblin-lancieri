@@ -17,7 +17,7 @@
 
 using namespace std;
 
-string nome_file {"log.txt"};
+const std::string nome_file{"log.txt"};
 
 int main(int argc, char *argv[])
 {
@@ -142,10 +142,18 @@ int main(int argc, char *argv[])
     vector<string> log = main_board.get_log();
     cout << "Partita finita, scrittura file log.txt" << endl;
     ofstream out_file(nome_file);
-    for(auto command : log){
-        out_file << command;
+    if(out_file.is_open()){
+        out_file.open(nome_file, std::ofstream::out | std::ofstream::trunc); //rende vuoto il file di log
+        for(auto command : log){
+            out_file << command;
+        }
+    } else {
+        cerr << "[ERROR] Impossibile aprire/leggere il file: '" << nome_file << "'" << endl;
+        return -1;
     }
+    out_file.close();
     cout << "Fine scrittura file log.txt" << endl;
+
     cout << "Programma terminato correttamente.\n";
     return 0;
 }

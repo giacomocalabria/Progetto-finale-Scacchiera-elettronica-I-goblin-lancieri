@@ -54,6 +54,7 @@ int file_replay(const string& _nome_file_log, const string& _nome_file_output_re
     string mossa;
     if(in_file.is_open()) {
         if(out_file.is_open()){
+            out_file.open(_nome_file_output_replay, std::ofstream::out | std::ofstream::trunc); //rende vuoto il file di log
             replay_player v1 = replay_player(&main_board, 1);
             replay_player v2 = replay_player(&main_board, 2);
             while(main_board.is_game_ended()){

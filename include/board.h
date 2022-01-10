@@ -51,7 +51,6 @@ class board
 
         bool is_castling(const position& from, const position& to);
         bool can_en_passant(const position& passing, const position& to_pass);
-        //bool can_en_passant(piece* pce, piece* pce_to_pass);
     
     // Costanti relative al numero di pezzi di ogni giocatore.
     private:
@@ -64,8 +63,6 @@ class board
             rook_number = 2,
             pawn_number = 8
         };
-
-        std::vector<std::string> log; //Vector per memorizzare tutte le mosse effettuate dai giocatori
     /*
         Variabili membro private
     */
@@ -95,7 +92,6 @@ class board
         std::vector<king> player_king[player_id::player_count];
         std::vector<queen> player_queen[player_id::player_count];
 
-        const std::string log_file{"log.txt"};
         bool king_eaten_player[player_id::player_count] = {false, false};
     
     /*
@@ -104,14 +100,12 @@ class board
     private:   
         void init_player_pieces();
         bool promote(const position& pos);
-        void init_log_file();
 
     private:
         int count_draw = 0;         //tiene conto del numero di mosse fatte da tutti e 2 i giocatori
         int no_pwn_no_eat = 0;      //tiene conto del numero di mosse senza mangiate e senza movimenti di pawn
-
-    private:
         std::map<std::string, int> states;    //mappa che contiene le varie "posizioni" della scacchiera e il numero di volte che si sono presentate durante una partita
+        std::vector<std::string> log; //Vector per memorizzare tutte le mosse effettuate dai giocatori
 
     public:
         bool too_much_reps(std::string str); //controlla il numero di ripetizioni di una singola "posizione" della board
