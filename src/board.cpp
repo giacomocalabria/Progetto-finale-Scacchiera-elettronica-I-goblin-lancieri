@@ -62,6 +62,7 @@ bool board::move_piece(const position& from, const position& to)
             board_matrix[make_index_8(rook_from)] = nullptr;
         }
         count_draw++;
+        ///////////
         return true;
     }*/
 
@@ -121,6 +122,7 @@ bool board::move_piece(const position& from, const position& to)
 
     // Mossa lecita
     count_draw++;
+    /////////////
     return true;    
     
 }
@@ -492,27 +494,14 @@ void board::init_player_pieces()
 void board::print_board()
 {
    for (int i = 0; i < board_size; i++)
-   {
+    {
        std::cout << board_size - i << " ";
 
-       for (int j = 0; j < board_size; j++)
-       {
-           piece* p = board_matrix[make_index_8(i, j)];
-           if (p == nullptr)
-           {
-               std::cout << "/";
-           }
-           else
-           {
-               std::cout << p->symbol();
-               //std::cout << p->get_position();
-               //std::cout << "*";
-           }
-           
-       }
+       cout << row_symbols(i);
+
        std::cout << std::endl;
-   }
-   std::cout << "  ABCDEFGH\n";
+    }
+    std::cout << "  ABCDEFGH\n";
 
 }
 
@@ -532,32 +521,85 @@ void board::file_print_board(ofstream& _out_file){
     _out_file << "  ABCDEFGH\n";
 }
 
+
+/*
+Mi restituisce una stringa con i simboli della riga i della board (compresi gli spazi)
+*/
+string board::row_symbols(int i)
+{
+    string str_board;
+
+    for (int j = 0; j < board_size; j++)
+    {
+        piece* p = board_matrix[make_index_8(i, j)];
+        if (p == nullptr)
+        {
+           str_board += " ";
+        }
+        else
+        {
+           str_board += p->symbol();
+           //std::cout << p->get_position();
+           //std::cout << "*";
+        } 
+    }
+
+    return str_board;
+}
+
+/*
+Ci dice se una certa "posizione" della board (rappresentata dalla stringa str) e' capitata 3 volte nella stessa partita. Se cio' si verifica, la partita termina per patta (facciamo obbligatoriamente?!?!?!)
+*/
+bool board::too_much_reps(string str)  
+{
+    if(check_reps[str] && check_reps[str] == 3)
+        return true;
+
+    return false;
+}
+
+
+/*
+La funzione is_draw ci permette di sapere se, prima della prossima mossa, si e' in una condizione in cui e' possibile procedere con la patta, ovvero interrompere la partita (in parita') per scelta o per evitare di continuare a giocare all'infinito
+*/
 bool board::is_draw(player_id pl)
 {
     cout << "Numero di mosse: " << get_no_pwn_no_eat() << "\n";
-    piece* p;
-
-    //--------------- patta per mancanza di mosse possibili del player considerato ---------------
-    /*for(int i = 0; i < board_size*board_size; i++)
-    {
-        p = board_matrix[i];
-        vector<position> possible_pos = p->get_possible_positions();
- 
-        if(p->get_player() == pl && p->can_move_to(possible_pos[i], board_matrix) && !is_check(pl))
-        {
-            return false;
-        }   
-    }*/
-
-
 
     //--------------- mancanza di movimenti del pedone e di catture ---------------
-    constexpr int limit {3};
-    if(get_no_pwn_no_eat() == limit)
+    constexpr int limit {3};        //AUMENTAA
+    constexpr int reps_limit {3};
+
+    for(int i = 0; i < board_size; i++)
+        board_state += row_symbols(i);
+
+    if(get_no_pwn_no_eat() == limit || too_much_reps(board_state))
     {
         cout << "limite superato\n";
         return true;
     }
+
+
+    //--------------- patta per mancanza di mosse possibili del player pl ---------------
+    piece* p;
+    vector<position> possible_pos;
+
+    for(int i = 0; i < board_size*board_size; i++)
+    {
+        p = board_matrix[i];
+
+        if(p)
+        {
+            possible_pos = p->get_possible_positions();
+        }
+ 
+        if(p && p->get_player() == pl && p->can_move_to(possible_pos[i], board_matrix) && !is_check(pl))
+        {
+            return false;
+        }   
+    }
+
+
 
 
     return false;

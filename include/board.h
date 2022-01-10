@@ -6,6 +6,8 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <string>
+#include <map>
 //#include <stdlib.h> 
 
 #include "bishop.h"
@@ -26,8 +28,10 @@ class board
 
     
     public:
+        std::string row_symbols(int i);
         void print_board();
         void file_print_board(std::ofstream& _out_file);
+
         piece* get_board_piece(position pos){return board_matrix[make_index_8(pos)];}
         void set_board_piece(position pos, piece* p){board_matrix[make_index_8(pos)] = p;}
         std::vector<position> get_player_pieces_positions(player_id player);
@@ -99,6 +103,12 @@ class board
     private:
         int count_draw = 0;         //tiene conto del numero di mosse fatte da tutti e 2 i giocatori
         int no_pwn_no_eat = 0;      //tiene conto del numero di mosse senza mangiate e senza movimenti di pawn
+
+    private:
+        std::map<std::string, int> check_reps;    //mappa che contiene le varie "posizioni" della scacchiera e il numero di volte che si sono presentate durante una partita
+
+    public:
+        bool too_much_reps(std::string str); //controlla il numero di ripetizioni di una singola "posizione" della board
 
     public:
         int get_count_draw() {return count_draw;}

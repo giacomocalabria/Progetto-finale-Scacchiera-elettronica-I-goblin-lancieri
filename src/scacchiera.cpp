@@ -42,9 +42,11 @@ int main(int argc, char *argv[])
 
     b.move_piece(position(7, 4), position(6, 4));
     space
+    b.print_board();
 
     b.move_piece(position(6, 4), position(5, 4));
     space
+    b.print_board();
 
     b.move_piece(position(5, 4), position(4, 4));
     space
