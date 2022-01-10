@@ -95,7 +95,7 @@ bool bishop::can_move_to(const position& dest, const vector<piece*>& board_piece
 
 char bishop::symbol()
 {
-	return player == board::PLAYER_1 ? 'a' : 'A';
+	return player == player_id::player_1 ? 'a' : 'A';
 }
 
 bool bishop::can_capture(const position& dest, const vector<piece*>& board_pieces)

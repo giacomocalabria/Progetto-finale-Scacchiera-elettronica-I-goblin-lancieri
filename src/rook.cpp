@@ -17,7 +17,7 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     }
 
     vector<position> possible_positions = get_possible_positions();
-    std::cout << "Positions generated (Rook).\n";
+    //std::cout << "Positions generated (Rook).\n";
     
     /*
         Ricerca della posizione di destinazione all'interno
@@ -123,7 +123,7 @@ bool rook::can_promote(){return false;}
 
 inline char rook::symbol()
 {
-    return player == board::PLAYER_1 ? 't' : 'T';
+    return player == player_id::player_1 ? 't' : 'T';
 }
 
 std::vector<position> rook::get_possible_positions()

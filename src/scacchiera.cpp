@@ -101,6 +101,7 @@ int main(int argc, char *argv[])
     int turn_counter{0};
     while (true)
     {
+        // Annuncio del turno
         std::cout << std::endl <<  "Turno " << turn_counter << std::endl;
         int player_turn{turn_counter % 2};
         if (player_turn == 0)
@@ -108,28 +109,38 @@ int main(int argc, char *argv[])
         else
             cout << "Tocca al nero.\n";
 
+        // Debug
         main_board.print_board();
-        cout << "Calling check_mate.\n";
+        
+        //cout << "Calling check_mate.\n";
+
+        // -------------------------- Controllo se il giocatore ha ancora il re --------------------------
+        if (main_board.has_king_been_captured(players[player_turn]->get_player_number()))
+        {
+            string winner = (player_turn == player_1) ? "bianco" : "nero";
+            std::cout << "Il giocatore " << winner << " ha vinto eliminando il re.\n";
+            break;
+        }
+        /*
+            Apparentemente sembra oppurtuno verificare che un giocatore abbia ancora pezzi,
+            ma chiaramente se non possiede pezzi allora non possiede nemmeno il re,
+            dunque poiché tale verifica è appena avvenuta non c'è bisogno.
+        */
+
+        // -------------------------- Controllo se il giocatore è sotto scacco --------------------------
         if (main_board.is_checkmate(players[player_turn]->get_player_number()))
         {
-            std::cout << "Il giocatore " << players[player_turn]->get_player_number() << " ha perso. Scacco matto.\n";
+            string winner = (player_turn == player_1) ? "bianco" : "nero";
+            std::cout << "Il giocatore " << winner << " ha vinto. Scacco matto.\n";
             break;
         }
-        cout << "Not check_mate.\n";
+        //cout << "Not check_mate.\n";
 
+        // Se non è sotto scacco allora il giocatore può eseguire la sua mossa.
         players[player_turn]->turn();
 
-        // Controllo se il gioco è finito.
-        player_id winner_id{main_board.is_game_ended()};
-        if (winner_id != player_id::no_player)
-        {
-            string winner = (winner_id == player_1) ? "bianco" : "nero";
-            cout << "Il giocatore " << winner << " ha vinto!\n";
-            break;
-        }
 
-
-        if (turn_counter == 500)
+        if (turn_counter == 500 || main_board.is_draw(players[player_turn]->get_player_number()))
         {
             cout << "Patta placeholder.\n";
             break;

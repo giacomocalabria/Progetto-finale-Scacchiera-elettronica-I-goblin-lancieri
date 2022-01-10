@@ -28,7 +28,7 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     if (it == possible_positions.end())
         return false;
 
-    int sign = player == board::PLAYER_1 ? -1 : 1;  // orientazione
+    int sign = player == player_id::player_1 ? -1 : 1;  // orientazione
     if (dest == pos + (sign * position(1, 0)))
     {
         // Allora si sta muovendo in avanti
@@ -55,7 +55,6 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 
     // Sicuramente si sta muovendo in diagonale (gli altri casi hanno già portato a conclusione)
     piece* other = board_pieces[make_index_8(dest)];
-    //cout << other << endl;
     if (other)
     {
         if (player != other->get_player())
@@ -73,8 +72,13 @@ bool pawn::can_promote(){return true;}
 
 bool pawn::can_capture(const position& dest, const vector<piece*>& board_pieces)   //serve per definire la condizione di scacco del re avversario
 {
+    // Ovviamente se nella cella di destinazione non c'è nulla non può mangiare.
+    if (!board_pieces[make_index_8(dest)])
+    {
+        return false;
+    }
 
-    int sign = player == board::PLAYER_1 ? -1 : 1;  // orientazione
+    int sign = player == player_id::player_1 ? -1 : 1;  // orientazione
 
     if(board_pieces[make_index_8(dest)] && (dest == pos + (sign * position(1, 1)) || dest == pos + (sign * position(1, -1))))
     {
@@ -103,7 +107,7 @@ bool pawn::can_capture(const position& dest, const vector<piece*>& board_pieces)
 
 inline char pawn::symbol()
 {
-    return player == board::PLAYER_1 ? 'p' : 'P';
+    return player == player_id::player_1 ? 'p' : 'P';
 }
 
 /*  
@@ -114,7 +118,7 @@ inline char pawn::symbol()
 std::vector<position> pawn::get_possible_positions()
 {
     std::vector<position> possible_positions;
-    int sign = player == board::PLAYER_1 ? -1 : 1;  // orientazione
+    int sign = player == player_id::player_1 ? -1 : 1;  // orientazione
     
     // Se si trova nella posizione iniziale
     if (is_init_pos)

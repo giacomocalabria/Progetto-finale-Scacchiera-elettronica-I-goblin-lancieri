@@ -22,6 +22,7 @@ class board
         board();
         void to_empty();    // rende la board priva di pezzi
         bool move_piece(const position& from, const position& to);
+        bool move_piece_2(const position& from, const position& to);
         void init_game();
         void init_board();
         std::vector<std::string> get_log() {return log;}
@@ -37,17 +38,16 @@ class board
         void set_board_piece(position pos, piece* p){board_matrix[make_index_8(pos)] = p;}
         std::vector<position> get_player_pieces_positions(player_id player);
         std::vector<position> get_player_in_board_pieces_positions(player_id player);
-        bool is_king_eaten(player_id id){return king_eaten_player[id];}
-        player_id is_game_ended();
+        
+        //player_id is_game_ended();
         
         static const int board_size {8};
-        static const int PLAYER_1{0}; //fare un enum?
-        static const int PLAYER_2{1};
 
         bool is_check(player_id player_number);
         bool is_checkmate(player_id player_number);
-
         bool is_draw(player_id pl);
+        bool has_king_been_captured(player_id id);
+        //bool is_king_eaten(player_id id){return king_eaten_player[id];}
 
         bool is_castling(const position& from, const position& to);
         bool can_en_passant(const position& passing, const position& to_pass);
@@ -96,7 +96,7 @@ class board
         std::vector<queen> player_queen[player_id::player_count];
 
         const std::string log_file{"log.txt"};
-        bool king_eaten_player[player_id::player_count] = {false, false};
+        //bool king_eaten_player[player_id::player_count] = {false, false};
     
     /*
         Funzioni membro privato.
@@ -105,6 +105,7 @@ class board
         void init_player_pieces();
         bool promote(const position& pos);
         void init_log_file();
+        bool can_do_legal_move(player_id pl);
 
     private:
         int count_draw = 0;         //tiene conto del numero di mosse fatte da tutti e 2 i giocatori

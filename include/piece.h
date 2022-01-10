@@ -48,4 +48,11 @@ class piece
         
 };
 
+bool is_pawn(piece* p);
+bool is_king(piece* p);
+bool is_queen(piece* p);
+bool is_rook(piece* p);
+bool is_knight(piece* p);
+bool is_bishop(piece* p);
+
 #endif // PIECE_H

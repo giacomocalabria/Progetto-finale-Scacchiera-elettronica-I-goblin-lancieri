@@ -29,7 +29,7 @@ bool knight::can_capture(const position& dest, const vector<piece*>& board_piece
 }
 
 inline char knight::symbol(){
-    return player == board::PLAYER_1 ? 'c' : 'C';
+    return player == player_id::player_1 ? 'c' : 'C';
 }
 
 bool knight::can_promote(){return false;}

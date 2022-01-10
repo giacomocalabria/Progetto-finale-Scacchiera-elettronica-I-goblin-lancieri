@@ -42,7 +42,7 @@ bool king::can_capture(const position& dest, const vector<piece*>& board_pieces)
 }
 
 inline char king::symbol(){
-    return player == board::PLAYER_1 ? 'r' : 'R';
+    return player == player_id::player_1 ? 'r' : 'R';
 }
 
 bool king::can_promote()
@@ -87,13 +87,13 @@ bool king::is_check(const std::vector<piece*>& board_pieces)
         if(board_pieces[i] && board_pieces[i]->get_player() != get_player()) //NOTA: ricordati la condizione (board[i])!
         { 
             // Commenti UTILISSIMI per debug: non eliminare pls
-            cout << board_pieces[i]->symbol() << ", " << board_pieces[i]->get_position();
+            //cout << board_pieces[i]->symbol() << ", " << board_pieces[i]->get_position();
             if((*(board_pieces[i])).can_capture(get_position(), board_pieces))
             {
-                cout << "CHEKS\n";
+                //cout << "CHEKS\n";
                 return true;
             }
-            cout << "NOT CHECKS\n";
+            //cout << "NOT CHECKS\n";
         }
     }
     return false;

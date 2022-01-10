@@ -22,13 +22,15 @@ int video_replay(const string& _nome_file_log){
         replay_player v1 = replay_player(&main_board, 1);
         replay_player v2 = replay_player(&main_board, 2);
         main_board.print_board();
-        while(main_board.is_game_ended()){
+        //while(main_board.is_game_ended()){
+        while(true){
             getline(in_file, mossa);
             v1.turn(mossa);
             std::this_thread::sleep_for(std::chrono::seconds(1));
             system("cls");
             main_board.print_board();
-            if(main_board.is_game_ended()){
+            //while(main_board.is_game_ended()){
+            while(true){
                 break;
             }
             getline(in_file, mossa);
@@ -56,12 +58,14 @@ int file_replay(const string& _nome_file_log, const string& _nome_file_output_re
         if(out_file.is_open()){
             replay_player v1 = replay_player(&main_board, 1);
             replay_player v2 = replay_player(&main_board, 2);
-            while(main_board.is_game_ended()){
+            //while(main_board.is_game_ended()){
+            while(true){
                 main_board.file_print_board(out_file);
                 getline(in_file, mossa);
                 v1.turn(mossa);
                 main_board.file_print_board(out_file);
-                if(main_board.is_game_ended()){
+                //if(main_board.is_game_ended()){
+                if(true){
                     break;
                 }
                 getline(in_file, mossa);

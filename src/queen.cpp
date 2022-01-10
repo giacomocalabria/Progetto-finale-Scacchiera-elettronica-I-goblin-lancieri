@@ -10,6 +10,7 @@ using namespace std;
 
 bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
+    return false;
     vector<position> possible_pos = get_possible_positions();
     auto it = find(possible_pos.begin(), possible_pos.end(), dest);
     if (it == possible_pos.end()) 
@@ -177,12 +178,12 @@ bool queen::can_capture(const position& dest, const vector<piece*>& board_pieces
 }
 
 inline char queen::symbol(){
-    return player == board::PLAYER_1 ? 'd' : 'D';
+    return player == player_id::player_1 ? 'd' : 'D';
 }
 
 vector<position> queen::get_possible_positions(){
     vector<position> possible_pos;
-    //return possible_pos;    // temporaneo
+    return possible_pos;    // temporaneo
 
     position dest; //position(riga, colonna)
     
