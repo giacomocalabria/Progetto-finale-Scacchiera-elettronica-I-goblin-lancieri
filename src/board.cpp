@@ -80,11 +80,11 @@ bool board::move_piece(const position& from, const position& to)
     if(can_en_passant(from, pos_to_pass))
     {
         // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
-        piece* prev_in_dest{board_matrix[make_index_8(pos_to_pass)]};
+        prev_in_dest = board_matrix[make_index_8(pos_to_pass)];
     }
     
     // ----------------------- Sezione mossa normale -----------------------
-    if (p->can_move_to(to, board_matrix) || p->can_capture(to, board_matrix))
+    /*if (p->can_move_to(to, board_matrix) || p->can_capture(to, board_matrix))
     {
         // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
         prev_in_dest = board_matrix[make_index_8(to)];
@@ -111,13 +111,13 @@ bool board::move_piece(const position& from, const position& to)
         cout << states[all_board_symbols()];
         states[all_board_symbols()]++;
         return true;
-    }
+    }*/
 
 
     //piece* p = board_matrix[make_index_8(from)];
 
     // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
-    piece* prev_in_dest{board_matrix[make_index_8(to)]};
+    prev_in_dest = board_matrix[make_index_8(to)];
 
 
     // ----------------------- Sezione mossa normale -----------------------
@@ -196,9 +196,10 @@ bool board::move_piece(const position& from, const position& to)
     /*
         Scrittura su file
     */
-    std::ofstream file;
+    
+    /*std::ofstream file;
     file.open(log_file, std::ios_base::app);   // std::ios_base::app indica che il contenuto andrà aggiunto alla fine del file
-    file_print_board(file, from, to);
+    file_print_board(file, from, to);*/
 
     return true;    
     
@@ -634,7 +635,8 @@ void board::print_board()
 
 }
 
-void board::file_print_board(ofstream& _out_file, const position& from, const position& to){
+//void board::file_print_board(ofstream& _out_file, const position& from, const position& to){
+void board::file_print_board(ofstream& _out_file){
     for (int i = 0; i < board_size; i++){
         _out_file << board_size - i << " ";
         for (int j = 0; j < board_size; j++){
@@ -737,7 +739,7 @@ bool board::is_draw(player_id pl)
     }
 
     return false;
-    _out_file << to_string_move(from, to) << endl;
+    //_out_file << to_string_move(from, to) << endl;
 }
 
 /*

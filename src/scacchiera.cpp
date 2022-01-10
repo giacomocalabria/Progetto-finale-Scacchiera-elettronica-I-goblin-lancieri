@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
     }
     #endif
     
-    vector<string> log = b.get_log();
+    vector<string> log = main_board.get_log();
     cout << "Partita finita, scrittura file log.txt" << endl;
     ofstream out_file(nome_file);
     for(auto command : log){
