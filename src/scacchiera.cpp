@@ -1,8 +1,23 @@
 //Author: NICOLA MARITAN
 
-#include "scacchiera.h"
+#include <fstream>
+#include <iostream>
+#include <random>
+#include <string>
+#include <vector>
+
+#include "board.h"
+#include "computer_player.h"
+#include "human_player.h"
+#include "player_id.h"
+
+
+#define space std::cout << "\n------------------------\n";
+#define pause system("pause"); system("cls"); 
 
 using namespace std;
+
+const std::string nome_file{"log.txt"};
 
 int main(int argc, char *argv[])
 {
@@ -26,9 +41,9 @@ int main(int argc, char *argv[])
         dal vector di player* players, per poter utilizzare le loro
         funzioni virtuali.
     */
-    vector<human_player> human_player_game;
-    vector<computer_player> computer_player_game;
-    vector<player*> players(player_id::player_count);
+    std::vector<human_player> human_player_game;
+    std::vector<computer_player> computer_player_game;
+    std::vector<player*> players(player_id::player_count);
 
     // Reserve delle capacità dei vector per le regole del gioco.
     human_player_game.reserve(1);
@@ -38,16 +53,17 @@ int main(int argc, char *argv[])
     // Se il tipo di match è giocatore vs computer
     if (type_of_match)
     {
-        cout << "Partita giocatore vs computer.\n";
+        std::cout << "Partita giocatore vs computer.\n";
 
         // Scelgo casualmente un id giocatore 
         // DA SISTEMARE RNG
-        random_device rd;
-        uniform_int_distribution<int> dstr(0, 1);
+        std::random_device rd;
+        std::uniform_int_distribution<int> dstr(0, 1);
         int int_player_id = dstr(rd);
         player_id human_id = int_player_id == 0 ? player_1 : player_2;
         player_id computer_id = human_id == player_1 ? player_2 : player_1;
         
+
         //cout << "human_id: " << human_id << "\ncomputer_id: " << computer_id << endl;
 
         computer_player_game.push_back(computer_player(&main_board, computer_id));
@@ -80,11 +96,12 @@ int main(int argc, char *argv[])
     main_board.print_board();
     #endif
 
+    
     #if !NO_TURNS
     int turn_counter{0};
     while (true)
     {
-        cout << endl <<  "Turno " << turn_counter << endl;
+        std::cout << std::endl <<  "Turno " << turn_counter << std::endl;
         int player_turn{turn_counter % 2};
         if (player_turn == 0)
             cout << "Tocca al bianco.\n";
@@ -95,7 +112,7 @@ int main(int argc, char *argv[])
         cout << "Calling check_mate.\n";
         if (main_board.is_checkmate(players[player_turn]->get_player_number()))
         {
-            cout << "Il giocatore " << players[player_turn]->get_player_number() << " ha perso. Scacco matto.\n";
+            std::cout << "Il giocatore " << players[player_turn]->get_player_number() << " ha perso. Scacco matto.\n";
             break;
         }
         cout << "Not check_mate.\n";
@@ -111,6 +128,7 @@ int main(int argc, char *argv[])
             break;
         }
 
+
         if (turn_counter == 500)
         {
             cout << "Patta placeholder.\n";
@@ -121,19 +139,12 @@ int main(int argc, char *argv[])
     }
     #endif
     
-    return create_file(main_board);
-}
-
-int create_file(board& main_board)
-{
     vector<string> log = main_board.get_log();
     cout << "Partita finita, scrittura file log.txt" << endl;
     ofstream out_file(nome_file);
-    if(out_file.is_open())
-    {
+    if(out_file.is_open()){
         out_file.open(nome_file, std::ofstream::out | std::ofstream::trunc); //rende vuoto il file di log
-        for(auto command : log)
-        {
+        for(auto command : log){
             out_file << command;
         }
     } else {
@@ -143,6 +154,6 @@ int create_file(board& main_board)
     out_file.close();
     cout << "Fine scrittura file log.txt" << endl;
 
-    cout << "Programma terminato correttamente" << endl;
+    cout << "Programma terminato correttamente.\n";
     return 0;
 }

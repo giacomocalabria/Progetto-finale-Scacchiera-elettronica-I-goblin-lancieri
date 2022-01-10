@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 set (CMAKE_CXX_STANDARD 11)
-set (CMAKE_CXX_FLAGS "-O2")
+set(CMAKE_CXX_FLAGS "-O2")
 
 include_directories(include)
 
@@ -39,7 +39,6 @@ add_library(player
     src/player.cpp
     src/human_player.cpp
     src/computer_player.cpp
-    include/scacchiera.h
 )
 
 add_library(replay_player
