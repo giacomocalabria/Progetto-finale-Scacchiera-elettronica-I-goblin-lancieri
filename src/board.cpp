@@ -16,7 +16,6 @@ board::board()
     #else
     setup_7();
     #endif
-    init_log_file();
 }
 
 /*
@@ -413,7 +412,8 @@ bool board::is_checkmate(player_id player_number)
 }
 
 
-bool board::is_castling(const position& from, const position& to){
+bool board::is_castling(const position& from, const position& to)
+{
     piece* _king = board_matrix[make_index_8(from)];
 
     // ELIMINARE MAGIC NUMBERS
@@ -714,33 +714,21 @@ void board::init_player_pieces()
 
 void board::print_board()
 {
-   for (int i = 0; i < board_size; i++)
+    for (int i = 0; i < board_size; i++)
     {
-       std::cout << board_size - i << " ";
-
-       cout << row_symbols(i);
-
-       std::cout << std::endl;
+       cout << board_size - i << " " << row_symbols(i) << endl;
     }
-    std::cout << "  ABCDEFGH\n";
-
+    cout << "  ABCDEFGH" << endl;
 }
 
 //void board::file_print_board(ofstream& _out_file, const position& from, const position& to){
-void board::file_print_board(ofstream& _out_file){
-    for (int i = 0; i < board_size; i++){
-        _out_file << board_size - i << " ";
-        for (int j = 0; j < board_size; j++){
-            piece* p = board_matrix[make_index_8(i, j)];
-            if (p == nullptr){
-                _out_file << "/";
-            } else {
-                _out_file << p->symbol();
-            }
-        }
-        _out_file << std::endl;
+void board::file_print_board(ofstream& _out_file)
+{
+    for (int i = 0; i < board_size; i++)
+    {
+       _out_file << board_size - i << " " << row_symbols(i) << endl;
     }
-    _out_file << "  ABCDEFGH\n";
+    _out_file << "  ABCDEFGH" << endl;
 }
 
 /*
@@ -841,18 +829,6 @@ bool board::can_do_legal_move(player_id pl)
     // Altrimenti: nessuna mossa legale.
     return false;
 }
-
-/*
-    Rende vuoto il file di log.
-*/
-void board::init_log_file()
-{
-    std::ofstream _out_file;
-    _out_file.open(log_file, std::ofstream::out | std::ofstream::trunc);
-    _out_file.close();
-}
-
-
 /*
     Setup 1:
      01234567

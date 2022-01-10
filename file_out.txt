@@ -1,0 +1,47 @@
+8 TCADRACT
+7 PPPPPPPP
+6         
+5         
+4         
+3         
+2 pppppppp
+1 tcadract
+  ABCDEFGH
+8 TCADRACT
+7 PPP PPPP
+6         
+5    P    
+4         
+3         
+2 pppppppp
+1 tcadract
+  ABCDEFGH
+8 TCADRACT
+7 PPP PPPP
+6         
+5    P    
+4         
+3   c     
+2 pppppppp
+1 t adract
+  ABCDEFGH
+8 TCADRACT
+7 PPP PPP 
+6         
+5    P   P
+4         
+3   c     
+2 pppppppp
+1 t adract
+  ABCDEFGH
+8 TCADRACT
+7 PPP PPP 
+6         
+5    P   P
+4         
+3   c     
+2 pppppppp
+1  tadract
+  ABCDEFGH
+
+Fine replay, vincitore giocatore 1
