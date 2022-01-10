@@ -1,2 +1,0 @@
-C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\ar.exe qc libpieces.a CMakeFiles/pieces.dir/piece.cpp.obj CMakeFiles/pieces.dir/pawn.cpp.obj CMakeFiles/pieces.dir/knight.cpp.obj CMakeFiles/pieces.dir/queen.cpp.obj CMakeFiles/pieces.dir/rook.cpp.obj CMakeFiles/pieces.dir/king.cpp.obj CMakeFiles/pieces.dir/bishop.cpp.obj
-C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\ranlib.exe libpieces.a
