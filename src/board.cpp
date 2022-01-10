@@ -7,13 +7,10 @@
 
 using namespace std;
 
-
 board::board()
 {
-    //std::cout << "Board Initialization.\n";
     init_board();
     init_player_pieces();
-    //std::cout << "Board initializated.\n";
 }
 
 /*
@@ -64,6 +61,8 @@ bool board::move_piece(const position& from, const position& to)
         }
         count_draw++;
         states[all_board_symbols()]++;
+        
+        log.push_back(get_string(from)+" "+get_string(to));
         return true;
     }*/
 
@@ -176,6 +175,7 @@ bool board::move_piece(const position& from, const position& to)
     
     //int& state_num {states[all_board_symbols()]};
     //cout << state_num;
+    log.push_back(get_string(from)+" "+get_string(to));
     return true;    
     
 }
@@ -264,7 +264,6 @@ bool board::is_checkmate(player_id player_number)
             if (!p->can_move_to(dest, board_matrix) && !p->can_capture(dest, board_matrix))
                 continue;
             
-            
             // Mossa fittizia
             piece* prev_in_dest = board_matrix[make_index_8(dest)];
             position prev_p_pos = p->get_position();
@@ -276,19 +275,6 @@ bool board::is_checkmate(player_id player_number)
             // Controllo se in tale configurazione è scaco
             bool is_check_bool = is_check(player_number);
 
-            // debug
-            /*
-            print_board();
-            if (is_check(player_number))
-            {
-                cout << "check\n";
-            }
-            else
-            {
-                cout << "NOT check\n";
-            }
-            */
-
             // Ripristino della configurazione iniziale
             board_matrix[make_index_8(dest)] = prev_in_dest;
             board_matrix[make_index_8(prev_p_pos)] = p;
@@ -297,10 +283,8 @@ bool board::is_checkmate(player_id player_number)
             // Se eseguendo tale mossa non vi è più lo scacco al re allora non è scacco matto
             if (!is_check_bool)
                 return false;
-
         }
     }
-
     // Altrimenti è necessariamente scacco matto
     return true;
 }
@@ -308,11 +292,11 @@ bool board::is_checkmate(player_id player_number)
 
 bool board::is_castling(const position& from, const position& to){
     piece* _king = board_matrix[make_index_8(from)];
-    if(true && true && abs(from.col - to.col) != 2){ //qui devo verificare se il piece king è effettivamente un Re e che il dato re non sia già sotto scacco
-    if(from == position(7, 4) || from == position(0, 4)){
+
+    if(!(from == position(7, 4)) || !(from == position(0, 4))){
         return false;
     }
-    //if(!_king.is_check(board_matrix) && abs(from.col - to.col) != 2){
+    if(is_check(_king->get_player()) && abs(from.col - to.col) != 2){
         return false;
     }
 
@@ -325,7 +309,23 @@ bool board::is_castling(const position& from, const position& to){
             if(!board_matrix[make_index_8(from.row,i)])
                 return false;
         }
-                
+        position temp_pos = position(from.row,from.col+1);
+        piece* prev_in_dest{board_matrix[make_index_8(temp_pos)]};
+        _king->set_position(temp_pos);
+        board_matrix[make_index_8(temp_pos)] = _king;
+        board_matrix[make_index_8(from)] = nullptr;
+        // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
+        if (is_check(_king->get_player()))
+        {
+            board_matrix[make_index_8(from)] = _king;
+            _king->set_position(from);
+            board_matrix[make_index_8(temp_pos)] = prev_in_dest;
+            return false;
+        }
+        board_matrix[make_index_8(from)] = _king;
+        _king->set_position(from);
+        board_matrix[make_index_8(temp_pos)] = prev_in_dest;
+        //qui verificare che il re non vada in scacco muovendosi in ciascuna delle due caselle     
     } else {
         rook_from = position(from.row, 7);
         rook_to = position(from.row, to.col - 1);
@@ -333,13 +333,44 @@ bool board::is_castling(const position& from, const position& to){
             if(!board_matrix[make_index_8(from.row,i)])
                 return false;
         }
+        position temp_pos = position(from.row,from.col-1);
+        piece* prev_in_dest{board_matrix[make_index_8(temp_pos)]};
+        _king->set_position(temp_pos);
+        board_matrix[make_index_8(temp_pos)] = _king;
+        board_matrix[make_index_8(from)] = nullptr;
+        // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
+        if (is_check(_king->get_player()))
+        {
+            board_matrix[make_index_8(from)] = _king;
+            _king->set_position(from);
+            board_matrix[make_index_8(temp_pos)] = prev_in_dest;
+            return false;
+        }
+        board_matrix[make_index_8(from)] = _king;
+        _king->set_position(from);
+        board_matrix[make_index_8(temp_pos)] = prev_in_dest;
+        //qui verificare che il re non vada in scacco muovendosi in ciascuna delle due caselle
     }
+    piece* prev_in_dest{board_matrix[make_index_8(to)]};
+    _king->set_position(to);
+    board_matrix[make_index_8(to)] = _king;
+    board_matrix[make_index_8(from)] = nullptr;
+    // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
+    if (is_check(_king->get_player()))
+    {
+        board_matrix[make_index_8(from)] = _king;
+        _king->set_position(from);
+        board_matrix[make_index_8(to)] = prev_in_dest;
+        return false;
+    }
+    board_matrix[make_index_8(from)] = _king;
+    _king->set_position(from);
+    board_matrix[make_index_8(to)] = prev_in_dest;
+
     piece* _rook = board_matrix[make_index_8(rook_from)];
     if(!_rook->get_init_pos() && !_king->get_init_pos()){
         return false;
     }
-
-    //qui verificare che il re non vada in scacco muovendosi in ciascuna delle due caselle
     return true;
 }
 

@@ -11,7 +11,6 @@ using namespace std;
 bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
     vector<position> possible_pos = get_possible_positions();
-    //vector<position>::iterator it;
     auto it = find(possible_pos.begin(), possible_pos.end(), dest);
     if (it == possible_pos.end()) 
         return false;

@@ -41,38 +41,6 @@ bool king::can_promote()
 vector<position> king::get_possible_positions()
 {
     vector<position> possible_pos;
-    
-    /*position dest = pos + position(0, 1);
-    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
-        possible_pos.push_back(dest);
-
-    dest = pos + position(1, 1);
-    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
-        possible_pos.push_back(dest);
-
-    dest = pos + position(1, 0);
-    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
-        possible_pos.push_back(dest);
-    
-    dest = pos + position(1, -1);
-    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
-        possible_pos.push_back(dest);
-    
-    dest = pos + position(0, -1);
-    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
-        possible_pos.push_back(dest);
-    
-    dest = pos + position(-1, -1);
-    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
-        possible_pos.push_back(dest);
-    
-    dest = pos + position(-1, 0);
-    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
-        possible_pos.push_back(dest);
-    
-    dest = pos + position(-1, 1);
-    if(dest.col > 0 && dest.col < 7 && dest.row > 0 && dest.row < 7)
-        possible_pos.push_back(dest);*/
 
     position possibility;
     possibility.row = pos.row;
@@ -87,18 +55,16 @@ vector<position> king::get_possible_positions()
                 possibility.row += i;
                 possibility.col += j;
 
-
-                if(possibility.col > -1 && possibility.col < 8 && possibility.row > -1 && possibility.row < 8)
-                    {
-                        possible_pos.push_back(possibility);
-                    }
+                if(possibility.col > -1 && possibility.col < 8 && possibility.row > -1 && possibility.row < 8) //cambiare sta roba !!
+                {
+                    possible_pos.push_back(possibility);
+                }
 
                 possibility.row = pos.row;
                 possibility.col = pos.col;
             }  
         }
     }
-
     return possible_pos;
 }
 

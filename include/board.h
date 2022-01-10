@@ -25,7 +25,7 @@ class board
         bool move_piece(const position& from, const position& to);
         void init_game();
         void init_board();
-
+        std::vector<string> get_log() {return log;}
     
     public:
         std::string row_symbols(int i);
@@ -42,14 +42,10 @@ class board
         static const int PLAYER_1{0}; //fare un enum?
         static const int PLAYER_2{1};
 
-        //void check_king_movement();
         bool is_check(player_id player_number);
         bool is_checkmate(player_id player_number);
 
         bool is_draw(player_id pl);
-        
-        
-        //bool is_checkmate2(int player_number);
 
         bool is_castling(const position& from, const position& to);
         bool can_en_passant(const position& passing, const position& to_pass);
@@ -66,6 +62,8 @@ class board
             rook_number = 2,
             pawn_number = 8
         };
+
+        std::vector<string> log; //Vector per memorizzare tutte le mosse effettuate dai giocatori
     /*
         Variabili membro private
     */
