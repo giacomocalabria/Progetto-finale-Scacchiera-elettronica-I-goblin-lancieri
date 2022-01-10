@@ -5,10 +5,9 @@
 
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <vector>
 #include <string>
-#include <map>
-//#include <stdlib.h> 
 
 #include "bishop.h"
 #include "king.h"
@@ -25,7 +24,7 @@ class board
         bool move_piece(const position& from, const position& to);
         void init_game();
         void init_board();
-        std::vector<string> get_log() {return log;}
+        std::vector<std::string> get_log() {return log;}
     
     public:
         std::string row_symbols(int i);
@@ -63,7 +62,7 @@ class board
             pawn_number = 8
         };
 
-        std::vector<string> log; //Vector per memorizzare tutte le mosse effettuate dai giocatori
+        std::vector<std::string> log; //Vector per memorizzare tutte le mosse effettuate dai giocatori
     /*
         Variabili membro private
     */
