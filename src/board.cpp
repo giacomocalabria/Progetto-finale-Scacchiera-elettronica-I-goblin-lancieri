@@ -149,7 +149,7 @@ bool board::move_piece(const position& from, const position& to)
 
     // ----------------- Arrocco -----------------
     
-    /*if(is_castling(from, to)){
+    if(is_castling(from, to)){
         piece* _king = board_matrix[make_index_8(from)];
         _king->set_position(to);
         board_matrix[make_index_8(to)] = _king;
@@ -175,7 +175,7 @@ bool board::move_piece(const position& from, const position& to)
         
         log.push_back(get_string(from)+" "+get_string(to));
         return true;
-    }*/
+    }
 
     piece* p = board_matrix[make_index_8(from)];
     piece* prev_in_dest;
@@ -570,6 +570,8 @@ bool board::promote(const position& pos)
         board_matrix[make_index_8(pos)] = &player_queen[player_num].back();
         return true;
     }
+    
+    return false;
 }
 
 std::vector<position> board::get_player_pieces_positions(player_id player)
@@ -636,7 +638,6 @@ void board::init_player_pieces()
             - 2 pawn ciascuno
             - 1 king e 1 queen ciascuno
     */
-
 
     // ----------- Inserimento pawns ----------- 
 
@@ -721,7 +722,6 @@ void board::print_board()
     cout << "  ABCDEFGH" << endl;
 }
 
-//void board::file_print_board(ofstream& _out_file, const position& from, const position& to){
 void board::file_print_board(ofstream& _out_file)
 {
     for (int i = 0; i < board_size; i++)
@@ -732,7 +732,9 @@ void board::file_print_board(ofstream& _out_file)
 }
 
 /*
+
 Mi restituisce una stringa con i simboli della riga i della board (compresi gli spazi)
+
 */
 string board::row_symbols(int i)
 {
@@ -741,32 +743,24 @@ string board::row_symbols(int i)
     for (int j = 0; j < board_size; j++)
     {
         piece* p = board_matrix[make_index_8(i, j)];
-        if (p == nullptr)
+        if (!p)
         {
            str_board += " ";
         }
-        else
-        {
+        else{
            str_board += p->symbol();
-           //std::cout << p->get_position();
-           //std::cout << "*";
         } 
     }
-
     return str_board;
 }
 
 string board::all_board_symbols()
 {
     string all_symbols;
-
     for(int i = 0; i < board_size; i++)
     {
-        //cout << "funziona " << i << std::endl;
         all_symbols += row_symbols(i);
     }
-
-    //cout << all_symbols << endl;
     return all_symbols;
 }
 
