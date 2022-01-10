@@ -627,7 +627,7 @@ void board::print_board()
     {
        cout << board_size - i << " " << row_symbols(i) << endl;
     }
-    cout << "  ABCDEFGH\n";
+    cout << "  ABCDEFGH" << endl;
 }
 
 //void board::file_print_board(ofstream& _out_file, const position& from, const position& to){
@@ -637,7 +637,7 @@ void board::file_print_board(ofstream& _out_file)
     {
        _out_file << board_size - i << " " << row_symbols(i) << endl;
     }
-    _out_file << "  ABCDEFGH\n";
+    _out_file << "  ABCDEFGH" << endl;
 }
 
 /*

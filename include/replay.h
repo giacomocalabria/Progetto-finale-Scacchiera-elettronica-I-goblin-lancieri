@@ -19,23 +19,21 @@ int video_replay(const string& _nome_file_log){
     ifstream in_file(_nome_file_log);
     string mossa;
     if(in_file.is_open()) {
-        replay_player v1 = replay_player(&main_board, 1);
-        replay_player v2 = replay_player(&main_board, 2);
+        replay_player vp = replay_player(&main_board);
         main_board.print_board();
-        while(main_board.is_game_ended()){
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        while(true){
             getline(in_file, mossa);
-            v1.turn(mossa);
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-            system("cls");
-            main_board.print_board();
-            if(main_board.is_game_ended()){
+            if(mossa == "FF 11"){
+                cout << endl <<"Fine replay, vincitore giocatore 1" << endl;
+                break;
+            } else if(mossa == "FF 22"){
+                cout << endl <<"Fine replay, vincitore giocatore 2" << endl;
                 break;
             }
-            getline(in_file, mossa);
-            v2.turn(mossa);
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-            system("cls");
+            vp.turn(mossa);
             main_board.print_board();
+            std::this_thread::sleep_for(std::chrono::seconds(1));
         }
         in_file.close();
     } else {
@@ -54,19 +52,18 @@ int file_replay(const string& _nome_file_log, const string& _nome_file_output_re
     string mossa;
     if(in_file.is_open()) {
         if(out_file.is_open()){
-            out_file.open(_nome_file_output_replay, std::ofstream::out | std::ofstream::trunc); //rende vuoto il file di log
-            replay_player v1 = replay_player(&main_board, 1);
-            replay_player v2 = replay_player(&main_board, 2);
-            while(main_board.is_game_ended()){
-                main_board.file_print_board(out_file);
+            replay_player vp = replay_player(&main_board);
+            main_board.file_print_board(out_file);
+            while(true){
                 getline(in_file, mossa);
-                v1.turn(mossa);
-                main_board.file_print_board(out_file);
-                if(main_board.is_game_ended()){
+                if(mossa == "FF 11"){
+                    out_file << endl <<"Fine replay, vincitore giocatore 1" << endl;
+                    break;
+                } else if(mossa == "FF 22"){
+                    out_file << endl <<"Fine replay, vincitore giocatore 2" << endl;
                     break;
                 }
-                getline(in_file, mossa);
-                v2.turn(mossa);
+                vp.turn(mossa);
                 main_board.file_print_board(out_file);  
             }
         } else {
@@ -74,7 +71,7 @@ int file_replay(const string& _nome_file_log, const string& _nome_file_output_re
             in_file.close();
             return -1;
         }
-        out_file.is_open();
+        out_file.close();
         in_file.close();
     } else {
         cerr << "[ERROR] Impossibile aprire/leggere il file: '" << _nome_file_log << "'" << endl;
