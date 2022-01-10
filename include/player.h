@@ -26,7 +26,7 @@ class player{
 
     public:
         player(board* _b, player_id _id) : b{_b}, id{_id}{};
-        int get_player_number(){return id;}
+        player_id get_player_number(){return id;}
         virtual void turn() = 0;
 
     protected:

@@ -31,6 +31,8 @@ int make_index_8(int row, int col);
 
 position position_from_8(int idx);
 
+std::string to_string_move(const position& p1, const position& p2);
+
 bool is_valid_position_8(const position& pos);
 
 std::string get_string(const position& pos);

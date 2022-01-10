@@ -54,8 +54,8 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     }
 
     // Sicuramente si sta muovendo in diagonale (gli altri casi hanno già portato a conclusione)
-
     piece* other = board_pieces[make_index_8(dest)];
+    //cout << other << endl;
     if (other)
     {
         if (player != other->get_player())
@@ -86,34 +86,23 @@ bool pawn::can_capture(const position& dest, const vector<piece*>& board_pieces)
     /*position straight_right = pos + (sign * position(1, 1));
     position straight_left = pos + (sign * position(1, 1));
 
-    piece* alto_dx = board_pieces[make_index_8(straight_right)];
-    piece* alto_sx = board_pieces[make_index_8(straight_left)];
+    /*
+        Se tale pedina però è dello stesso giocatore
+        di questo pedone significa che non potrà mangiarlo
+    */
+    if (board_pieces[make_index_8(dest)]->get_player() == get_player())
+        return false;
 
-    if(dest == straight_right)
+    if (dest == pos + (sign * position(1, 1)) || dest == pos + (sign * position(1, -1)))
     {
-        if(alto_dx)
-        {
-            return true;
-        }
+        return true;
     }
-    else if(dest == straight_left)
-    {
-        if(alto_sx)
-        {
-            return true;
-        }
-    }*/
-    
     return false;
 
 }
 
 inline char pawn::symbol()
 {
-    /*if (player == board::PLAYER_1)    // Player 1
-        return 'p';
-    return 'P'; // Player 2*/
-
     return player == board::PLAYER_1 ? 'p' : 'P';
 }
 
@@ -122,7 +111,6 @@ inline char pawn::symbol()
     celle frontali. Se si trova nella posizione iniziale allora
     ha la possibilità di fare un salto in avanti di 2.
 */
-
 std::vector<position> pawn::get_possible_positions()
 {
     std::vector<position> possible_positions;

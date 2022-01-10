@@ -113,7 +113,7 @@ vector<position> bishop::get_possible_positions()
 	vector<position> possible_positions;
 
 	position go_on = position(pos.row + 1, pos.col + 1);
-	while(go_on.row < 8 && go_on.row > 0 && go_on.col < 8 && go_on.col > 0) //boundary rispettato?
+	while(is_valid_position_8(go_on)) //boundary rispettato?
 	{
 		possible_positions.push_back(go_on);
 
@@ -122,7 +122,7 @@ vector<position> bishop::get_possible_positions()
 	}
 
 	go_on = position(pos.row - 1, pos.col + 1);
-	while(go_on.row < 8 && go_on.row > -1 && go_on.col < 8 && go_on.col > -1)	//boundary rispettato?
+	while(is_valid_position_8(go_on))	//boundary rispettato?
 	{
 		possible_positions.push_back(go_on);
 
@@ -131,7 +131,7 @@ vector<position> bishop::get_possible_positions()
 	}
 
 	go_on = position(pos.row + 1, pos.col - 1);
-	while(go_on.row < 8 && go_on.row > 0 && go_on.col < 8 && go_on.col > 0)	//boundary rispettato?
+	while(is_valid_position_8(go_on))	//boundary rispettato?
 	{
 		possible_positions.push_back(go_on);
 
@@ -140,7 +140,7 @@ vector<position> bishop::get_possible_positions()
 	}
 
 	go_on = position(pos.row - 1, pos.col - 1);
-	while(go_on.row < 8 && go_on.row > 0 && go_on.col < 8 && go_on.col > 0)	//boundary rispettato?
+	while(is_valid_position_8(go_on))	//boundary rispettato?
 	{
 		possible_positions.push_back(go_on);
 
