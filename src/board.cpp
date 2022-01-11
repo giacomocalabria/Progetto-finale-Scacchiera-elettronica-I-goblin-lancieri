@@ -14,11 +14,10 @@ board::board()
 }
 
 /*
-    La funzione membro move_piece rappresenta l'interfaccia fra
-    il player e la board concreta. Essa chiama per un determinato
-    pezzo le funzioni membro virtuali can_move_to, can_capture, ecc
-    di piece. Essa modifica concretamente la board.
-    Funzione membro CHIAVE della board. Muove fisicamente il pezzo.
+    La funzione membro move_piece rappresenta l'interfaccia fra il player 
+    e la board concreta. Essa chiama per un determinato pezzo le funzioni 
+    membro virtuali can_move_to, can_capture, ecc. di piece. 
+    Essa modifica concretamente la board. Funzione membro CHIAVE della board che muove fisicamente il pezzo.
 */
 bool board::move_piece(const position& from, const position& to)
 {
@@ -36,11 +35,6 @@ bool board::move_piece(const position& from, const position& to)
     {
         return false; // Restituisce false
     }
-    // Se non è una posizione logicamente valida:
-    if (!is_valid_position_8(from) || !is_valid_position_8(to))
-    {
-        return false;
-    }
 
     // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
     piece* prev_in_dest = board_matrix[make_index_8(to)];
@@ -55,7 +49,6 @@ bool board::move_piece(const position& from, const position& to)
     }
 
     // ----------------- Arrocco -----------------
-    
     if(is_castling(from, to))
     {
         piece* _king = board_matrix.at(make_index_8(from));
@@ -141,14 +134,13 @@ bool board::move_piece(const position& from, const position& to)
 
         count_draw++;
         states[all_board_symbols()]++;
-        
         log.push_back(get_string_8(from) + " " + get_string_8(to));
         return true;
     }
 
     // ----------------- En passant -----------------
-     
-    //N.B.! Nella posizione to, in caso di en passant, e' impossibile che vi sia una pedina; se fosse il contrario, il pedone avversario non avrebbe potuto fare 2 passi (nemmeno uno in realta')
+    // N.B.! Nella posizione to, in caso di en passant, e' impossibile che vi sia una pedina; 
+    // se fosse il contrario, il pedone avversario non avrebbe potuto fare 2 passi (nemmeno uno in realta')
     if(can_en_passant(from, to))
     {
         int sign = p->get_player() == player_id::player_1 ? -1 : 1;  // orientazione
@@ -165,17 +157,19 @@ bool board::move_piece(const position& from, const position& to)
         // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
         if (is_check(p->get_player()))
         {
-            // Ritorna alla situazione iniziale
-            board_matrix[make_index_8(from)] = p;
+            board_matrix[make_index_8(from)] = p;// Ritorna alla situazione iniziale
             p->set_position(from);
             board_matrix[make_index_8(pos_to_pass)] = prev_in_dest;
             return false;
         }
+
+        count_draw++;
+        states[all_board_symbols()]++;
+        log.push_back(get_string_8(from) + " " + get_string_8(to));
         return true;
     }
     // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
     prev_in_dest = board_matrix[make_index_8(to)];
-
 
     // ----------------------- Sezione mossa normale -----------------------
     if (p->can_move_to(to, board_matrix) || p->can_capture(to, board_matrix))
@@ -187,17 +181,13 @@ bool board::move_piece(const position& from, const position& to)
         // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
         if (is_check(p->get_player()))
         {
-            // Ritorna alla situazione iniziale
-            board_matrix[make_index_8(from)] = p;
+            board_matrix[make_index_8(from)] = p; // Ritorna alla situazione iniziale
             p->set_position(from);
             board_matrix[make_index_8(to)] = prev_in_dest;
             return false;
         }
     }
-    else
-    {
-        return false;
-    }
+    else return false;
 
     // -------------- Promozione -----------------
     if (p->get_player() == player_id::player_1)
@@ -222,69 +212,34 @@ bool board::move_piece(const position& from, const position& to)
 
     // Mossa lecita
     count_draw++;
-    
-    //cout << all_board_symbols() << endl;
-    
-    /*auto iterator = find(states.begin(), states.end(), all_board_symbols());
-    if(iterator == states.end())
-    {
-        //states[all_board_symbols()] = 0;
-    }
-    else
-    {
-        //states[all_board_symbols()]++;
-    }*/
-    
-    //int& state_num {states[all_board_symbols()]};
-    //cout << state_num;
+    states[all_board_symbols()]++;
     log.push_back(get_string_8(from) + " " + get_string_8(to));
-    // ALLORA è una mossa lecita
-    
-    // Se c'era un pezzo e se tale pezzo aveva come simbolo k allora ha mangiato il re
-    /*if (prev_in_dest && prev_in_dest->symbol() == 'k')
-    {
-        king_eaten_player[prev_in_dest->get_player()] = true;
-    }*/
-
     return true;    
-    
 }
 
 bool board::can_en_passant(const position& passing, const position& to)
 {
     piece* pce{board_matrix[make_index_8(passing)]};
 
-    //AGGIUNTO IN CORSO D'OPERA(ho modificato pensando di rendere il tutto piu coerente)
+    //AGGIUNTO IN CORSO D'OPERA (ho modificato pensando di rendere il tutto piu coerente)
     int sign = pce->get_player() == player_id::player_1 ? -1 : 1;  // orientazione
     position pos_to_pass = to - position(sign, 0);
-    //pos_to_pass.row -= sign;
     piece* pce_to_pass{board_matrix[make_index_8(pos_to_pass)]};
 
-    if (!pce_to_pass || !pce)   // Non c'è una pedina in pos_to_pass
-    {
-        return false; // Da def, forse eccezione o altro
-    }
+    if (!pce_to_pass || !pce) 
+        return false;  // Non c'è una pedina in pos_to_pass
 
-    //if (pce->can_promote()) // in generale se è un pedone
-    if (is_pawn(pce)) // in generale se è un pedone
+    if (is_pawn(pce))
     {
-        // Ufficiale: pce e' un pawn
         if(pce_to_pass->get_can_be_passed() && pce_to_pass->get_player() != pce->get_player())
-        {
-            return true;
-        }
-        else
-            return false;        
+            return true;        
     }
     
     return false;
 }
 
-/*
-    Si limita a chiamare is_check del re del proprio giocatore.
-*/
 bool board::is_check(player_id player_number)
-{
+{   //Si limita a chiamare is_check del re del proprio giocatore.
     return player_king[player_number].front().is_check(board_matrix);
 }
 
@@ -306,26 +261,17 @@ bool board::has_king_been_captured(player_id id)
 */
 bool board::is_checkmate(player_id player_number)
 {
-    // Per ogni pezzo della board
-    for (auto p : board_matrix)
+    for (auto p : board_matrix) // Per ogni pezzo della board
     {
         // Il puntatore deve essere valido ed avere numero di giocatore uguale a player_number
         if (!p || p->get_player() != player_number)
             continue;
 
-        // Per ogni possibile posizione del pezzo
-        for (auto dest : p->get_possible_positions())
+        for (auto dest : p->get_possible_positions()) // Per ogni possibile posizione del pezzo
         {
             // Controlla se può raggiungere tale posizione
-            //cout << "CHIAMATA A CAN_MOVE_TO e CAN_CAPTURE in is_check_mate per pezzo: " << p->symbol() << " da " << p->get_position() << " a" << dest << endl;
-            if (!p->can_move_to(dest, board_matrix) && !p->can_capture(dest, board_matrix))
-            {
-                //cout << "NON PUO' MUOVERSI.\n";
-                continue;
-            }
-                
-            //cout << "PUO' MUOVERSI.\n";
-            
+            if (!p->can_move_to(dest, board_matrix) && !p->can_capture(dest, board_matrix)) continue;
+
             // Mossa fittizia
             piece* prev_in_dest = board_matrix[make_index_8(dest)];
             position prev_p_pos = p->get_position();
@@ -334,23 +280,18 @@ bool board::is_checkmate(player_id player_number)
             board_matrix[make_index_8(p->get_position())] = nullptr;
             p->set_position(dest);
 
-            // Controllo se in tale configurazione è scaco
-            //cout << "CHIAMATA A IS_CHECK\n";
-            bool is_check_bool = is_check(player_number);
-            //cout << "FINE CHIAMATA A IS_CHECK\n";
+            bool is_check_bool = is_check(player_number); // Controllo se in tale configurazione è scaco
 
             // Ripristino della configurazione iniziale
             board_matrix[make_index_8(dest)] = prev_in_dest;
             board_matrix[make_index_8(prev_p_pos)] = p;
             p->set_position(prev_p_pos);
 
-            // Se eseguendo tale mossa non vi è più lo scacco al re allora non è scacco matto
-            if (!is_check_bool)
+            if (!is_check_bool) // Se eseguendo tale mossa non vi è più lo scacco, allora non è scacco matto
                 return false;
         }
     }
-    // Altrimenti è necessariamente scacco matto
-    return true;
+    return true; // Altrimenti è necessariamente scacco matto
 }
 
 
@@ -363,18 +304,57 @@ bool board::is_castling(const position& from, const position& to)
 }
 
 /*
-    Rende vuota la board inizializzando a nullptr ogni riferimento
-    in board_matrix.
+    Promote viene chiamata quando quando una cella si ritrova dalla parte opposta 
+    della board, tenendo conto del colore del giocatore: se il pezzo può pruomovere 
+    allora viene sostituito da una regina.
+*/
+bool board::promote(const position& pos)
+{
+    piece* p{board_matrix.at(make_index_8(pos))};
+    if (!p) return false;
+
+    if (is_pawn(p))
+    {
+        player_id player_num{p->get_player()};
+        /*
+            Il pezzo viene inserito nel vector dei pezzi in quanto nuovo pezzo concreto.
+            Ciò NON causa la riallocazione dei vector poiché avviene il reserve della
+            memoria del vector di 1 (la regina iniziale) + 8 (i pedoni iniziali, che
+            possono promuovere).
+        */
+        player_queen[player_num].push_back(queen(p->get_position(), player_num));
+        board_matrix[make_index_8(pos)] = &player_queen[player_num].back();
+        return true;
+    }
+    
+    return false;
+}
+
+bool board::can_do_legal_move(player_id pl)
+{
+    for (auto p : board_matrix) // Per ogni pedina
+    {
+        if (!p || p->get_player() != pl) continue; // Se non c'è alcuna pedina o se tale non è del player
+        
+        vector<position> possible_pos;
+        possible_pos = p->get_possible_positions();
+        for (auto pos : possible_pos)
+        {
+            // Se la pedina può muoversi verso tale posizione allora ritorna true
+            if (p->can_move_to(pos, board_matrix)) return true;
+        }
+    }
+    return false; // Altrimenti: nessuna mossa legale.
+}
+
+/*
+    Rende vuota la board inizializzando a nullptr ogni riferimento in board_matrix.
 */
 void board::to_empty()
 {
     for (int i = 0; i < board_size; i++)
-    {
         for (int j = 0; j < board_size; j++)
-        {
             board_matrix[make_index_8(i, j)] = nullptr;
-        }
-    }
 }
 
 void board::init_board()
@@ -408,34 +388,6 @@ void board::init_board()
     player_queen[player_id::player_2].reserve(piece_numbers::queen_number + piece_numbers::pawn_number);
     
     to_empty();
-}
-
-/*
-    Promote viene chiamata quando quando una cella si ritrova
-    dalla parte opposta della board, tenendo conto del colore
-    del giocatore: se il pezzo può pruomovere allora viene sostituito
-    da una regina.
-*/
-bool board::promote(const position& pos)
-{
-    piece* p{board_matrix.at(make_index_8(pos))};
-    if (!p) return false;
-
-    if (is_pawn(p))
-    {
-        player_id player_num{p->get_player()};
-        /*
-            Il pezzo viene inserito nel vector dei pezzi in quanto nuovo pezzo concreto.
-            Ciò NON causa la riallocazione dei vector poiché avviene il reserve della
-            memoria del vector di 1 (la regina iniziale) + 8 (i pedoni iniziali, che
-            possono promuovere).
-        */
-        player_queen[player_num].push_back(queen(p->get_position(), player_num));
-        board_matrix[make_index_8(pos)] = &player_queen[player_num].back();
-        return true;
-    }
-    
-    return false;
 }
 
 std::vector<position> board::get_player_pieces_positions(player_id player)
@@ -621,25 +573,16 @@ void board::file_print_board(ofstream& _out_file)
     _out_file << "  ABCDEFGH" << endl;
 }
 
-/*
-
-Mi restituisce una stringa con i simboli della riga i della board (compresi gli spazi)
-
-*/
-string board::row_symbols(int i)
+string board::row_symbols(int i) //Restituisce una stringa con i simboli della riga i della board (compresi gli spazi)
 {
     string str_board;
-
     for (int j = 0; j < board_size; j++)
     {
         piece* p = board_matrix[make_index_8(i, j)];
         if (!p)
-        {
            str_board += " ";
-        }
         else{
            str_board += p->symbol();
-        } 
     }
     return str_board;
 }
@@ -648,35 +591,18 @@ string board::all_board_symbols()
 {
     string all_symbols;
     for(int i = 0; i < board_size; i++)
-    {
         all_symbols += row_symbols(i);
-    }
     return all_symbols;
 }
-
-/*
-Ci dice se una certa "posizione" della board (rappresentata dalla stringa str) e' capitata 3 volte nella stessa partita. Se cio' si verifica, la partita termina per patta (facciamo obbligatoriamente?!?!?!)
-*/
-/*bool board::too_much_reps(string str)  
-{
-    if(states[str] && states[str] == 3)
-        return true;
-
-    return false;
-}*/
-
-
 /*
 La funzione is_draw ci permette di sapere se, prima della prossima mossa, si e' in una condizione in cui e' possibile procedere con la patta, ovvero interrompere la partita (in parita') per scelta o per evitare di continuare a giocare all'infinito
 */
 bool board::is_draw(player_id pl)
 {
-    //cout << "Numero di mosse: " << get_no_pwn_no_eat() << "\n";
-
     //--------------- mancanza di movimenti del pedone e di catture ---------------
     constexpr int limit {50};
     constexpr int reps_limit {3};
-    if(get_no_pwn_no_eat() == limit /*|| too_much_reps(all_board_symbols())*/)
+    if(get_no_pwn_no_eat() == limit)
     {
         cout << "Nessun pedone è stato mosso e nessuna cattura è avvenuta per " << limit << " mosse." << endl;
         return true;
@@ -685,31 +611,9 @@ bool board::is_draw(player_id pl)
     //--------------- patta per mancanza di mosse possibili del player pl ---------------
     piece* p;
     vector<position> possible_pos;
-
     if (!is_check(pl) && !can_do_legal_move(pl))
         return true;
 
-    return false;
-}
-
-bool board::can_do_legal_move(player_id pl)
-{
-    // Per ogni pedina
-    for (auto p : board_matrix)
-    {
-        // Se non c'è alcuna pedina o se tale non è del player
-        if (!p || p->get_player() != pl) continue;
-        
-        vector<position> possible_pos;
-        possible_pos = p->get_possible_positions();
-        for (auto pos : possible_pos)
-        {
-            // Se la pedina può muoversi verso tale posizione allora ritorna true
-            if (p->can_move_to(pos, board_matrix)) return true;
-        }
-    }
-
-    // Altrimenti: nessuna mossa legale.
     return false;
 }
 
