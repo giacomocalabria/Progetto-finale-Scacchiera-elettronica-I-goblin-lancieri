@@ -15,15 +15,16 @@
 using namespace std;
 
 int video_replay(const string& _nome_file_log){
-    board main_board;
     ifstream in_file(_nome_file_log);
-    string mossa;
     if(in_file.is_open()) {
-        replay_player vp = replay_player(&main_board);
         cout << "Replay della partita a video del file log: '" << _nome_file_log << "'" << endl << endl;
+        
+        board main_board;
+        replay_player virtual_player = replay_player(&main_board);
         main_board.print_board();
         cout << endl;
         std::this_thread::sleep_for(std::chrono::seconds(1));
+        string mossa;
         while(true){
             getline(in_file, mossa);
             if(mossa == "FF nero"){
@@ -36,7 +37,7 @@ int video_replay(const string& _nome_file_log){
                 cout << endl << "Fine replay, nessuno ha vinto e' patta" << endl;
                 break;
             }
-            vp.turn(mossa);
+            virtual_player.turn(mossa);
             main_board.print_board();
             cout << endl;
             std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -52,16 +53,18 @@ int video_replay(const string& _nome_file_log){
 
 
 int file_replay(const string& _nome_file_log, const string& _nome_file_output_replay){
-    board main_board;
     ifstream in_file(_nome_file_log);
-    ofstream out_file(_nome_file_output_replay);
-    string mossa;
     if(in_file.is_open()) {
+        ofstream out_file(_nome_file_output_replay);
         if(out_file.is_open()){
-            replay_player vp = replay_player(&main_board);
             out_file << "Replay della partita del file log: '" << _nome_file_log << "'" << endl << endl;
+            
+            board main_board;
+            replay_player virtual_player = replay_player(&main_board);
             main_board.file_print_board(out_file);
             out_file << endl;
+            string mossa;
+
             while(true){
                 getline(in_file, mossa);
                 if(mossa == "FF nero"){
@@ -74,10 +77,11 @@ int file_replay(const string& _nome_file_log, const string& _nome_file_output_re
                     out_file << endl << "Fine replay, nessuno ha vinto e' patta" << endl;
                     break;
                 }
-                vp.turn(mossa);
+                virtual_player.turn(mossa);
                 main_board.file_print_board(out_file);
                 out_file << endl;  
             }
+
         } else {
             cerr << "[ERROR] Impossibile aprire/scrivere sul file: '" << _nome_file_output_replay << "'" << endl;
             in_file.close();
@@ -89,7 +93,7 @@ int file_replay(const string& _nome_file_log, const string& _nome_file_output_re
         cerr << "[ERROR] Impossibile aprire/leggere il file: '" << _nome_file_log << "'" << endl;
         return -1;
     }
-    cout << "Replay su file eseguito con successo !" << endl;
+    cout << "Replay su file '"<< _nome_file_output_replay <<"' eseguito con successo !" << endl;
     return 0;
 }
 

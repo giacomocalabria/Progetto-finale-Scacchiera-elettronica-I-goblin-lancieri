@@ -1,10 +1,12 @@
-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+#Author: GIACOMO CALABRIA
+
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 set (CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_FLAGS "-O2")
+set (CMAKE_CXX_FLAGS "-O2")
 
 include_directories(include)
 
-project("Scacchiera_elettronica")
+project(Scacchiera_elettronica)
 
 # librerie del progetto
 add_library(board
@@ -47,7 +49,7 @@ add_library(replay_player
     src/replay_player.cpp
 )
 
-#executable scacchiera
+#eseguibile della scacchiera
 add_executable(scacchiera
 	src/scacchiera.cpp
     src/position.cpp
@@ -70,10 +72,9 @@ target_link_libraries(scacchiera
     player
 )
 
-#executable replay
+#eseguibile per il replay
 add_executable(replay
-    #susmake lists
-	src/replay.cpp
+    src/replay.cpp
     src/position.cpp
     src/pawn.cpp
     src/piece.cpp

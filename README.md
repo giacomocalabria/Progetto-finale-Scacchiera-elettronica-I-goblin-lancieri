@@ -8,7 +8,7 @@ GIACOMO:
 2. knight.cpp
 3. CMakeLists.txt
 4. player.h
-5. player.cpp
+5. player.cpp *file vuoto*
 6. human_player.h
 7. human_player.cpp
 8. replay.h

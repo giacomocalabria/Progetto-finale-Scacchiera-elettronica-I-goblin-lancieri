@@ -730,7 +730,6 @@ bool board::is_draw(player_id pl)
         return true;
 
     return false;
-    //_out_file << to_string_move(from, to) << endl;
 }
 
 bool board::can_do_legal_move(player_id pl)

@@ -1,4 +1,4 @@
-// Author: NICOLA MARITAN
+// Author: EDDIE CARRARO
 
 #include "pawn.h"
 
