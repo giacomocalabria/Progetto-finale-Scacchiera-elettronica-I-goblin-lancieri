@@ -20,19 +20,25 @@ int video_replay(const string& _nome_file_log){
     string mossa;
     if(in_file.is_open()) {
         replay_player vp = replay_player(&main_board);
+        cout << "Replay della partita a video del file log: '" << _nome_file_log << "'" << endl << endl;
         main_board.print_board();
+        cout << endl;
         std::this_thread::sleep_for(std::chrono::seconds(1));
         while(true){
             getline(in_file, mossa);
-            if(mossa == "FF 11"){
-                cout << endl <<"Fine replay, vincitore giocatore 1" << endl;
+            if(mossa == "FF nero"){
+                cout << endl <<"Fine replay, vincitore giocatore colore nero" << endl;
                 break;
-            } else if(mossa == "FF 22"){
-                cout << endl <<"Fine replay, vincitore giocatore 2" << endl;
+            } else if(mossa == "FF bianco"){
+                cout << endl <<"Fine replay, vincitore giocatore bianco" << endl;
+                break;
+            } else if(mossa == "PP PP"){
+                cout << endl << "Fine replay, nessuno ha vinto e' patta" << endl;
                 break;
             }
             vp.turn(mossa);
             main_board.print_board();
+            cout << endl;
             std::this_thread::sleep_for(std::chrono::seconds(1));
         }
         in_file.close();
@@ -53,18 +59,24 @@ int file_replay(const string& _nome_file_log, const string& _nome_file_output_re
     if(in_file.is_open()) {
         if(out_file.is_open()){
             replay_player vp = replay_player(&main_board);
+            out_file << "Replay della partita del file log: '" << _nome_file_log << "'" << endl << endl;
             main_board.file_print_board(out_file);
+            out_file << endl;
             while(true){
                 getline(in_file, mossa);
-                if(mossa == "FF 11"){
-                    out_file << endl <<"Fine replay, vincitore giocatore 1" << endl;
+                if(mossa == "FF nero"){
+                    out_file << endl <<"Fine replay, vincitore giocatore colore nero" << endl;
                     break;
-                } else if(mossa == "FF 22"){
-                    out_file << endl <<"Fine replay, vincitore giocatore 2" << endl;
+                } else if(mossa == "FF bianco"){
+                    out_file << endl <<"Fine replay, vincitore giocatore bianco" << endl;
+                    break;
+                } else if(mossa == "PP PP"){
+                    out_file << endl << "Fine replay, nessuno ha vinto e' patta" << endl;
                     break;
                 }
                 vp.turn(mossa);
-                main_board.file_print_board(out_file);  
+                main_board.file_print_board(out_file);
+                out_file << endl;  
             }
         } else {
             cerr << "[ERROR] Impossibile aprire/scrivere sul file: '" << _nome_file_output_replay << "'" << endl;

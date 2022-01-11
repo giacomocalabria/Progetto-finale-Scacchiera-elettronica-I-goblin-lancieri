@@ -24,7 +24,7 @@ class board
         bool move_piece(const position& from, const position& to);
         void init_game();
         void init_board();
-        std::vector<std::string> get_log() {return log;}
+        inline std::vector<std::string> get_log() { return log; }
     
     public:
         std::string row_symbols(int i);

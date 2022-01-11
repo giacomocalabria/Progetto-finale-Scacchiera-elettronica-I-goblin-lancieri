@@ -13,9 +13,6 @@ board::board()
     //#define DEBUG 1
     #if !DEBUG
     init_player_pieces();
-    #else
-    setup_7();
-    #endif
 }
 
 /*
