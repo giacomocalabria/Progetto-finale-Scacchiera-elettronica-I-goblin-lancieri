@@ -178,7 +178,9 @@ bool board::move_piece(const position& from, const position& to)
     }
 
     piece* p = board_matrix[make_index_8(from)];
-    piece* prev_in_dest;
+
+    // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
+    piece* prev_in_dest = board_matrix[make_index_8(to)];
 
 
     // ----------------- En passant -----------------
@@ -191,11 +193,24 @@ bool board::move_piece(const position& from, const position& to)
     {
         // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
         prev_in_dest = board_matrix[make_index_8(pos_to_pass)];
+
+        p->set_position(to);
+        board_matrix[make_index_8(to)] = p;
+        board_matrix[make_index_8(from)] = nullptr;
+        board_matrix[make_index_8(pos_to_pass)] = nullptr;
+
+        // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
+        if (is_check(p->get_player()))
+        {
+            // Ritorna alla situazione iniziale
+            board_matrix[make_index_8(from)] = p;
+            p->set_position(from);
+            board_matrix[make_index_8(pos_to_pass)] = prev_in_dest;
+            //cout << "Mossa non valida. La mossa porta ad uno scacco del proprio re.\n";
+            return false;
+        }
+        return true;
     }
-
-
-    // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
-    prev_in_dest = board_matrix[make_index_8(to)];
 
 
     // ----------------------- Sezione mossa normale -----------------------

@@ -38,7 +38,9 @@ int main(int argc, char *argv[])
     main_board.print_board();
     main_board.move_piece(position(4, 3), position(3, 3));
     main_board.print_board();
-    main_board.move_piece(position(1, 4), position(3, 4));
+    main_board.move_piece(position(6, 4), position(4, 4));
+    main_board.print_board();
+    main_board.move_piece(position(4, 4), position(3, 4));
     main_board.print_board();
     main_board.move_piece(position(3, 3), position(2, 4));
     main_board.print_board();
