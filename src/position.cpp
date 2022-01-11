@@ -1,9 +1,17 @@
+// Author: NICOLA MARITAN
+
 #include "position.h"
 
 #include <iostream>
 #include <string>
 
-position::position(const std::string& pos){
+position::position(const std::string& pos)
+{
+    if (!is_valid_position_8(pos))
+    {
+        throw bad_position_8();
+    }
+
     char c_col = pos.at(0);
     char c_row = pos.at(1);
     if(c_col < 'a') //lettera maiuscola
@@ -62,15 +70,26 @@ bool is_valid_position_8(const position& pos)
     return pos.row < max_position && pos.col < max_position && pos.row >= min_position && pos.col >= min_position;
 }
 
-std::string get_string(const position& pos){
+std::string get_string_8(const position& pos)
+{
+    if (!is_valid_position_8(pos))
+    {
+        throw bad_position_8();
+    }
+
     std::string s;
     s.push_back((char) (pos.col + 'A'));
     s.push_back((char) (pos.row + '0'));
     return s;
 }
 
-std::string to_string_move(const position& p1, const position& p2)
+std::string get_string_move_8(const position& p1, const position& p2)
 {
+    if (!is_valid_position_8(p1) || !is_valid_position_8(p2))
+    {
+        throw bad_position_8();
+    }
+
     char p1_row = '7' - p1.row;
     char p1_col = 'A' + p1.col;
     char p2_row = '7' - p2.row;

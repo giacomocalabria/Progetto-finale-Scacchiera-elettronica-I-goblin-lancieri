@@ -169,8 +169,6 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
     return true;
 }
 
-bool queen::can_promote(){return false;}
-
 bool queen::can_capture(const position& dest, const vector<piece*>& board_pieces)
 {
     return this->can_move_to(dest, board_pieces);

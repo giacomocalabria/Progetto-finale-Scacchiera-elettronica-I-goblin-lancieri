@@ -23,11 +23,15 @@ class piece
         static constexpr int min_position {0};
 
     public:
-        piece(const position& _pos, player_id _player) : pos{_pos}, player{_player}{};
+        //piece(const position& _pos, player_id _player) : pos{_pos}, player{_player}{};
+        piece(const position& _pos, player_id _player) : player{_player}
+        {
+            if (!is_valid_position_8(_pos)) throw bad_position_8();
+            pos = _pos;
+        };
 
         virtual bool can_move_to(const position& dest, const std::vector<piece*>& board_pieces) = 0;
         virtual bool can_capture(const position& dest, const std::vector<piece*>& board_pieces) = 0;
-        virtual bool can_promote() = 0;
         virtual bool get_can_be_passed() = 0;
         virtual char symbol() = 0;
         virtual std::vector<position> get_possible_positions() = 0;
