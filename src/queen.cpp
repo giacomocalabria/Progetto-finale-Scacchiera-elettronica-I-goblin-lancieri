@@ -10,7 +10,6 @@ using namespace std;
 
 bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
-    return false;
     vector<position> possible_pos = get_possible_positions();
     auto it = find(possible_pos.begin(), possible_pos.end(), dest);
     if (it == possible_pos.end()) 
@@ -25,7 +24,6 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
         di dest è maggiore di pos, allora la scansione avviene solo
         verso il basso.
     */
-
     // ----------- scansione in basso -----------  
     if (dest.row > pos.row)
     {
@@ -86,6 +84,16 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
                 return false;
             cursor = cursor - position(0, 1);
         }
+    }
+
+    if(cursor == dest)
+    {
+        //controllo se in dest c' e' una pedina avversaria o nulla (se trovo una pedina dello stesso player, ritorno false)
+        other = board_pieces[make_index_8(dest)];    //inserisco in other il pezzo presente in dest (eventualmente null)
+        if(other && other->get_player() == player)
+            return false;
+
+        return true;
     }
 
     cursor = pos;        //posizione che avanza fino a dest
@@ -193,7 +201,7 @@ inline char queen::symbol(){
 
 vector<position> queen::get_possible_positions(){
     vector<position> possible_pos;
-    return possible_pos;    // temporaneo
+   // return possible_pos;    // temporaneo
 
     position dest; //position(riga, colonna)
     

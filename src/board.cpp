@@ -147,6 +147,16 @@ bool board::move_piece(const position& from, const position& to)
         return false;
     }
 
+    piece* p = board_matrix[make_index_8(from)];
+
+    if(!is_pawn(p) || !can_en_passant(from, to))
+    {
+        for(int i = 0; i < player_pawns[p->get_player()].size(); i++)
+        {
+            (player_pawns[p->get_player()].at(i)).set_can_be_passed(false);
+        }
+    }
+
     // ----------------- Arrocco -----------------
     
     if(is_castling(from, to)){
@@ -177,20 +187,19 @@ bool board::move_piece(const position& from, const position& to)
         return true;
     }
 
-    piece* p = board_matrix[make_index_8(from)];
-
     // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
     piece* prev_in_dest = board_matrix[make_index_8(to)];
 
 
     // ----------------- En passant -----------------
-    int sign = p->get_player() == player_id::player_1 ? -1 : 1;  // orientazione (serve?)
-    position pos_to_pass = to;
-    pos_to_pass.row -= sign; 
+     
     //N.B.! Nella posizione to, in caso di en passant, e' impossibile che vi sia una pedina; se fosse il contrario, il pedone avversario non avrebbe potuto fare 2 passi (nemmeno uno in realta')
-
-    if(can_en_passant(from, pos_to_pass))
+    if(can_en_passant(from, to))
     {
+        int sign = p->get_player() == player_id::player_1 ? -1 : 1;  // orientazione
+        position pos_to_pass = to - position(sign, 0);
+        //pos_to_pass.row -= sign;
+
         // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
         prev_in_dest = board_matrix[make_index_8(pos_to_pass)];
 
@@ -298,17 +307,22 @@ bool board::move_piece(const position& from, const position& to)
     
 }
 
-bool board::can_en_passant(const position& passing, const position& to_pass)
+bool board::can_en_passant(const position& passing, const position& to)
 {
     piece* pce{board_matrix[make_index_8(passing)]};
-    piece* pce_to_pass{board_matrix[make_index_8(to_pass)]};
+
+    //AGGIUNTO IN CORSO D'OPERA(ho modificato pensando di rendere il tutto piu coerente)
+    int sign = pce->get_player() == player_id::player_1 ? -1 : 1;  // orientazione
+    position pos_to_pass = to - position(sign, 0);
+    //pos_to_pass.row -= sign;
+    piece* pce_to_pass{board_matrix[make_index_8(pos_to_pass)]};
 
     if (!pce_to_pass || !pce)   // non c'è una pedina in pos_to_pass
     {
         return false; // da def, forse eccezione o altro
     }
 
-    if (pce->can_promote()) // in generale se è un pedone
+    if (is_pawn(pce)) // in generale se è un pedone
     {
         //ufficiale: pce e' un pawn
 
@@ -317,8 +331,7 @@ bool board::can_en_passant(const position& passing, const position& to_pass)
             return true;
         }
         else
-        return false;        
-
+            return false;        
     }
     
     return false;
