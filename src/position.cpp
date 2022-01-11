@@ -10,7 +10,7 @@ position::position(const std::string& pos){
         col = c_col - 'A';
     else            //lettera minuscola
         col = c_col - 'a';
-    row = '8' - c_row;
+    row = '7' - c_row;
 }
 
 position operator+(position p1, position p2)
@@ -71,9 +71,9 @@ std::string get_string(const position& pos){
 
 std::string to_string_move(const position& p1, const position& p2)
 {
-    char p1_row = '8' - p1.row;
+    char p1_row = '7' - p1.row;
     char p1_col = 'A' + p1.col;
-    char p2_row = '8' - p2.row;
+    char p2_row = '7' - p2.row;
     char p2_col = 'A' + p2.col;
 
     std::string str{p1_col, p1_row, ' ', p2_col, p2_row};

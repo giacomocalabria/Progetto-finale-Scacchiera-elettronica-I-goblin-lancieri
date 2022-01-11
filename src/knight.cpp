@@ -4,7 +4,7 @@
 
 #include <algorithm>
 
-#include "board.h"
+//#include "board.h"
 
 using namespace std;
 
@@ -31,8 +31,6 @@ bool knight::can_capture(const position& dest, const vector<piece*>& board_piece
 inline char knight::symbol(){
     return player == player_id::player_1 ? 'c' : 'C';
 }
-
-bool knight::can_promote(){return false;}
 
 vector<position> knight::get_possible_positions(){ 
     vector<position> possible_pos;

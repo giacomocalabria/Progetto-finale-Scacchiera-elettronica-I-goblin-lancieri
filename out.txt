@@ -1,0 +1,854 @@
+Replay della partita del file log: 'log.txt'
+
+8 TCADRACT
+7 PPPPPPPP
+6         
+5         
+4         
+3         
+2 pppppppp
+1 tcadract
+  ABCDEFGH
+
+8 TCADRACT
+7 PPPPPPP 
+6         
+5        P
+4         
+3         
+2 pppppppp
+1 tcadract
+  ABCDEFGH
+
+8 TCADRACT
+7 PPPPPPP 
+6         
+5        P
+4        p
+3         
+2 ppppppp 
+1 tcadract
+  ABCDEFGH
+
+8 TCADRA T
+7 PPPPPPP 
+6        C
+5        P
+4        p
+3         
+2 ppppppp 
+1 tcadract
+  ABCDEFGH
+
+8 TCADRA T
+7 PPPPPPP 
+6        C
+5        P
+4       pp
+3         
+2 pppppp  
+1 tcadract
+  ABCDEFGH
+
+8 TCADRA T
+7 PPPPPP  
+6        P
+5        P
+4       pp
+3         
+2 pppppp  
+1 tcadract
+  ABCDEFGH
+
+8 TCADRA T
+7 PPPPPP  
+6        P
+5        P
+4    p  pp
+3         
+2 ppp pp  
+1 tcadract
+  ABCDEFGH
+
+8 TCADRA T
+7 PP PPP  
+6        P
+5   P    P
+4    p  pp
+3         
+2 ppp pp  
+1 tcadract
+  ABCDEFGH
+
+8 TCADRA T
+7 PP PPP  
+6        P
+5   P    P
+4    p  pp
+3        t
+2 ppp pp  
+1 tcadrac 
+  ABCDEFGH
+
+8 TCADR  T
+7 PP PPPA 
+6        P
+5   P    P
+4    p  pp
+3        t
+2 ppp pp  
+1 tcadrac 
+  ABCDEFGH
+
+8 TCADR  T
+7 PP PPPA 
+6        P
+5   P    P
+4    p  pp
+3   c    t
+2 ppp pp  
+1 t adrac 
+  ABCDEFGH
+
+8 TCADR  T
+7 P  PPPA 
+6        P
+5  PP    P
+4    p  pp
+3   c    t
+2 ppp pp  
+1 t adrac 
+  ABCDEFGH
+
+8 TCADR  T
+7 P  PPPA 
+6        P
+5  PP    P
+4    p ppp
+3   c    t
+2 ppp p   
+1 t adrac 
+  ABCDEFGH
+
+8 TCADR   
+7 P  PPPAT
+6        P
+5  PP    P
+4    p ppp
+3   c    t
+2 ppp p   
+1 t adrac 
+  ABCDEFGH
+
+8 TCADR   
+7 P  PPPAT
+6        P
+5  PP    P
+4    ppppp
+3   c    t
+2 ppp     
+1 t adrac 
+  ABCDEFGH
+
+8 TCADR   
+7 P  PP AT
+6      P P
+5  PP    P
+4    ppppp
+3   c    t
+2 ppp     
+1 t adrac 
+  ABCDEFGH
+
+8 TCADR   
+7 P  PP AT
+6      P P
+5  PP    P
+4    ppppp
+3   c    t
+2 pppr    
+1 t ad ac 
+  ABCDEFGH
+
+8 TCADR   
+7 P  P  AT
+6      P P
+5  PP    P
+4    ppppp
+3   c    t
+2 pppr    
+1 t ad ac 
+  ABCDEFGH
+
+8 TCADR   
+7 P  P  AT
+6      P P
+5  PP    P
+4    ppppp
+3   c    t
+2 pppra   
+1 t ad  c 
+  ABCDEFGH
+
+8 TCADR   
+7 P  P  AT
+6      P P
+5   P    P
+4  P ppppp
+3   c    t
+2 pppra   
+1 t ad  c 
+  ABCDEFGH
+
+8 TCADR   
+7 P  P  AT
+6      P P
+5   P    P
+4  P ppppp
+3   c  c t
+2 pppra   
+1 t ad    
+  ABCDEFGH
+
+8 TCADR   
+7    P  AT
+6 P    P P
+5   P    P
+4  P ppppp
+3   c  c t
+2 pppra   
+1 t ad    
+  ABCDEFGH
+
+8 TCADR   
+7    P  AT
+6 P    P P
+5   P    P
+4  P ppppp
+3   c  ct 
+2 pppra   
+1 t ad    
+  ABCDEFGH
+
+8 TCADR   
+7    P  AT
+6 P    P P
+5   P    P
+4    ppppp
+3   P  ct 
+2 pppra   
+1 t ad    
+  ABCDEFGH
+
+8 TCADR   
+7    P  AT
+6 P    P P
+5   P    P
+4    ppppp
+3   P  ct 
+2 ppp a   
+1 t adr   
+  ABCDEFGH
+
+8 T ADR   
+7    P  AT
+6 P C  P P
+5   P    P
+4    ppppp
+3   P  ct 
+2 ppp a   
+1 t adr   
+  ABCDEFGH
+
+8 T ADR   
+7    P  AT
+6 P C  P P
+5   P    P
+4    ppppp
+3 p P  ct 
+2  pp a   
+1 t adr   
+  ABCDEFGH
+
+8 T AD    
+7    P RAT
+6 P C  P P
+5   P    P
+4    ppppp
+3 p P  ct 
+2  pp a   
+1 t adr   
+  ABCDEFGH
+
+8 T AD    
+7    P RAT
+6 P C  P P
+5   P    P
+4 p  ppppp
+3   P  ct 
+2  pp a   
+1 t adr   
+  ABCDEFGH
+
+8 T AD    
+7    P RAT
+6 P C  P P
+5   P     
+4 p  pppPp
+3   P  ct 
+2  pp a   
+1 t adr   
+  ABCDEFGH
+
+8 T AD    
+7    P RAT
+6 P C  P P
+5   P     
+4 p  pppPp
+3   p  ct 
+2   p a   
+1 t adr   
+  ABCDEFGH
+
+8 T AD   A
+7    P R T
+6 P C  P P
+5   P     
+4 p  pppPp
+3   p  ct 
+2   p a   
+1 t adr   
+  ABCDEFGH
+
+8 T AD   A
+7    P R T
+6 P C  P P
+5   P    p
+4 p  pppP 
+3   p  ct 
+2   p a   
+1 t adr   
+  ABCDEFGH
+
+8 T AD   A
+7 C  P R T
+6 P    P P
+5   P    p
+4 p  pppP 
+3   p  ct 
+2   p a   
+1 t adr   
+  ABCDEFGH
+
+8 T AD   A
+7 C  P R T
+6 P    P P
+5   p    p
+4 p   ppP 
+3   p  ct 
+2   p a   
+1 t adr   
+  ABCDEFGH
+
+8 T AD    
+7 C  P RAT
+6 P    P P
+5   p    p
+4 p   ppP 
+3   p  ct 
+2   p a   
+1 t adr   
+  ABCDEFGH
+
+8 T AD    
+7 C  P RAT
+6 P    P P
+5   p    p
+4 p   ppP 
+3 t p  ct 
+2   p a   
+1   adr   
+  ABCDEFGH
+
+8 T AD    
+7 C  P RAT
+6 P    P P
+5   p    p
+4 p   pp  
+3 t p  Pt 
+2   p a   
+1   adr   
+  ABCDEFGH
+
+8 T AD    
+7 C  P RAT
+6 P    P P
+5   p    p
+4 p   pp  
+3 t pa Pt 
+2   p     
+1   adr   
+  ABCDEFGH
+
+8  TAD    
+7 C  P RAT
+6 P    P P
+5   p    p
+4 p   pp  
+3 t pa Pt 
+2   p     
+1   adr   
+  ABCDEFGH
+
+8  TAD    
+7 C  P RAT
+6 P    P P
+5 p p    p
+4     pp  
+3 t pa Pt 
+2   p     
+1   adr   
+  ABCDEFGH
+
+8  TAD    
+7    P RAT
+6 P C  P P
+5 p p    p
+4     pp  
+3 t pa Pt 
+2   p     
+1   adr   
+  ABCDEFGH
+
+8  TAD    
+7    P RAT
+6 P C  P P
+5 p p    p
+4     pp  
+3 t pa Pt 
+2   pa    
+1    dr   
+  ABCDEFGH
+
+8  TAD A  
+7    P R T
+6 P C  P P
+5 p p    p
+4     pp  
+3 t pa Pt 
+2   pa    
+1    dr   
+  ABCDEFGH
+
+8  TAD A  
+7    P R T
+6 P C  P P
+5 p p    p
+4     pp  
+3 t pa P  
+2   pa  t 
+1    dr   
+  ABCDEFGH
+
+8  TAD    
+7    PAR T
+6 P C  P P
+5 p p    p
+4     pp  
+3 t pa P  
+2   pa  t 
+1    dr   
+  ABCDEFGH
+
+8  TAD    
+7    PAR T
+6 P C  P P
+5 p p    p
+4     pp  
+3 t pa P  
+2   pa rt 
+1    d    
+  ABCDEFGH
+
+8  TAD    
+7    PAR T
+6 P C  P P
+5 p p    p
+4     pp  
+3 t pa    
+2   pa rP 
+1    d    
+  ABCDEFGH
+
+8  TAD    
+7    PAR T
+6 P C  P P
+5 p p    p
+4     pp  
+3 t pa    
+2   par P 
+1    d    
+  ABCDEFGH
+
+8  TAD    
+7 C  PAR T
+6 P    P P
+5 p p    p
+4     pp  
+3 t pa    
+2   par P 
+1    d    
+  ABCDEFGH
+
+8  TAD    
+7 C  PAR T
+6 P    P P
+5 p p  p p
+4     p   
+3 t pa    
+2   par P 
+1    d    
+  ABCDEFGH
+
+8  TAD    
+7    PAR T
+6 P C  P P
+5 p p  p p
+4     p   
+3 t pa    
+2   par P 
+1    d    
+  ABCDEFGH
+
+8  TAD    
+7    PAR T
+6 P C  P P
+5 p p  p p
+4     p   
+3 t pp    
+2    ar P 
+1    d    
+  ABCDEFGH
+
+8  TAD    
+7     AR T
+6 P C  P P
+5 p pP p p
+4     p   
+3 t pp    
+2    ar P 
+1    d    
+  ABCDEFGH
+
+8  TAD    
+7     AR T
+6 P C  P P
+5 p pP pap
+4     p   
+3 t pp    
+2     r P 
+1    d    
+  ABCDEFGH
+
+8  TAD A  
+7      R T
+6 P C  P P
+5 p pP pap
+4     p   
+3 t pp    
+2     r P 
+1    d    
+  ABCDEFGH
+
+8  TAD A  
+7      R T
+6 P C  P P
+5 p pP pap
+4     p   
+3 t pp    
+2      rP 
+1    d    
+  ABCDEFGH
+
+8  TADRA  
+7        T
+6 P C  P P
+5 p pP pap
+4     p   
+3 t pp    
+2      rP 
+1    d    
+  ABCDEFGH
+
+8  TADRA  
+7        T
+6 P C  P P
+5 p pP p p
+4     p   
+3 t pp    
+2      rP 
+1   ad    
+  ABCDEFGH
+
+8  TADRA  
+7 T       
+6 P C  P P
+5 p pP p p
+4     p   
+3 t pp    
+2      rP 
+1   ad    
+  ABCDEFGH
+
+8  TADRA  
+7 T       
+6 P C  P P
+5 p pP pap
+4     p   
+3 t pp    
+2      rP 
+1    d    
+  ABCDEFGH
+
+8  TADRA  
+7 T       
+6 P C  P  
+5 p pP pPp
+4     p   
+3 t pp    
+2      rP 
+1    d    
+  ABCDEFGH
+
+8  TADRA  
+7 T       
+6 P C  P  
+5 p pP pPp
+4     p   
+3 t pp    
+2       r 
+1    d    
+  ABCDEFGH
+
+8   ADRA  
+7 TT      
+6 P C  P  
+5 p pP pPp
+4     p   
+3 t pp    
+2       r 
+1    d    
+  ABCDEFGH
+
+8   ADRA  
+7 TT      
+6 P C  P p
+5 p pP pP 
+4     p   
+3 t pp    
+2       r 
+1    d    
+  ABCDEFGH
+
+8   ADRA  
+7 TT  C   
+6 P    P p
+5 p pP pP 
+4     p   
+3 t pp    
+2       r 
+1    d    
+  ABCDEFGH
+
+8   ADRA  
+7 TT  C  p
+6 P    P  
+5 p pP pP 
+4     p   
+3 t pp    
+2       r 
+1    d    
+  ABCDEFGH
+
+8    DRA  
+7 TT  C  p
+6 P    P  
+5 p pP pP 
+4     p A 
+3 t pp    
+2       r 
+1    d    
+  ABCDEFGH
+
+8    DRA  
+7 TT  C  p
+6 P    P  
+5 p pP pP 
+4     p A 
+3 t p     
+2       r 
+1    d    
+  ABCDEFGH
+
+8    D A  
+7 TT RC  p
+6 P    P  
+5 p pP pP 
+4     p A 
+3 t p     
+2       r 
+1    d    
+  ABCDEFGH
+
+8    D A  
+7 TT RC  p
+6 P    P  
+5 p pP pP 
+4     p A 
+3 t p   r 
+2         
+1    d    
+  ABCDEFGH
+
+8    DRA  
+7 TT  C  p
+6 P    P  
+5 p pP pP 
+4     p A 
+3 t p   r 
+2         
+1    d    
+  ABCDEFGH
+
+8    DRA  
+7 TT  C  p
+6 P    P  
+5 p pP pP 
+4     p A 
+3   p   r 
+2         
+1 t  d    
+  ABCDEFGH
+
+8    DR   
+7 TT  C Ap
+6 P    P  
+5 p pP pP 
+4     p A 
+3   p   r 
+2         
+1 t  d    
+  ABCDEFGH
+
+8    DR   
+7 TT  C Ap
+6 P    P  
+5 p pP pP 
+4       A 
+3   p   r 
+2         
+1 t  d    
+  ABCDEFGH
+
+8    DR   
+7 TT  C Ap
+6 P    P  
+5 p pP pP 
+4         
+3   p   rA
+2         
+1 t  d    
+  ABCDEFGH
+
+8    DR   
+7 TT  C Ap
+6 P    P  
+5 p pP pP 
+4         
+3   p  r A
+2         
+1 t  d    
+  ABCDEFGH
+
+8  T DR   
+7 T   C Ap
+6 P    P  
+5 p pP pP 
+4         
+3   p  r A
+2         
+1 t  d    
+  ABCDEFGH
+
+8  T DR  d
+7 T   C A 
+6 P    P  
+5 p pP pP 
+4         
+3   p  r A
+2         
+1 t  d    
+  ABCDEFGH
+
+8  T DR  d
+7 T   C A 
+6 P    P  
+5 p pP pP 
+4         
+3   p  r  
+2         
+1 t  d A  
+  ABCDEFGH
+
+8  T DR  d
+7 T   C A 
+6 P    P  
+5 p pP pP 
+4       r 
+3   p     
+2         
+1 t  d A  
+  ABCDEFGH
+
+8  T DR  d
+7 T   C A 
+6 P       
+5 p pP pP 
+4       r 
+3   p     
+2         
+1 t  d A  
+  ABCDEFGH
+
+8  T DR  d
+7 T   C A 
+6 P       
+5 p pP pP 
+4       r 
+3   p     
+2         
+1   td A  
+  ABCDEFGH
+
+8  T DR Cd
+7 T     A 
+6 P       
+5 p pP pP 
+4       r 
+3   p     
+2         
+1   td A  
+  ABCDEFGH
+
+8  T DR Cd
+7 T     A 
+6 P       
+5 p pP pP 
+4       r 
+3   p     
+2   t     
+1    d A  
+  ABCDEFGH
+
+
+Fine replay, nessuno ha vinto e' patta

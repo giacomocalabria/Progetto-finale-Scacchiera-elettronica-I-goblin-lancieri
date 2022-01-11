@@ -11,13 +11,9 @@
 #include "human_player.h"
 #include "player_id.h"
 
-
-#define space std::cout << "\n------------------------\n";
-#define pause system("pause"); system("cls"); 
-
 using namespace std;
 
-const std::string nome_file{"log.txt"};
+const string nome_file{"log.txt"};
 
 int main(int argc, char *argv[])
 {
@@ -41,9 +37,9 @@ int main(int argc, char *argv[])
         dal vector di player* players, per poter utilizzare le loro
         funzioni virtuali.
     */
-    std::vector<human_player> human_player_game;
-    std::vector<computer_player> computer_player_game;
-    std::vector<player*> players(player_id::player_count);
+    vector<human_player> human_player_game;
+    vector<computer_player> computer_player_game;
+    vector<player*> players(player_id::player_count);
 
     // Reserve delle capacità dei vector per le regole del gioco.
     human_player_game.reserve(1);
@@ -83,8 +79,6 @@ int main(int argc, char *argv[])
         players[1] = &computer_player_game[1];
     }
 
-    //#define NO_TURNS 1
-
     #if NO_TURNS
     main_board.print_board();
     main_board.move_piece(position("C2"), position("C3"));
@@ -99,26 +93,26 @@ int main(int argc, char *argv[])
     
     #if !NO_TURNS
     int turn_counter{0};
+    vector<string> log;
     while (true)
     {
         // Annuncio del turno
-        std::cout << std::endl <<  "Turno " << turn_counter << std::endl;
+        cout << endl <<  "Turno " << turn_counter << endl;
         int player_turn{turn_counter % 2};
         if (player_turn == 0)
-            cout << "Tocca al bianco.\n";
+            cout << "Tocca al bianco." << endl;
         else
-            cout << "Tocca al nero.\n";
+            cout << "Tocca al nero." << endl;
 
-        // Debug
         main_board.print_board();
-        
-        //cout << "Calling check_mate.\n";
 
         // -------------------------- Controllo se il giocatore ha ancora il re --------------------------
         if (main_board.has_king_been_captured(players[player_turn]->get_player_number()))
         {
             string winner = (player_turn == player_1) ? "bianco" : "nero";
-            std::cout << "Il giocatore " << winner << " ha vinto eliminando il re.\n";
+            cout << "Il giocatore " << winner << " ha vinto eliminando il re." << endl;
+            log = main_board.get_log();
+            log.push_back("FF " + winner);
             break;
         }
         /*
@@ -131,40 +125,40 @@ int main(int argc, char *argv[])
         if (main_board.is_checkmate(players[player_turn]->get_player_number()))
         {
             string winner = (player_turn == player_1) ? "bianco" : "nero";
-            std::cout << "Il giocatore " << winner << " ha vinto. Scacco matto.\n";
+            cout << "Il giocatore " << winner << " ha vinto. Scacco matto." << endl;
+            log = main_board.get_log();
+            log.push_back("FF " + winner);
             break;
         }
-        //cout << "Not check_mate.\n";
 
         // Se non è sotto scacco allora il giocatore può eseguire la sua mossa.
         players[player_turn]->turn();
 
-
         if (turn_counter == 500 || main_board.is_draw(players[player_turn]->get_player_number()))
         {
-            cout << "Patta placeholder.\n";
+            cout << "Patta placeholder." << endl;
+            log = main_board.get_log();
+            log.push_back("PP PP");
             break;
         }
 
         turn_counter++;
     }
     #endif
-    
-    vector<string> log = main_board.get_log();
-    cout << "Partita finita, scrittura file log.txt" << endl;
+
+    cout << "Partita finita, scrittura file 'log.txt'" << endl;
     ofstream out_file(nome_file);
     if(out_file.is_open()){
-        out_file.open(nome_file, std::ofstream::out | std::ofstream::trunc); //rende vuoto il file di log
         for(auto command : log){
-            out_file << command;
+            out_file << command << endl;
         }
     } else {
         cerr << "[ERROR] Impossibile aprire/leggere il file: '" << nome_file << "'" << endl;
         return -1;
     }
     out_file.close();
-    cout << "Fine scrittura file log.txt" << endl;
+    cout << "Fine scrittura file 'log.txt'" << endl;
 
-    cout << "Programma terminato correttamente.\n";
+    cout << "Programma terminato correttamente." << endl;
     return 0;
 }
