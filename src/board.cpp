@@ -10,12 +10,12 @@ using namespace std;
 board::board()
 {
     init_board();
-    #define DEBUG 1
-    #if !DEBUG
+    /*#define DEBUG 1
+    #if !DEBUG*/
     init_player_pieces();
-    #else
+    /*#else
     setup_7();
-    #endif
+    #endif*/
 }
 
 /*
@@ -215,7 +215,6 @@ bool board::move_piece(const position& from, const position& to)
             //cout << "Mossa non valida. La mossa porta ad uno scacco del proprio re.\n";
             return false;
         }
-
     }
     else    // Allora la destinazione non è nelle possibili posizioni.
     {

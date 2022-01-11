@@ -23,71 +23,94 @@ bool bishop::can_move_to(const position& dest, const vector<piece*>& board_piece
 		return false;
 
 	position go_on = position(pos.row, pos.col);		//posizione che avanza fino a dest
-	piece* go_piece = board_pieces[make_index_8(go_on)];			//pedina di ogni posizione considerata fino a dest
+	piece* go_piece = board_pieces[make_index_8(go_on)];	//pedina di ogni posizione considerata fino a dest
 
-	if(dest.col > pos.col)			//controllo se la destinazione e' a "destra" rispetto alla current_pos
+	//controllo se la destinazione e' a "destra" rispetto alla current_pos
+	if(dest.col > pos.col)
 	{
-		if(dest.row > pos.row)		//controllo se la destinazione e' "in alto" (a destra) rispetto alla current_pos
+		go_on = go_on + position(0, 1);
+
+		//controllo se la destinazione e' "in basso" (a destra) rispetto alla current_pos
+		if(dest.row > pos.row)
 		{
+			go_on = go_on + position(1, 0);
+
 			while(go_on.row != dest.row && go_on.col != dest.col)
 			{
-				go_on = position(go_on.row + 1, go_on.col + 1);
 				go_piece = board_pieces[make_index_8(go_on)];
 
-				if(go_piece != nullptr && (*go_piece).get_player() == this->get_player())
+				if(go_piece)
 				{
 					return false;
 				}
+				go_on = go_on + position(1, 1);
 			}
 		}
+		//controllo se la destinazione e' "in alto" (a destra) rispetto alla current_pos
 		else if(dest.row < pos.row)
 		{
+			go_on = go_on - position(1, 0);
+
 			while(go_on.row != dest.row && go_on.col != dest.col)
 			{
-				go_on = position(go_on.row - 1, go_on.col + 1);
 				go_piece = board_pieces[make_index_8(go_on)];
 
-				if(go_piece != nullptr && (*go_piece).get_player() == this->get_player())
+				if(go_piece)
 				{
 					return false;
 				}
+				go_on = go_on + position(-1, 1);
 			}
 		}
 		else
 			return false;
 	}
+	//controllo se la destinazione e' a "sinistra" rispetto alla current_pos
 	else if(dest.col < pos.col)
 	{
-		if(dest.row > pos.row)		//controllo se la destinazione e' "in alto" (a destra) rispetto alla current_pos
+		go_on = go_on - position(0, 1);
+
+		//controllo se la destinazione e' "in basso" (a sinistra) rispetto alla current_pos
+		if(dest.row > pos.row)
 		{
+			go_on = go_on + position(1, 0);
+
 			while(go_on.row != dest.row && go_on.col != dest.col)
 			{
-				go_on = position(go_on.row + 1, go_on.col - 1);
 				go_piece = board_pieces[make_index_8(go_on)];
 
-				if(go_piece != nullptr && (*go_piece).get_player() == this->get_player())
+				if(go_piece)
 				{
 					return false;
 				}
+				go_on = go_on + position(1, -1);
 			}
 		}
+		//controllo se la destinazione e' "in alto" (a sinistra) rispetto alla current_pos
 		else if(dest.row < pos.row)
 		{
+			go_on = go_on - position(1, 0);
+
 			while(go_on.row != dest.row && go_on.col != dest.col)
 			{
-				go_on = position(go_on.row - 1, go_on.col - 1);
 				go_piece = board_pieces[make_index_8(go_on)];
 
-				if(go_piece != nullptr && (*go_piece).get_player() == this->get_player())
+				if(go_piece)
 				{
 					return false;
 				}
+				go_on = go_on + position(-1, -1);
 			}
 		}
 		else
 			return false;
 	}
 	else
+		return false;
+
+	//controllo se in dest c' e' una pedina avversaria o nulla (se trovo una pedina dello stesso player, ritorno false)
+	go_piece = board_pieces[make_index_8(dest)];	//inserisco in go_piece il pezzo presente in dest (eventualmente null)
+	if(go_piece && go_piece->get_player() == player)
 		return false;
 
 	return true;

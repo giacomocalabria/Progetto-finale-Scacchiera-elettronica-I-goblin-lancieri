@@ -34,6 +34,16 @@ int main(int argc, char *argv[])
     board main_board;
     main_board.print_board();
 
+    main_board.move_piece(position(6, 3), position(4, 3));
+    main_board.print_board();
+    main_board.move_piece(position(4, 3), position(3, 3));
+    main_board.print_board();
+    main_board.move_piece(position(1, 4), position(3, 4));
+    main_board.print_board();
+    main_board.move_piece(position(3, 3), position(2, 4));
+    main_board.print_board();
+    return 0;
+
     /*
         Vector contenente human_player e computer_players. Il primo
         avrà capacitò max 1 e l'altro 2 per le regole del gioco.

@@ -88,84 +88,94 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
         }
     }
 
-    // se la cella di arrivo è occupata ed è occupata da un pezzo del stesso giocatore -> rest falso
-    other = board_pieces[make_index_8(dest)];
-    //cout << other->symbol();
-    if (other && other->get_player() == player)
-    {
-        //cout << "Same color.\n";
-        return false;
-    }
-
     cursor = pos;        //posizione che avanza fino a dest
     other = board_pieces[make_index_8(cursor)];            //pedina di ogni posizione considerata fino a dest
 
-    if(dest.col > pos.col)          //controllo se la destinazione e' a "destra" rispetto alla pos corrente
+    //controllo se la destinazione e' a "destra" rispetto alla pos corrente
+    if(dest.col > pos.col)
     {
+        cursor = cursor + position(0, 1);
+
         // ----------- scansione in basso a destra -----------
         if(dest.row > pos.row)
         {
+            cursor = cursor + position(1, 0);
+
             while(cursor.row != dest.row && cursor.col != dest.col)
             {
-                cursor = position(cursor.row + 1, cursor.col + 1);
                 other = board_pieces[make_index_8(cursor)];
 
-                if(other != nullptr && (*other).get_player() == this->get_player())
+                if(other)
                 {
                     return false;
                 }
+                cursor = cursor + position(1, 1);
             }
         }
         // ----------- scansione in alto a destra -----------
         else if(dest.row < pos.row)
         {
+            cursor = cursor - position(1, 0);
+
             while(cursor.row != dest.row && cursor.col != dest.col)
             {
-                cursor = position(cursor.row - 1, cursor.col + 1);
                 other = board_pieces[make_index_8(cursor)];
 
-                if(other != nullptr && (*other).get_player() == this->get_player())
+                if(other)
                 {
                     return false;
                 }
+                cursor = cursor + position(-1, 1);
             }
         }
         else
             return false;
     }
-    else if(dest.col < pos.col)          //controllo se la destinazione e' a "sinistra" rispetto alla pos corrente
+    //controllo se la destinazione e' a "sinistra" rispetto alla pos corrente
+    else if(dest.col < pos.col)
     {
+        cursor = cursor - position(0, 1);
+
         // ----------- scansione in basso a sinistra -----------
         if(dest.row > pos.row)
         {
+            cursor = cursor + position(1, 0);
+
             while(cursor.row != dest.row && cursor.col != dest.col)
             {
-                cursor = position(cursor.row + 1, cursor.col - 1);
                 other = board_pieces[make_index_8(cursor)];
 
-                if(other != nullptr && (*other).get_player() == this->get_player())
+                if(other)
                 {
                     return false;
                 }
+                cursor = cursor + position(1, -1);
             }
         }
         // ----------- scansione in alto a sinistra -----------
         else if(dest.row < pos.row)
         {
+            cursor = cursor - position(1, 0);
+
             while(cursor.row != dest.row && cursor.col != dest.col)
             {
-                cursor = position(cursor.row - 1, cursor.col - 1);
                 other = board_pieces[make_index_8(cursor)];
 
-                if(other != nullptr && (*other).get_player() == this->get_player())
+                if(other)
                 {
                     return false;
                 }
+                cursor = cursor + position(-1, -1);
             }
         }
         else
             return false;
     }
+
+    //controllo se in dest c' e' una pedina avversaria o nulla (se trovo una pedina dello stesso player, ritorno false)
+    other = board_pieces[make_index_8(dest)];    //inserisco in other il pezzo presente in dest (eventualmente null)
+    if(other && other->get_player() == player)
+        return false;
 
     return true;
 }
