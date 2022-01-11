@@ -7,11 +7,6 @@
 
 position::position(const std::string& pos)
 {
-    if (!is_valid_position_8(pos))
-    {
-        throw bad_position_8();
-    }
-
     char c_col = pos.at(0);
     char c_row = pos.at(1);
     if(c_col < 'a') //lettera maiuscola
@@ -23,8 +18,6 @@ position::position(const std::string& pos)
 
 position operator+(position p1, position p2)
 {
-    /*position p_sum(p1.row + p2.row, p1.col + p2.col);
-    return p_sum;*/
     return position(p1.row + p2.row, p1.col + p2.col);
 }
 
@@ -35,8 +28,6 @@ position operator-(position p1, position p2)
 
 position operator*(int scalar, position p)
 {
-    /*position p_res(scalar * p.row, scalar * p.col);
-    return p_res;*/
     return position(scalar * p.row, scalar * p.col);
 }
 
@@ -76,7 +67,6 @@ std::string get_string_8(const position& pos)
     {
         throw bad_position_8();
     }
-
     std::string s;
     s.push_back((char) (pos.col + 'A'));
     s.push_back((char) (pos.row + '0'));

@@ -10,12 +10,7 @@ using namespace std;
 board::board()
 {
     init_board();
-    /*#define DEBUG 1
-    #if !DEBUG*/
     init_player_pieces();
-    /*#else
-    setup_7();
-    #endif*/
 }
 
 /*
@@ -99,7 +94,6 @@ bool board::move_piece(const position& from, const position& to)
     {
         int sign = p->get_player() == player_id::player_1 ? -1 : 1;  // orientazione
         position pos_to_pass = to - position(sign, 0);
-        //pos_to_pass.row -= sign;
 
         // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
         prev_in_dest = board_matrix[make_index_8(pos_to_pass)];
@@ -116,7 +110,6 @@ bool board::move_piece(const position& from, const position& to)
             board_matrix[make_index_8(from)] = p;
             p->set_position(from);
             board_matrix[make_index_8(pos_to_pass)] = prev_in_dest;
-            //cout << "Mossa non valida. La mossa porta ad uno scacco del proprio re.\n";
             return false;
         }
         return true;
@@ -139,13 +132,11 @@ bool board::move_piece(const position& from, const position& to)
             board_matrix[make_index_8(from)] = p;
             p->set_position(from);
             board_matrix[make_index_8(to)] = prev_in_dest;
-            //cout << "Mossa non valida. La mossa porta ad uno scacco del proprio re.\n";
             return false;
         }
     }
-    else    // Allora la destinazione non è nelle possibili posizioni.
+    else
     {
-        //IMPORTANTE PER IL DEBUG, NON ELIMINARE
         return false;
     }
 
@@ -165,7 +156,6 @@ bool board::move_piece(const position& from, const position& to)
         }
     }
 
-    //if(!p->can_promote() && !prev_in_dest)
     if(!is_pawn(p) && !prev_in_dest)
     {
         no_pwn_no_eat++;
@@ -196,14 +186,6 @@ bool board::move_piece(const position& from, const position& to)
     {
         king_eaten_player[prev_in_dest->get_player()] = true;
     }*/
-
-    /*
-        Scrittura su file
-    */
-    
-    /*std::ofstream file;
-    file.open(log_file, std::ios_base::app);   // std::ios_base::app indica che il contenuto andrà aggiunto alla fine del file
-    file_print_board(file, from, to);*/
 
     return true;    
     
