@@ -1,3 +1,11 @@
+//Autor: EDDIE CARRARO
+
+/*  
+    ----------------------------------------------------
+    Classe derivata da piece della queen/regina.
+    ----------------------------------------------------
+*/
+
 #ifndef QUEEN_H
 #define QUEEN_H
 

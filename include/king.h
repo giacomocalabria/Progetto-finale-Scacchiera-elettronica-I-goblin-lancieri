@@ -1,3 +1,11 @@
+//Author: EDDIE CARRARO
+
+/*  
+    ----------------------------------------------------
+    Classe derivata da piece del king/re.
+    ----------------------------------------------------
+*/
+
 #ifndef KING_H
 #define KING_H
 

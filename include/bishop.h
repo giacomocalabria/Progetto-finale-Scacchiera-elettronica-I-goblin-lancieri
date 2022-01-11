@@ -1,5 +1,11 @@
 //Autore: EDDIE CARRARO
 
+/*  
+    ----------------------------------------------------
+    Classe derivata da piece del bishop/alfiere.
+    ----------------------------------------------------
+*/
+
 #ifndef BISHOP_H
 #define BISHOP_H
 

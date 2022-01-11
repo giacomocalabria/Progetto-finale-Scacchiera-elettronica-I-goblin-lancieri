@@ -1,13 +1,15 @@
-#ifndef ROOK_H
-#define ROOK_H
-
-#include "piece.h"
+//Autor: NICOLA MARITAN
 
 /*  
     ----------------------------------------------------
     Classe derivata da piece del rook/torre.
     ----------------------------------------------------
 */
+
+#ifndef ROOK_H
+#define ROOK_H
+
+#include "piece.h"
 
 class rook : public piece
 {

@@ -11,7 +11,8 @@
 
 #include "piece.h"
 
-class knight : public piece{
+class knight : public piece
+{
     public:
         knight(const position& _pos, player_id _player) : piece(_pos, _player){}
         bool can_move_to(const position& dest, const std::vector<piece*>& board_pieces) override;
