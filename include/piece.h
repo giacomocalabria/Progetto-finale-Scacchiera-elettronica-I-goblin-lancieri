@@ -23,7 +23,6 @@ class piece
         static constexpr int min_position {0};
 
     public:
-        //piece(const position& _pos, player_id _player) : pos{_pos}, player{_player}{};
         piece(const position& _pos, player_id _player) : player{_player}
         {
             if (!is_valid_position_8(_pos)) throw bad_position_8();

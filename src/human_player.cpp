@@ -26,7 +26,7 @@ bool human_player::move(){
     string inp2 = input.substr(3, 2);
 
     if(input.length() != 5){
-        cout << "Comando non valido! " << endl;
+        cerr << "Comando non valido! " << endl;
         return false;
     }
 
@@ -40,7 +40,7 @@ bool human_player::move(){
     position to = position(inp2);
     
     if(!is_valid_position_8(from) && !is_valid_position_8(to)){
-        cout << "Comando non valido! La posizione non è nella scacchiera" << endl;
+        cerr << "Comando non valido! La posizione non è nella scacchiera" << endl;
         return false;
     }
 
@@ -50,7 +50,7 @@ bool human_player::move(){
     }
 
     if(b->get_board_piece(from)->get_player() != get_player_number()){
-        cout << "Comando non valido! Non puoi muovere una pedina avversaria" << endl;
+        cerr << "Comando non valido! Non puoi muovere una pedina avversaria" << endl;
         return false;
     }
     /*if(b->get_board_piece(to)->get_player() == get_player_number()){
@@ -59,7 +59,7 @@ bool human_player::move(){
     }*/
 
     if(! b->move_piece(from, to)){
-        cout << "Comando non valido! Non puoi fare quella mossa" << endl;
+        cerr << "Comando non valido! Non puoi fare quella mossa" << endl;
         return false;
     }
 

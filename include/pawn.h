@@ -21,7 +21,6 @@ class pawn : public piece
         std::vector<position> get_possible_positions() override;
 
     private:
-        bool is_init_pos {true};
         bool can_be_passed {false};
 
     public:
