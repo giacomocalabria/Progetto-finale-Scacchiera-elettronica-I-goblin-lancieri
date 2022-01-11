@@ -1,4 +1,4 @@
-// Author: NICOLA MARITAN
+// Author: EDDIE CARRARO
 
 #include "pawn.h"
 
@@ -67,8 +67,6 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 
     return false;
 }
-
-bool pawn::can_promote(){return true;}
 
 bool pawn::can_capture(const position& dest, const vector<piece*>& board_pieces)   //serve per definire la condizione di scacco del re avversario
 {

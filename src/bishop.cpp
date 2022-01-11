@@ -103,17 +103,12 @@ bool bishop::can_capture(const position& dest, const vector<piece*>& board_piece
 	return this->can_move_to(dest, board_pieces);
 }
 
-bool bishop::can_promote()
-{
-	return false;
-}
-
 vector<position> bishop::get_possible_positions()
 {
 	vector<position> possible_positions;
 
 	position go_on = position(pos.row + 1, pos.col + 1);
-	while(is_valid_position_8(go_on)) //boundary rispettato?
+	while(is_valid_position_8(go_on))
 	{
 		possible_positions.push_back(go_on);
 
@@ -122,7 +117,7 @@ vector<position> bishop::get_possible_positions()
 	}
 
 	go_on = position(pos.row - 1, pos.col + 1);
-	while(is_valid_position_8(go_on))	//boundary rispettato?
+	while(is_valid_position_8(go_on))
 	{
 		possible_positions.push_back(go_on);
 
@@ -131,7 +126,7 @@ vector<position> bishop::get_possible_positions()
 	}
 
 	go_on = position(pos.row + 1, pos.col - 1);
-	while(is_valid_position_8(go_on))	//boundary rispettato?
+	while(is_valid_position_8(go_on))
 	{
 		possible_positions.push_back(go_on);
 
@@ -140,7 +135,7 @@ vector<position> bishop::get_possible_positions()
 	}
 
 	go_on = position(pos.row - 1, pos.col - 1);
-	while(is_valid_position_8(go_on))	//boundary rispettato?
+	while(is_valid_position_8(go_on))
 	{
 		possible_positions.push_back(go_on);
 
