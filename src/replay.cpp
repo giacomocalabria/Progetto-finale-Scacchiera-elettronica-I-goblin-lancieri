@@ -20,7 +20,7 @@ int main(int argc, char* argv[]){
 
     if(type_of_replay){
         string nome_file_log;
-        int i = 0;
+        int i {0};
         while(argv[2][i] != '\0'){ //carattere terminatore stringa C-type
             nome_file_log.push_back(argv[2][i]);
             i++;
@@ -33,12 +33,12 @@ int main(int argc, char* argv[]){
             return -1;
         }
         string nome_file_log;
-        string nome_file_output_replay;
-        int i = 0;
+        int i {0};
         while(argv[2][i] != '\0'){ //carattere terminatore stringa C-type
             nome_file_log.push_back(argv[2][i]);
             i++;
         }
+        string nome_file_output_replay;
         i = 0;
         while(argv[3][i] != '\0'){ //carattere terminatore stringa C-type
             nome_file_output_replay.push_back(argv[3][i]);
