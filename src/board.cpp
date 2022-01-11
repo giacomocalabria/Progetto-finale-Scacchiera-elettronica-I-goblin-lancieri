@@ -303,58 +303,20 @@ bool board::is_castling(const position& from, const position& to)
     return true;
 }
 
-/*
-    Promote viene chiamata quando quando una cella si ritrova dalla parte opposta 
-    della board, tenendo conto del colore del giocatore: se il pezzo può pruomovere 
-    allora viene sostituito da una regina.
-*/
-bool board::promote(const position& pos)
-{
-    piece* p{board_matrix.at(make_index_8(pos))};
-    if (!p) return false;
-
-    if (is_pawn(p))
-    {
-        player_id player_num{p->get_player()};
-        /*
-            Il pezzo viene inserito nel vector dei pezzi in quanto nuovo pezzo concreto.
-            Ciò NON causa la riallocazione dei vector poiché avviene il reserve della
-            memoria del vector di 1 (la regina iniziale) + 8 (i pedoni iniziali, che
-            possono promuovere).
-        */
-        player_queen[player_num].push_back(queen(p->get_position(), player_num));
-        board_matrix[make_index_8(pos)] = &player_queen[player_num].back();
-        return true;
-    }
-    
-    return false;
-}
-
-bool board::can_do_legal_move(player_id pl)
-{
-    for (auto p : board_matrix) // Per ogni pedina
-    {
-        if (!p || p->get_player() != pl) continue; // Se non c'è alcuna pedina o se tale non è del player
-        
-        vector<position> possible_pos;
-        possible_pos = p->get_possible_positions();
-        for (auto pos : possible_pos)
-        {
-            // Se la pedina può muoversi verso tale posizione allora ritorna true
-            if (p->can_move_to(pos, board_matrix)) return true;
-        }
-    }
-    return false; // Altrimenti: nessuna mossa legale.
-}
 
 /*
-    Rende vuota la board inizializzando a nullptr ogni riferimento in board_matrix.
+    Rende vuota la board inizializzando a nullptr ogni riferimento
+    in board_matrix.
 */
 void board::to_empty()
 {
     for (int i = 0; i < board_size; i++)
+    {
         for (int j = 0; j < board_size; j++)
+        {
             board_matrix[make_index_8(i, j)] = nullptr;
+        }
+    }
 }
 
 void board::init_board()
@@ -388,6 +350,34 @@ void board::init_board()
     player_queen[player_id::player_2].reserve(piece_numbers::queen_number + piece_numbers::pawn_number);
     
     to_empty();
+}
+
+/*
+    Promote viene chiamata quando quando una cella si ritrova
+    dalla parte opposta della board, tenendo conto del colore
+    del giocatore: se il pezzo può pruomovere allora viene sostituito
+    da una regina.
+*/
+bool board::promote(const position& pos)
+{
+    piece* p{board_matrix.at(make_index_8(pos))};
+    if (!p) return false;
+
+    if (is_pawn(p))
+    {
+        player_id player_num{p->get_player()};
+        /*
+            Il pezzo viene inserito nel vector dei pezzi in quanto nuovo pezzo concreto.
+            Ciò NON causa la riallocazione dei vector poiché avviene il reserve della
+            memoria del vector di 1 (la regina iniziale) + 8 (i pedoni iniziali, che
+            possono promuovere).
+        */
+        player_queen[player_num].push_back(queen(p->get_position(), player_num));
+        board_matrix[make_index_8(pos)] = &player_queen[player_num].back();
+        return true;
+    }
+    
+    return false;
 }
 
 std::vector<position> board::get_player_pieces_positions(player_id player)
@@ -573,16 +563,23 @@ void board::file_print_board(ofstream& _out_file)
     _out_file << "  ABCDEFGH" << endl;
 }
 
-string board::row_symbols(int i) //Restituisce una stringa con i simboli della riga i della board (compresi gli spazi)
+/*
+Mi restituisce una stringa con i simboli della riga i della board (compresi gli spazi)
+*/
+string board::row_symbols(int i)
 {
     string str_board;
+
     for (int j = 0; j < board_size; j++)
     {
         piece* p = board_matrix[make_index_8(i, j)];
         if (!p)
+        {
            str_board += " ";
+        }
         else{
            str_board += p->symbol();
+        } 
     }
     return str_board;
 }
@@ -591,18 +588,34 @@ string board::all_board_symbols()
 {
     string all_symbols;
     for(int i = 0; i < board_size; i++)
+    {
         all_symbols += row_symbols(i);
+    }
     return all_symbols;
 }
+
+/*
+Ci dice se una certa "posizione" della board (rappresentata dalla stringa str) e' capitata 3 volte nella stessa partita. Se cio' si verifica, la partita termina per patta (facciamo obbligatoriamente?!?!?!)
+*/
+/*bool board::too_much_reps(string str)  
+{
+    if(states[str] && states[str] == 3)
+        return true;
+    return false;
+}*/
+
+
 /*
 La funzione is_draw ci permette di sapere se, prima della prossima mossa, si e' in una condizione in cui e' possibile procedere con la patta, ovvero interrompere la partita (in parita') per scelta o per evitare di continuare a giocare all'infinito
 */
 bool board::is_draw(player_id pl)
 {
+    //cout << "Numero di mosse: " << get_no_pwn_no_eat() << "\n";
+
     //--------------- mancanza di movimenti del pedone e di catture ---------------
     constexpr int limit {50};
     constexpr int reps_limit {3};
-    if(get_no_pwn_no_eat() == limit)
+    if(get_no_pwn_no_eat() == limit /*|| too_much_reps(all_board_symbols())*/)
     {
         cout << "Nessun pedone è stato mosso e nessuna cattura è avvenuta per " << limit << " mosse." << endl;
         return true;
@@ -611,9 +624,32 @@ bool board::is_draw(player_id pl)
     //--------------- patta per mancanza di mosse possibili del player pl ---------------
     piece* p;
     vector<position> possible_pos;
+
     if (!is_check(pl) && !can_do_legal_move(pl))
         return true;
 
+    return false;
+    //_out_file << to_string_move(from, to) << endl;
+}
+
+bool board::can_do_legal_move(player_id pl)
+{
+    // Per ogni pedina
+    for (auto p : board_matrix)
+    {
+        // Se non c'è alcuna pedina o se tale non è del player
+        if (!p || p->get_player() != pl) continue;
+        
+        vector<position> possible_pos;
+        possible_pos = p->get_possible_positions();
+        for (auto pos : possible_pos)
+        {
+            // Se la pedina può muoversi verso tale posizione allora ritorna true
+            if (p->can_move_to(pos, board_matrix)) return true;
+        }
+    }
+
+    // Altrimenti: nessuna mossa legale.
     return false;
 }
 
