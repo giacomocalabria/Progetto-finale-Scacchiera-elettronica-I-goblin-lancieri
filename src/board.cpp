@@ -47,7 +47,9 @@ bool board::move_piece(const position& from, const position& to)
         return false;
     }
 
-    piece* p = board_matrix[make_index_8(from)];
+    // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
+    piece* prev_in_dest = board_matrix[make_index_8(to)];
+    piece* p = board_matrix.at(make_index_8(from));
 
     if(!is_pawn(p) || !can_en_passant(from, to))
     {
@@ -89,11 +91,6 @@ bool board::move_piece(const position& from, const position& to)
         log.push_back(get_string_8(from) + " " + get_string_8(to));
         return true;
     }
-
-    // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
-    piece* prev_in_dest = board_matrix[make_index_8(to)];
-    piece* p = board_matrix.at(make_index_8(from));
-
 
     // ----------------- En passant -----------------
      

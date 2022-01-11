@@ -119,17 +119,27 @@ std::vector<position> pawn::get_possible_positions()
 {
     std::vector<position> possible_positions;
     int sign = player == player_id::player_1 ? -1 : 1;  // orientazione
+    position dest;
     
     // Se si trova nella posizione iniziale
     if (is_init_pos)
     {
-        possible_positions.push_back(pos + (sign * position(2, 0)));
+        dest = pos + (sign * position(2, 0));
+        if(is_valid_position_8(dest))
+            possible_positions.push_back(dest);
     }
 
-    //FARE IL RANGE CHECK DI STA ROBA !!
-    possible_positions.push_back(pos + (sign * position(1, 0)));    // avanza di una casa in verticale
-    possible_positions.push_back(pos + (sign * position(1, 1)));    // avanza di una casa in verticale e orizzontale
-    possible_positions.push_back(pos + (sign * position(1, -1)));   
+    dest = pos + (sign * position(1, 0));
+    if(is_valid_position_8(dest))
+        possible_positions.push_back(dest);
+    
+    dest = pos + (sign * position(1, 1));
+    if(is_valid_position_8(dest))
+        possible_positions.push_back(dest);
+    
+    dest = pos + (sign * position(1, -1));
+    if(is_valid_position_8(dest))
+        possible_positions.push_back(dest);
 
     return possible_positions;
 }
