@@ -55,7 +55,6 @@ CMakeFiles/3.16.3/CompilerIdCXX/CMakeCXXCompilerId.cpp
 CMakeFiles/3.16.3/CompilerIdC/CMakeCCompilerId.c
 CMakeFiles/bishop.dir/link.txt
 CMakeFiles/rook.dir/link.txt
-<<<<<<< Updated upstream
 src/CMakeFiles/3.22.0/CompilerIdC/CMakeCCompilerId.c
 src/CMakeFiles/Makefile2
 src/Makefile
@@ -78,12 +77,9 @@ src/CMakeFiles/scacchiera.dir/link.txt
 src/CMakeFiles/TargetDirectories.txt
 src/CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.cpp
 src/CMakeCache.txt
-=======
-*.json
 build/CMakeFiles/replay.dir/link.txt
 CMakeFiles/replay.dir/link.txt
 replay
->>>>>>> Stashed changes
 src/CMakeFiles/king.dir/link.txt
 src/CMakeFiles/king.dir/link.txt
 src/CMakeFiles/knight.dir/link.txt
@@ -105,7 +101,6 @@ CMakeFiles/Progress/count.txt
 CMakeFiles/Progress/33
 CMakeFiles/pieces.dir/link.txt
 CMakeFiles/Progress/1
-.gitignore
 CMakeFiles/Progress/6
 CMakeFiles/Progress/16
 CMakeFiles/Progress/2
@@ -129,5 +124,3 @@ src/CMakeFiles/pieces.dir/link.txt
 log.txt
 build/log.txt
 out.txt
-out.txt
-log.txt
