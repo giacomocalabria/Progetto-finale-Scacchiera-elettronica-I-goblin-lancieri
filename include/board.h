@@ -49,7 +49,7 @@ class board
         //bool is_king_eaten(player_id id){return king_eaten_player[id];}
 
         bool is_castling(const position& from, const position& to);
-        bool can_en_passant(const position& passing, const position& to_pass);
+        bool can_en_passant(const position& passing, const position& to);
     
     // Costanti relative al numero di pezzi di ogni giocatore.
     private:

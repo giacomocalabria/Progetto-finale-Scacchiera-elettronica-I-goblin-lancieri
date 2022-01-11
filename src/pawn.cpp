@@ -50,6 +50,7 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         }
         is_init_pos = false;
         can_be_passed = true;
+        //ci arriva
         return true;
     }
 
@@ -64,7 +65,6 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
             return true;
         }
     }
-
     return false;
 }
 
@@ -72,38 +72,39 @@ bool pawn::can_promote(){return true;}
 
 bool pawn::can_capture(const position& dest, const vector<piece*>& board_pieces)   //serve per definire la condizione di scacco del re avversario
 {
+    piece* other = board_pieces[make_index_8(dest)];
+
     // Ovviamente se nella cella di destinazione non c'è nulla non può mangiare.
-    if (!board_pieces[make_index_8(dest)])
+    if (!other)
     {
         return false;
     }
 
     int sign = player == player_id::player_1 ? -1 : 1;  // orientazione
 
-    if(board_pieces[make_index_8(dest)] && board_pieces[make_index_8(dest)]->get_player() != get_player() && (dest == pos + (sign * position(1, 1)) || dest == pos + (sign * position(1, -1))))
+    if(other && (dest == pos + (sign * position(1, 1)) || dest == pos + (sign * position(1, -1))))
     {
+        /*Se tale pedina però è dello stesso giocatore
+        di questo pedone significa che non potrà mangiarlo*/
+        if (other->get_player() == get_player())
+            return false;
+
         is_init_pos = false;    //potremmo metterlo in set_position di piece.....
         can_be_passed = false;
         return true;
     }
 
     /*position straight_right = pos + (sign * position(1, 1));
-    position straight_left = pos + (sign * position(1, 1));
+    position straight_left = pos + (sign * position(1, 1));*/
+    
 
-    /*
-        Se tale pedina però è dello stesso giocatore
-        di questo pedone significa che non potrà mangiarlo
-    */
-    /*
-    if (board_pieces[make_index_8(dest)]->get_player() == get_player())
-        return false;
-
-    if (dest == pos + (sign * position(1, 1)) || dest == pos + (sign * position(1, -1)))
+    /*if (dest == pos + (sign * position(1, 1)) || dest == pos + (sign * position(1, -1)))
     {
         return true;
-    }*/
-    return false;
+    }
+    return false;*/
 
+    return false;
 }
 
 inline char pawn::symbol()

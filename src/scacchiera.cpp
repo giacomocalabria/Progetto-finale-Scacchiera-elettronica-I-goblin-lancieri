@@ -30,6 +30,44 @@ int main(int argc, char *argv[])
     board main_board;
     main_board.print_board();
 
+
+    /*main_board.move_piece(position(1, 4), position(3, 4));
+    main_board.print_board();
+    main_board.move_piece(position(6, 3), position(4, 3));
+    main_board.print_board();
+    main_board.move_piece(position(4, 3), position(3, 3));
+    main_board.print_board();
+    main_board.move_piece(position(1, 0), position(2, 0));
+    main_board.print_board();
+    main_board.move_piece(position(3, 3), position(2, 4));
+    main_board.print_board();
+    main_board.move_piece(position(6, 4), position(4, 4));
+    main_board.print_board();
+    main_board.move_piece(position(4, 4), position(3, 4));
+    main_board.print_board();
+    main_board.move_piece(position(3, 3), position(2, 4));
+    main_board.print_board();
+    cout << "controllo donna\n";
+    main_board.move_piece(position(7, 3), position(6, 3));
+    main_board.print_board();
+    main_board.move_piece(position(6, 3), position(4, 3));
+    main_board.print_board();
+    main_board.move_piece(position(7, 2), position(5, 4));
+    main_board.print_board();
+    main_board.move_piece(position(4, 3), position(5, 3));
+    main_board.print_board();
+    main_board.move_piece(position(5, 3), position(6, 3));
+    main_board.print_board();
+    main_board.move_piece(position(6, 3), position(5, 4));
+    main_board.print_board();
+    main_board.move_piece(position(6, 3), position(4, 1));
+    main_board.print_board();
+    main_board.move_piece(position(4, 1), position(4, 3));
+    main_board.print_board();
+    main_board.move_piece(position(5, 4), position(1, 0));
+    main_board.print_board();*/
+    return 0;
+
     /*
         Vector contenente human_player e computer_players. Il primo
         avrà capacitò max 1 e l'altro 2 per le regole del gioco.
