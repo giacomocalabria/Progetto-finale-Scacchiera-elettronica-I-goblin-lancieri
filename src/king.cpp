@@ -42,8 +42,6 @@ inline char king::symbol(){
     return player == player_id::player_1 ? 'r' : 'R';
 }
 
-bool king::can_promote(){ return false; }
-
 vector<position> king::get_possible_positions()
 {
     vector<position> possible_pos;

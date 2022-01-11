@@ -27,12 +27,17 @@ board::board()
 */
 bool board::move_piece(const position& from, const position& to)
 {
-    if(is_draw(board_matrix[make_index_8(from)]->get_player()))
+    // Se la posizione di partenza viene chiamata una eccezione, errore grave
+    if (!is_valid_position_8(from)) throw bad_position_8();
+    // Provare a muovere un pezzo da una posizione valida a una non comporta "solo" che la funzione restituisca false
+    if (!is_valid_position_8(to)) return false;
+
+    if(is_draw(board_matrix.at(make_index_8(from))->get_player()))
     {
         return false;
     }
 
-    if (board_matrix[make_index_8(from)] == nullptr)   // Non c'è una pedina nella casella from
+    if (board_matrix.at(make_index_8(from)) == nullptr)   // Non c'è una pedina nella casella from
     {
         return false; // Restituisce false
     }
@@ -54,23 +59,26 @@ bool board::move_piece(const position& from, const position& to)
 
     // ----------------- Arrocco -----------------
     
-    if(is_castling(from, to)){
-        piece* _king = board_matrix[make_index_8(from)];
+    if(is_castling(from, to))
+    {
+        piece* _king = board_matrix.at(make_index_8(from));
         _king->set_position(to);
         board_matrix[make_index_8(to)] = _king;
         board_matrix[make_index_8(from)] = nullptr;
-        if(from.col > to.col){
+        if(from.col > to.col)
+        {
             position rook_from = position(from.row, 0);
             position rook_to = position(from.row,to.col + 1);
-            piece* _rook = board_matrix[make_index_8(rook_from)];
+            piece* _rook = board_matrix.at(make_index_8(rook_from));
             _rook->set_position(rook_to);
             board_matrix[make_index_8(rook_to)] = _rook;
             board_matrix[make_index_8(rook_from)] = nullptr;
         }
-        else{
+        else
+        {
             position rook_from = position(from.row, 7);
             position rook_to = position(from.row, to.col - 1);
-            piece* _rook = board_matrix[make_index_8(rook_from)];
+            piece* _rook = board_matrix.at(make_index_8(rook_from));
             _rook->set_position(rook_to);
             board_matrix[make_index_8(rook_to)] = _rook;
             board_matrix[make_index_8(rook_from)] = nullptr;
@@ -78,12 +86,13 @@ bool board::move_piece(const position& from, const position& to)
         count_draw++;
         states[all_board_symbols()]++;
         
-        log.push_back(get_string(from)+" "+get_string(to));
+        log.push_back(get_string_8(from) + " " + get_string_8(to));
         return true;
     }
 
     // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
     piece* prev_in_dest = board_matrix[make_index_8(to)];
+    piece* p = board_matrix.at(make_index_8(from));
 
 
     // ----------------- En passant -----------------
@@ -115,6 +124,8 @@ bool board::move_piece(const position& from, const position& to)
         }
         return true;
     }
+    // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
+    prev_in_dest = board_matrix[make_index_8(to)];
 
 
     // ----------------------- Sezione mossa normale -----------------------
@@ -138,10 +149,8 @@ bool board::move_piece(const position& from, const position& to)
     else    // Allora la destinazione non è nelle possibili posizioni.
     {
         //IMPORTANTE PER IL DEBUG, NON ELIMINARE
-        //cout << "Mossa non valida. Da " << from << " a " << to << endl;
         return false;
     }
-    //cout << "Nessun scacco.\n";
 
     // -------------- Promozione -----------------
     if (p->get_player() == player_id::player_1)
@@ -159,7 +168,8 @@ bool board::move_piece(const position& from, const position& to)
         }
     }
 
-    if(!p->can_promote() && !prev_in_dest)
+    //if(!p->can_promote() && !prev_in_dest)
+    if(!is_pawn(p) && !prev_in_dest)
     {
         no_pwn_no_eat++;
     }
@@ -181,7 +191,7 @@ bool board::move_piece(const position& from, const position& to)
     
     //int& state_num {states[all_board_symbols()]};
     //cout << state_num;
-    log.push_back(get_string(from)+" "+get_string(to));
+    log.push_back(get_string_8(from) + " " + get_string_8(to));
     // ALLORA è una mossa lecita
     
     // Se c'era un pezzo e se tale pezzo aveva come simbolo k allora ha mangiato il re
@@ -212,15 +222,15 @@ bool board::can_en_passant(const position& passing, const position& to)
     //pos_to_pass.row -= sign;
     piece* pce_to_pass{board_matrix[make_index_8(pos_to_pass)]};
 
-    if (!pce_to_pass || !pce)   // non c'è una pedina in pos_to_pass
+    if (!pce_to_pass || !pce)   // Non c'è una pedina in pos_to_pass
     {
-        return false; // da def, forse eccezione o altro
+        return false; // Da def, forse eccezione o altro
     }
 
+    //if (pce->can_promote()) // in generale se è un pedone
     if (is_pawn(pce)) // in generale se è un pedone
     {
-        //ufficiale: pce e' un pawn
-
+        // Ufficiale: pce e' un pawn
         if(pce_to_pass->get_can_be_passed() && pce_to_pass->get_player() != pce->get_player())
         {
             return true;
@@ -230,34 +240,6 @@ bool board::can_en_passant(const position& passing, const position& to)
     }
     
     return false;
-
-    /*vector<pawn> pl_pawns = player_pawns[pce->get_player()];
-    for(int i = 0; i < pl_pawns.size(); i++)         //di fatto, controllo se pce punta ad un pedone o meno...
-    {
-        if(pl_pawns[i].get_position() == pce->get_position())  
-        {
-            pawn* pw = (pawn*)pce;    //ufficiale: pce e' un pawn
-
-            vector<pawn> pl_pawns_2 = player_pawns[pce_to_pass->get_player()];
-            for(int j = 0; j < pl_pawns.size(); j++) //di fatto, controllo se pce_to_pass punta ad un pedone o meno...
-            {
-                if(pl_pawns_2[j].get_position() == pce_to_pass->get_position())
-                {
-                    pawn* pw_to_pass = (pawn*)pce_to_pass;   //ufficiale: pce_to_pass e' un pawn
-
-                    if(pw_to_pass->get_can_be_passed())
-                    {
-                        return true;
-                    }
-                    else
-                        return false;
-                }
-            }
-            cout << "\n";
-
-        }
-    }
-    return false;*/
 }
 
 /*
@@ -550,6 +532,66 @@ std::vector<position> board::get_player_in_board_pieces_positions(player_id play
     return player_in_board_pieces_positions;
 }
 
+void board::insert_pawn(const position& pos, player_id id)
+{
+    if (!is_valid_position_8(pos))  throw bad_position_8();
+
+    if (player_pawns[id].size() == piece_numbers::pawn_number)  throw too_many_pieces();
+
+    player_pawns[id].push_back(pawn(pos, id));
+    board_matrix[make_index_8(pos)] = &player_pawns[id].back();
+}
+
+void board::insert_king(const position& pos, player_id id)
+{
+    if (!is_valid_position_8(pos))  throw bad_position_8();
+
+    if (player_king[id].size() == piece_numbers::king_number)  throw too_many_pieces();
+
+    player_king[id].push_back(king(pos, id));
+    board_matrix[make_index_8(pos)] = &player_king[id].back();
+}
+
+void board::insert_queen(const position& pos, player_id id)
+{
+    if (!is_valid_position_8(pos))  throw bad_position_8();
+
+    if (player_queen[id].size() == piece_numbers::queen_number)  throw too_many_pieces();
+
+    player_queen[id].push_back(queen(pos, id));
+    board_matrix[make_index_8(pos)] = &player_queen[id].back();
+}
+
+void board::insert_rook(const position& pos, player_id id)
+{
+    if (!is_valid_position_8(pos))  throw bad_position_8();
+
+    if (player_rooks[id].size() == piece_numbers::rook_number)  throw too_many_pieces();
+
+    player_rooks[id].push_back(rook(pos, id));
+    board_matrix[make_index_8(pos)] = &player_rooks[id].back();
+}
+
+void board::insert_bishop(const position& pos, player_id id)
+{
+    if (!is_valid_position_8(pos))  throw bad_position_8();
+
+    if (player_bishops[id].size() == piece_numbers::bishop_number)  throw too_many_pieces();
+
+    player_bishops[id].push_back(bishop(pos, id));
+    board_matrix[make_index_8(pos)] = &player_bishops[id].back();
+}
+
+void board::insert_knight(const position& pos, player_id id)
+{
+    if (!is_valid_position_8(pos))  throw bad_position_8();
+
+    if (player_knights[id].size() == piece_numbers::knight_number)  throw too_many_pieces();
+
+    player_knights[id].push_back(knight(pos, id));
+    board_matrix[make_index_8(pos)] = &player_knights[id].back();
+}
+
 void board::init_player_pieces()
 {
     /*
@@ -568,70 +610,36 @@ void board::init_player_pieces()
 
     for (int i = 0; i < piece_numbers::pawn_number; i++)
     {
-        player_pawns[player_id::player_1].push_back(pawn(position(PAWN_ROW_PLAYER_1, i), player_id::player_1));
-        player_pawns[player_id::player_2].push_back(pawn(position(PAWN_ROW_PLAYER_2, i), player_id::player_2));
-        
-    }
-    for (int i = 0; i < piece_numbers::pawn_number; i++)
-    {
-
-        board_matrix[make_index_8(PAWN_ROW_PLAYER_2, i)] = &player_pawns[player_id::player_2].at(i);
-        board_matrix[make_index_8(PAWN_ROW_PLAYER_1, i)] = &player_pawns[player_id::player_1].at(i);
+        insert_pawn(position(PAWN_ROW_PLAYER_1, i), player_1);
+        insert_pawn(position(PAWN_ROW_PLAYER_2, i), player_2);
     }
 
 
     // ----------- Inserimento knights ----------- 
-
-    player_knights[player_id::player_1].push_back(knight(position(7, 1), player_id::player_1));
-    player_knights[player_id::player_2].push_back(knight(position(0, 1), player_id::player_2));
-    player_knights[player_id::player_1].push_back(knight(position(7, 6), player_id::player_1));
-    player_knights[player_id::player_2].push_back(knight(position(0, 6), player_id::player_2));
-    
-
-    board_matrix[make_index_8(7, 1)] = &player_knights[player_id::player_1][0];
-    board_matrix[make_index_8(0, 1)] = &player_knights[player_id::player_2][0];
-    board_matrix[make_index_8(7, 6)] = &player_knights[player_id::player_1][1];
-    board_matrix[make_index_8(0, 6)] = &player_knights[player_id::player_2][1]; 
+    insert_knight(position(7, 1), player_1);
+    insert_knight(position(0, 1), player_2);
+    insert_knight(position(7, 6), player_1);
+    insert_knight(position(0, 6), player_2);
 
     // ----------- Inserimento bishop ----------- 
-
-    player_bishops[player_id::player_1].push_back(bishop(position(7, 2), player_id::player_1));
-    player_bishops[player_id::player_2].push_back(bishop(position(0, 2), player_id::player_2));
-    player_bishops[player_id::player_1].push_back(bishop(position(7, 5), player_id::player_1));
-    player_bishops[player_id::player_2].push_back(bishop(position(0, 5), player_id::player_2));
-    
-    board_matrix[make_index_8(7, 2)] = &player_bishops[player_id::player_1][0];
-    board_matrix[make_index_8(0, 2)] = &player_bishops[player_id::player_2][0];
-    board_matrix[make_index_8(7, 5)] = &player_bishops[player_id::player_1][1];
-    board_matrix[make_index_8(0, 5)] = &player_bishops[player_id::player_2][1];
+    insert_bishop(position(7, 2), player_1);
+    insert_bishop(position(0, 2), player_2);
+    insert_bishop(position(7, 5), player_1);
+    insert_bishop(position(0, 5), player_2);
 
     // ----------- Inserimento rook ----------- 
-
-    player_rooks[player_id::player_1].push_back(rook(position(7, 0), player_id::player_1));
-    player_rooks[player_id::player_2].push_back(rook(position(0, 0), player_id::player_2));
-    player_rooks[player_id::player_1].push_back(rook(position(7, 7), player_id::player_1));
-    player_rooks[player_id::player_2].push_back(rook(position(0, 7), player_id::player_2));
-    
-    board_matrix[make_index_8(7, 0)] = &player_rooks[player_id::player_1][0];
-    board_matrix[make_index_8(0, 0)] = &player_rooks[player_id::player_2][0];
-    board_matrix[make_index_8(7, 7)] = &player_rooks[player_id::player_1][1];
-    board_matrix[make_index_8(0, 7)] = &player_rooks[player_id::player_2][1];
+    insert_rook(position(7, 0), player_1);
+    insert_rook(position(0, 0), player_2);
+    insert_rook(position(7, 7), player_1);
+    insert_rook(position(0, 7), player_2);
 
     // ----------- Inserimento queen -----------
-
-    player_queen[player_id::player_1].push_back(queen(position(7, 3), player_id::player_1));
-    player_queen[player_id::player_2].push_back(queen(position(0, 3), player_id::player_2));
-
-    board_matrix[make_index_8(0, 3)] = &player_queen[player_id::player_2][0];
-    board_matrix[make_index_8(7, 3)] = &player_queen[player_id::player_1][0];
+    insert_queen(position(7, 3), player_1);
+    insert_queen(position(0, 3), player_2);
 
     // ----------- Inserimento king -----------
-
-    player_king[player_id::player_1].push_back(king(position(7, 4), player_id::player_1));
-    player_king[player_id::player_2].push_back(king(position(0, 4), player_id::player_2));
-
-    board_matrix[make_index_8(7, 4)] = &player_king[player_id::player_1][0];
-    board_matrix[make_index_8(0, 4)] = &player_king[player_id::player_2][0];
+    insert_king(position(7, 4), player_1);
+    insert_king(position(0, 4), player_2);
     
 }
 
@@ -745,6 +753,9 @@ bool board::can_do_legal_move(player_id pl)
     // Altrimenti: nessuna mossa legale.
     return false;
 }
+
+
+
 /*
     Setup 1:
      01234567
@@ -950,4 +961,36 @@ void board::setup_7()
 {
     player_pawns[player_id::player_1].push_back(pawn(position(2, 5), player_id::player_1));
     board_matrix[make_index_8(position(2, 5))] = &player_pawns[player_id::player_1][0];
+}
+
+/*
+    Setup 8:
+     01234567
+    0////////
+    1/A//////
+    2////////
+    3////////
+    4///P/a/p
+    5/////r//
+    6//////T/
+    7////////
+
+    // NON CONCLUSO
+    Test: Bug fix scacco matto.
+*/
+void board::setup_8()
+{
+    // Player 1
+    player_rooks[player_1].push_back(rook(position("A1"), player_1));
+    player_knights[player_1].push_back(knight(position("B1"), player_1));
+    player_queen[player_1].push_back(queen(position("D1"), player_1));
+    player_rooks[player_1].push_back(rook(position("F1"), player_1));
+    player_knights[player_1].push_back(knight(position("E2"), player_1));
+    player_pawns[player_1].push_back(pawn(position("A1"), player_1));
+    player_king[player_1].push_back(king(position("F3"), player_1));
+    player_bishops[player_1].push_back(bishop(position("F4"), player_1));
+    player_pawns[player_1].push_back(pawn(position("E5"), player_1));
+    player_bishops[player_1].push_back(bishop(position("F5"), player_1));
+
+
 }

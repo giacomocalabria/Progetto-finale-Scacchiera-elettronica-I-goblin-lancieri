@@ -19,37 +19,48 @@
 class board
 {
     public:
+        // ------------------ Costruttore e inizializzatori ------------------
         board();
         void to_empty();    // rende la board priva di pezzi
         bool move_piece(const position& from, const position& to);
         void init_game();
         void init_board();
+
+        // ------------------ Costruttore e inizializzatori ------------------
         inline std::vector<std::string> get_log() { return log; }
-    
-    public:
         std::string row_symbols(int i);
         std::string all_board_symbols();
-
         void print_board();
         void file_print_board(std::ofstream& _out_file);
-
         piece* get_board_piece(position pos){return board_matrix[make_index_8(pos)];}
         void set_board_piece(position pos, piece* p){board_matrix[make_index_8(pos)] = p;}
         std::vector<position> get_player_pieces_positions(player_id player);
         std::vector<position> get_player_in_board_pieces_positions(player_id player);
-        
-        //player_id is_game_ended();
-        
+
+        // Lato della board        
         static const int board_size {8};
 
+        // ------------------ Funzioni membro di stato ------------------
         bool is_check(player_id player_number);
         bool is_checkmate(player_id player_number);
         bool is_draw(player_id pl);
         bool has_king_been_captured(player_id id);
-        //bool is_king_eaten(player_id id){return king_eaten_player[id];}
-
         bool is_castling(const position& from, const position& to);
-        bool can_en_passant(const position& passing, const position& to);
+        bool can_en_passant(const position& passing, const position& to_pass);
+        bool too_much_reps(std::string str); //controlla il numero di ripetizioni di una singola "posizione" della board
+        int get_count_draw() {return count_draw;}
+        int get_no_pwn_no_eat() {return no_pwn_no_eat;}
+
+        // ------------------ Funzioni membro di inserimento ------------------
+        private:
+            void insert_pawn(const position& pos, player_id id);
+            void insert_king(const position& pos, player_id id);
+            void insert_queen(const position& pos, player_id id);
+            void insert_rook(const position& pos, player_id id);
+            void insert_bishop(const position& pos, player_id id);
+            void insert_knight(const position& pos, player_id id);
+
+            class too_many_pieces{};
     
     // Costanti relative al numero di pezzi di ogni giocatore.
     private:
@@ -62,10 +73,15 @@ class board
             rook_number = 2,
             pawn_number = 8
         };
-    /*
-        Variabili membro private
-    */
-    private:
+
+        // ------------------ Variabili membro private ------------------
+
+        /*
+            Board concreata di puntatori a piece. L'accesso alla cella di
+            di riga i e colonna j avviene tramite la formula 8*i + j.
+            A tal proposito vi e' l'uso massiccio della funzione make_index_8
+            definita in position.h che si occupa di questo calcolo.
+        */
         std::vector<piece*> board_matrix;
         
         /* 
@@ -91,9 +107,7 @@ class board
         std::vector<king> player_king[player_id::player_count];
         std::vector<queen> player_queen[player_id::player_count];
     
-    /*
-        Funzioni membro privato.
-    */   
+        // ------------------ Funzioni membro private ------------------
     private:   
         void init_player_pieces();
         bool promote(const position& pos);
@@ -105,12 +119,6 @@ class board
         std::map<std::string, int> states;    //mappa che contiene le varie "posizioni" della scacchiera e il numero di volte che si sono presentate durante una partita
         std::vector<std::string> log; //Vector per memorizzare tutte le mosse effettuate dai giocatori
 
-    public:
-        bool too_much_reps(std::string str); //controlla il numero di ripetizioni di una singola "posizione" della board
-
-    public:
-        int get_count_draw() {return count_draw;}
-        int get_no_pwn_no_eat() {return no_pwn_no_eat;}
 
     // -------------- setup di debug --------------
     private:
@@ -122,6 +130,7 @@ class board
         void setup_5();
         void setup_6();
         void setup_7();
+        void setup_8();
 };
 
 #endif // BOARD_H
