@@ -59,27 +59,86 @@ bool board::move_piece(const position& from, const position& to)
     if(is_castling(from, to))
     {
         piece* _king = board_matrix.at(make_index_8(from));
+        piece* _rook;
+        if(is_check(_king->get_player()))
+            return false;
+        position rook_from;
+        position rook_to;
+        if(from.col > to.col) // va a sinistra
+        {
+            rook_from = position(from.row, 0);
+            rook_to = position(from.row, to.col + 1);
+            _rook = board_matrix.at(make_index_8(rook_from));
+            if(!_rook->get_init_pos() && !_king->get_init_pos()){
+                return false;
+            }
+            for(int i = 1; i < from.col; i++){
+                if(!board_matrix[make_index_8(from.row,i)])
+                    return false;
+            }
+            position temp_pos = position(from.row, from.col - 1);
+            piece* prev_in_dest{board_matrix[make_index_8(temp_pos)]};
+            _king->set_position(temp_pos);
+            board_matrix[make_index_8(temp_pos)] = _king;
+            board_matrix[make_index_8(from)] = nullptr;
+            if (is_check(_king->get_player()))
+            {
+                board_matrix[make_index_8(from)] = _king;
+                _king->set_position(from);
+                board_matrix[make_index_8(temp_pos)] = prev_in_dest;
+                return false;
+            }
+            board_matrix[make_index_8(from)] = _king;
+            _king->set_position(from);
+            board_matrix[make_index_8(temp_pos)] = prev_in_dest;
+        }
+        else // va a destra
+        {
+            rook_from = position(from.row, 7);
+            rook_to = position(from.row, to.col - 1);
+            _rook = board_matrix[make_index_8(rook_from)];
+            if(!_rook->get_init_pos() && !_king->get_init_pos()){
+                return false;
+            }
+            for(int i = from.col + 1 ; i < 7; i++){
+                if(!board_matrix[make_index_8(from.row,i)])
+                    return false;
+            }
+            position temp_pos = position(from.row, from.col + 1);
+            piece* prev_in_dest{board_matrix[make_index_8(temp_pos)]};
+            _king->set_position(temp_pos);
+            board_matrix[make_index_8(temp_pos)] = _king;
+            board_matrix[make_index_8(from)] = nullptr;
+            if (is_check(_king->get_player()))
+            {
+                board_matrix[make_index_8(from)] = _king;
+                _king->set_position(from);
+                board_matrix[make_index_8(temp_pos)] = prev_in_dest;
+                return false;
+            }
+            board_matrix[make_index_8(from)] = _king;
+            _king->set_position(from);
+            board_matrix[make_index_8(temp_pos)] = prev_in_dest;
+        }
+
+        //CONTROLLO CHE NELLA DESTINAZIONE IL RE NON VADA IN SCACCO ALTRIMENTI ESEGUO L' ARROCCO DEL RE
+        piece* prev_in_dest = board_matrix[make_index_8(to)];
         _king->set_position(to);
         board_matrix[make_index_8(to)] = _king;
         board_matrix[make_index_8(from)] = nullptr;
-        if(from.col > to.col)
-        {
-            position rook_from = position(from.row, 0);
-            position rook_to = position(from.row,to.col + 1);
-            piece* _rook = board_matrix.at(make_index_8(rook_from));
-            _rook->set_position(rook_to);
-            board_matrix[make_index_8(rook_to)] = _rook;
-            board_matrix[make_index_8(rook_from)] = nullptr;
+        if (is_check(_king->get_player()))
+        {   
+            board_matrix[make_index_8(from)] = _king;
+            _king->set_position(from);
+            board_matrix[make_index_8(to)] = prev_in_dest;
+            return false;
         }
-        else
-        {
-            position rook_from = position(from.row, 7);
-            position rook_to = position(from.row, to.col - 1);
-            piece* _rook = board_matrix.at(make_index_8(rook_from));
-            _rook->set_position(rook_to);
-            board_matrix[make_index_8(rook_to)] = _rook;
-            board_matrix[make_index_8(rook_from)] = nullptr;
-        }
+        
+        // ESEGUO L' ARROCCO DELLA TORRE
+        _rook->set_position(rook_to);
+        board_matrix[make_index_8(rook_to)] = _rook;
+        board_matrix[make_index_8(rook_from)] = nullptr;
+
         count_draw++;
         states[all_board_symbols()]++;
         
@@ -297,85 +356,7 @@ bool board::is_checkmate(player_id player_number)
 
 bool board::is_castling(const position& from, const position& to)
 {
-    piece* _king = board_matrix[make_index_8(from)];
-
-    // ELIMINARE MAGIC NUMBERS
-    if(!(from == position(7, 4)) || !(from == position(0, 4))){
-        return false;
-    }
-    if(is_check(_king->get_player()) && abs(from.col - to.col) != 2){
-        return false;
-    }
-
-    position rook_from = position(from.row, 0);
-    position rook_to = position(from.row, 0);
-    if(from.col > to.col){
-        rook_from = position(from.row, 0);
-        rook_to = position(from.row,to.col + 1);
-        for(int i = 1; i < from.col; i++){
-            if(!board_matrix[make_index_8(from.row,i)])
-                return false;
-        }
-        position temp_pos = position(from.row,from.col+1);
-        piece* prev_in_dest{board_matrix[make_index_8(temp_pos)]};
-        _king->set_position(temp_pos);
-        board_matrix[make_index_8(temp_pos)] = _king;
-        board_matrix[make_index_8(from)] = nullptr;
-        // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
-        if (is_check(_king->get_player()))
-        {
-            board_matrix[make_index_8(from)] = _king;
-            _king->set_position(from);
-            board_matrix[make_index_8(temp_pos)] = prev_in_dest;
-            return false;
-        }
-        board_matrix[make_index_8(from)] = _king;
-        _king->set_position(from);
-        board_matrix[make_index_8(temp_pos)] = prev_in_dest;
-        //qui verificare che il re non vada in scacco muovendosi in ciascuna delle due caselle     
-    } else {
-        rook_from = position(from.row, 7);
-        rook_to = position(from.row, to.col - 1);
-        for(int i = 7; i > from.col; i--){
-            if(!board_matrix[make_index_8(from.row,i)])
-                return false;
-        }
-        position temp_pos = position(from.row,from.col-1);
-        piece* prev_in_dest{board_matrix[make_index_8(temp_pos)]};
-        _king->set_position(temp_pos);
-        board_matrix[make_index_8(temp_pos)] = _king;
-        board_matrix[make_index_8(from)] = nullptr;
-        // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
-        if (is_check(_king->get_player()))
-        {
-            board_matrix[make_index_8(from)] = _king;
-            _king->set_position(from);
-            board_matrix[make_index_8(temp_pos)] = prev_in_dest;
-            return false;
-        }
-        board_matrix[make_index_8(from)] = _king;
-        _king->set_position(from);
-        board_matrix[make_index_8(temp_pos)] = prev_in_dest;
-        //qui verificare che il re non vada in scacco muovendosi in ciascuna delle due caselle
-    }
-    piece* prev_in_dest{board_matrix[make_index_8(to)]};
-    _king->set_position(to);
-    board_matrix[make_index_8(to)] = _king;
-    board_matrix[make_index_8(from)] = nullptr;
-    // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
-    if (is_check(_king->get_player()))
-    {
-        board_matrix[make_index_8(from)] = _king;
-        _king->set_position(from);
-        board_matrix[make_index_8(to)] = prev_in_dest;
-        return false;
-    }
-    board_matrix[make_index_8(from)] = _king;
-    _king->set_position(from);
-    board_matrix[make_index_8(to)] = prev_in_dest;
-
-    piece* _rook = board_matrix[make_index_8(rook_from)];
-    if(!_rook->get_init_pos() && !_king->get_init_pos()){
+    if(!(from == position(7, 4)) || !(from == position(0, 4)) && abs(from.col - to.col) != 2){
         return false;
     }
     return true;
