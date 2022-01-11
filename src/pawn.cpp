@@ -80,7 +80,7 @@ bool pawn::can_capture(const position& dest, const vector<piece*>& board_pieces)
 
     int sign = player == player_id::player_1 ? -1 : 1;  // orientazione
 
-    if(board_pieces[make_index_8(dest)] && (dest == pos + (sign * position(1, 1)) || dest == pos + (sign * position(1, -1))))
+    if(board_pieces[make_index_8(dest)] && board_pieces[make_index_8(dest)]->get_player() != get_player() && (dest == pos + (sign * position(1, 1)) || dest == pos + (sign * position(1, -1))))
     {
         is_init_pos = false;    //potremmo metterlo in set_position di piece.....
         can_be_passed = false;
@@ -94,13 +94,14 @@ bool pawn::can_capture(const position& dest, const vector<piece*>& board_pieces)
         Se tale pedina però è dello stesso giocatore
         di questo pedone significa che non potrà mangiarlo
     */
+    /*
     if (board_pieces[make_index_8(dest)]->get_player() == get_player())
         return false;
 
     if (dest == pos + (sign * position(1, 1)) || dest == pos + (sign * position(1, -1)))
     {
         return true;
-    }
+    }*/
     return false;
 
 }

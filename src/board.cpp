@@ -10,7 +10,7 @@ using namespace std;
 board::board()
 {
     init_board();
-    #define DEBUG 1
+    //#define DEBUG 1
     #if !DEBUG
     init_player_pieces();
     #else
@@ -23,111 +23,6 @@ board::board()
     il player e la board concreta. Essa chiama per un determinato
     pezzo le funzioni membro virtuali can_move_to, can_capture, ecc
     di piece. Essa modifica concretamente la board.
-*/
-bool board::move_piece_2(const position& from, const position& to)
-{   
-    cout << "CHIAMATA A MOVE_PIECE; from " << from << " to: " << to << endl;
-    if (board_matrix[make_index_8(from)] == nullptr)   // Non c'è una pedina nella casella from
-    {
-        return false; // Restituisce false
-    }
-    // Se non è una posizione logicamente valida:
-    if (!is_valid_position_8(from) || !is_valid_position_8(to))
-    {
-        return false;
-    }
-
-    // ----------------- Arrocco -----------------
-    
-    /*if(is_castling(from, to)){
-        piece* _king = board_matrix[make_index_8(from)];
-        _king->set_position(to);
-        board_matrix[make_index_8(to)] = _king;
-        board_matrix[make_index_8(from)] = nullptr;
-        if(from.col > to.col){
-            position rook_from = position(from.row, 0);
-            position rook_to = position(from.row,to.col + 1);
-            piece* _rook = board_matrix[make_index_8(rook_from)];
-            _rook->set_position(rook_to);
-            board_matrix[make_index_8(rook_to)] = _rook;
-            board_matrix[make_index_8(rook_from)] = nullptr;
-        }
-        else{
-            position rook_from = position(from.row, 7);
-            position rook_to = position(from.row, to.col - 1);
-            piece* _rook = board_matrix[make_index_8(rook_from)];
-            _rook->set_position(rook_to);
-            board_matrix[make_index_8(rook_to)] = _rook;
-            board_matrix[make_index_8(rook_from)] = nullptr;
-        }
-        return true;
-    }*/
-
-    piece* p = board_matrix[make_index_8(from)];
-    piece* prev_in_dest;
-
-    // ----------------------- Sezione mossa normale -----------------------
-    if (p->can_move_to(to, board_matrix) || p->can_capture(to, board_matrix))
-    {
-        // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
-        prev_in_dest = board_matrix[make_index_8(to)];
-
-        p->set_position(to);
-        board_matrix[make_index_8(to)] = p;
-        board_matrix[make_index_8(from)] = nullptr;
-
-        // Se dopo una propria mossa si ha una situazione di check allora la mossa non è valida.
-        //cout << "Chiamata a is_check.\n";
-        if (is_check(p->get_player()))
-        {
-            // Ritorna alla situazione iniziale
-            board_matrix[make_index_8(from)] = p;
-            p->set_position(from);
-            board_matrix[make_index_8(to)] = prev_in_dest;
-            
-            //cout << "Mossa non valida. La mossa porta ad uno scacco del proprio re.\n";
-
-            return false;
-        }
-
-    }
-    else    // Allora la destinazione non è nelle possibili posizioni.
-    {
-        //IMPORTANTE PER IL DEBUG, NON ELIMINARE
-        //cout << "Mossa non valida. Da " << from << " a " << to << endl;
-        return false;
-    }
-    //cout << "Nessun scacco.\n";
-
-    // -------------- Promozione -----------------
-    if (p->get_player() == player_id::player_1)
-    {
-        if (p->get_position().row == 0)
-        {
-            promote(p->get_position());
-        }
-    }
-    else    // se no a ze pan a ze polenta
-    {
-        if (p->get_position().row == 7)
-        {
-            promote(p->get_position());
-        }
-    }
-
-    // ALLORA è una mossa lecita
-    
-
-
-    /*
-        Scrittura su file
-    */
-
-    return true;    
-    
-}
-
-/*
     Funzione membro CHIAVE della board. Muove fisicamente il pezzo.
 */
 bool board::move_piece(const position& from, const position& to)

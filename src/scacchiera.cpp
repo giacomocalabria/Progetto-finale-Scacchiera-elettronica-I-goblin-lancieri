@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
         // -------------------------- Controllo se il giocatore è sotto scacco --------------------------
         if (main_board.is_checkmate(players[player_turn]->get_player_number()))
         {
-            string winner = (player_turn == player_1) ? "bianco" : "nero";
+            string winner = (player_turn == player_1) ? "nero" : "bianco";
             std::cout << "Il giocatore " << winner << " ha vinto. Scacco matto.\n";
             break;
         }
@@ -139,8 +139,8 @@ int main(int argc, char *argv[])
         // Se non è sotto scacco allora il giocatore può eseguire la sua mossa.
         players[player_turn]->turn();
 
-
-        if (turn_counter == 500 || main_board.is_draw(players[player_turn]->get_player_number()))
+        int max_turn_counter {500};
+        if (turn_counter >= max_turn_counter || main_board.is_draw(players[player_turn]->get_player_number()))
         {
             cout << "Patta placeholder.\n";
             break;

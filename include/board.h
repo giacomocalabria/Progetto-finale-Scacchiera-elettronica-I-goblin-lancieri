@@ -22,7 +22,6 @@ class board
         board();
         void to_empty();    // rende la board priva di pezzi
         bool move_piece(const position& from, const position& to);
-        bool move_piece_2(const position& from, const position& to);
         void init_game();
         void init_board();
         std::vector<std::string> get_log() {return log;}

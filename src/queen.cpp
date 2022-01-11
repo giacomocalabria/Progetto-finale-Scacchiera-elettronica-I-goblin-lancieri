@@ -10,7 +10,6 @@ using namespace std;
 
 bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
-    return false;
     vector<position> possible_pos = get_possible_positions();
     auto it = find(possible_pos.begin(), possible_pos.end(), dest);
     if (it == possible_pos.end()) 
@@ -183,7 +182,6 @@ inline char queen::symbol(){
 
 vector<position> queen::get_possible_positions(){
     vector<position> possible_pos;
-    return possible_pos;    // temporaneo
 
     position dest; //position(riga, colonna)
     
