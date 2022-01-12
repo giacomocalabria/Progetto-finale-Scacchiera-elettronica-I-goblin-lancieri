@@ -21,6 +21,7 @@ board::board()
 */
 bool board::move_piece(const position& from, const position& to)
 {
+    cout << "Call a move_piece; from : " << from << "; to: " << to << endl;
     // Se la posizione di partenza viene chiamata una eccezione, errore grave
     if (!is_valid_position_8(from)) throw bad_position_8();
     // Provare a muovere un pezzo da una posizione valida a una non comporta "solo" che la funzione restituisca false
@@ -51,29 +52,47 @@ bool board::move_piece(const position& from, const position& to)
     // ----------------- Arrocco -----------------
     if(is_castling(from, to))
     {
+        //cout << "is_castling true\n";
         piece* _king = board_matrix.at(make_index_8(from));
         piece* _rook;
         if(is_check(_king->get_player()))
             return false;
-        position rook_from;
-        position rook_to;
+        
+        position rook_from; // Posizione di partenza della torre
+        position rook_to;   // Sua posizione di arrivo
         if(from.col > to.col) // va a sinistra
         {
             rook_from = position(from.row, 0);
             rook_to = position(from.row, to.col + 1);
             _rook = board_matrix.at(make_index_8(rook_from));
-            if(!_rook->get_init_pos() && !_king->get_init_pos()){
+
+            if (!_rook) return false;   // Controllo che sia un rif. valido
+
+            if(!_rook->get_init_pos() && !_king->get_init_pos()){   // Se torre e re NON sono entrambi nella posizione iniziale
                 return false;
             }
+
+            /*
+                Controllo che tra tra la torre e il re
+                non ci sia nessun pezzo. Se ci sono pezzi
+                allora non è possibile eseguire l'arrocco.
+            */
             for(int i = 1; i < from.col; i++){
-                if(!board_matrix[make_index_8(from.row,i)])
+                if(board_matrix[make_index_8(from.row,i)])
                     return false;
             }
+
+            // Inizio di una mossa fittizia
             position temp_pos = position(from.row, from.col - 1);
             piece* prev_in_dest{board_matrix[make_index_8(temp_pos)]};
             _king->set_position(temp_pos);
             board_matrix[make_index_8(temp_pos)] = _king;
             board_matrix[make_index_8(from)] = nullptr;
+            
+            /*
+                Controllo se nella posizione intermedia c'è scacco al re:
+                non ci può essere scacco al re in tale posizione.
+            */
             if (is_check(_king->get_player()))
             {
                 board_matrix[make_index_8(from)] = _king;
@@ -81,20 +100,29 @@ bool board::move_piece(const position& from, const position& to)
                 board_matrix[make_index_8(temp_pos)] = prev_in_dest;
                 return false;
             }
+            /*
+                Ritorno in ogni caso alla posizione inizale, in quanto
+                quello precedente era solo un controllo momentaneo
+                necessario.
+            */
             board_matrix[make_index_8(from)] = _king;
             _king->set_position(from);
             board_matrix[make_index_8(temp_pos)] = prev_in_dest;
         }
         else // va a destra
         {
+            // Ragionamento ANALOGO a ciò che avviene nel movimento verso sinistra.
             rook_from = position(from.row, 7);
             rook_to = position(from.row, to.col - 1);
             _rook = board_matrix[make_index_8(rook_from)];
+
+            if (!_rook) return false;
+
             if(!_rook->get_init_pos() && !_king->get_init_pos()){
                 return false;
             }
             for(int i = from.col + 1 ; i < 7; i++){
-                if(!board_matrix[make_index_8(from.row,i)])
+                if(board_matrix[make_index_8(from.row,i)])
                     return false;
             }
             position temp_pos = position(from.row, from.col + 1);
@@ -114,7 +142,8 @@ bool board::move_piece(const position& from, const position& to)
             board_matrix[make_index_8(temp_pos)] = prev_in_dest;
         }
 
-        //CONTROLLO CHE NELLA DESTINAZIONE IL RE NON VADA IN SCACCO ALTRIMENTI ESEGUO L' ARROCCO DEL RE
+        // CONTROLLO CHE NELLA DESTINAZIONE IL RE NON VADA IN SCACCO ALTRIMENTI ESEGUO L' ARROCCO DEL RE
+        // Controllo che il re nella nuova posizione non sia sotto scacco.
         piece* prev_in_dest = board_matrix[make_index_8(to)];
         _king->set_position(to);
         board_matrix[make_index_8(to)] = _king;
@@ -131,6 +160,8 @@ bool board::move_piece(const position& from, const position& to)
         _rook->set_position(rook_to);
         board_matrix[make_index_8(rook_to)] = _rook;
         board_matrix[make_index_8(rook_from)] = nullptr;
+
+        // TO DO: Set initial position to false
 
         count_draw++;
         states[all_board_symbols()]++;
@@ -162,6 +193,8 @@ bool board::move_piece(const position& from, const position& to)
             board_matrix[make_index_8(pos_to_pass)] = prev_in_dest;
             return false;
         }
+
+        // TO DO: Set initial position to false
 
         count_draw++;
         states[all_board_symbols()]++;
@@ -261,6 +294,7 @@ bool board::has_king_been_captured(player_id id)
 */
 bool board::is_checkmate(player_id player_number)
 {
+    cout << "Call a check mate.\n";
     for (auto p : board_matrix) // Per ogni pezzo della board
     {
         // Il puntatore deve essere valido ed avere numero di giocatore uguale a player_number
@@ -273,7 +307,7 @@ bool board::is_checkmate(player_id player_number)
             if (!p->can_move_to(dest, board_matrix) && !p->can_capture(dest, board_matrix)) continue;
 
             // Mossa fittizia
-            piece* prev_in_dest = board_matrix[make_index_8(dest)];
+            piece* prev_in_dest = board_matrix.at(make_index_8(dest));
             position prev_p_pos = p->get_position();
 
             board_matrix[make_index_8(dest)] = p;
@@ -283,14 +317,18 @@ bool board::is_checkmate(player_id player_number)
             bool is_check_bool = is_check(player_number); // Controllo se in tale configurazione è scaco
 
             // Ripristino della configurazione iniziale
-            board_matrix[make_index_8(dest)] = prev_in_dest;
-            board_matrix[make_index_8(prev_p_pos)] = p;
+            board_matrix.at(make_index_8(dest)) = prev_in_dest;
+            board_matrix.at(make_index_8(prev_p_pos)) = p;
             p->set_position(prev_p_pos);
 
             if (!is_check_bool) // Se eseguendo tale mossa non vi è più lo scacco, allora non è scacco matto
+            {   
+                cout << "NO check mate.\n"; 
                 return false;
+            }
         }
     }
+    cout << "YES check mate.\n"; 
     return true; // Altrimenti è necessariamente scacco matto
 }
 

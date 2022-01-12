@@ -17,6 +17,7 @@ pawn::pawn(const position& _pos, player_id _player) : piece(_pos, _player) {}
 
 bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
+    //cout << "Call a can_move_to di pawn; from : " << pos << ", dest: " << dest << endl;
     if (!is_valid_position_8(dest))
         return false;
 

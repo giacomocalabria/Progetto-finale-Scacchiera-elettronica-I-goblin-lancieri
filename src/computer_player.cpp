@@ -23,6 +23,7 @@ void computer_player::turn()
 
 bool computer_player::move()
 {
+    //cout << "START MOVE\n\n";
     //cout << "Computer_player move.\n";
     // Ottengo tutti i pezzi ancora nella board di questo giocatore in un vector
     vector<position> player_pieces_positions = b->get_player_in_board_pieces_positions(id);
@@ -48,10 +49,8 @@ bool computer_player::move()
     // Ottengo tutte le possibili posizioni del pezzo scelto causalmente
     vector<position> possible_positions = p->get_possible_positions();
     if (possible_positions.size() == 0)
-    {
-        #if DEBUG
-        cout << "possible positions size e' 0.\n";
-        #endif
+    {   
+        //cout << "END MOVE (0 POSITIONS)\n\n";
         return false;
     }
 
@@ -68,5 +67,6 @@ bool computer_player::move()
     system("pause");
     #endif
 
+    //cout << "END MOVE (CALLING MOVE_PIECE)\n\n";
     return b->move_piece(from, to);
 }

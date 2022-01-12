@@ -74,6 +74,7 @@ vector<position> king::get_possible_positions()
 
 bool king::is_check(const std::vector<piece*>& board_pieces)
 {
+    //cout << "CALL IS_CHECK\n";
     for(int i = 0; i < board::board_size * board::board_size; i++)
     {
         if(board_pieces[i] && board_pieces[i]->get_player() != get_player()) //NOTA: ricordati la condizione (board[i])!
