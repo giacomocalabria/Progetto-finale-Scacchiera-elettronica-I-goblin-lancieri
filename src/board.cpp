@@ -10,6 +10,7 @@ using namespace std;
 board::board()
 {
     init_board();
+    //setup_9();
     init_player_pieces();
 }
 
@@ -21,7 +22,7 @@ board::board()
 */
 bool board::move_piece(const position& from, const position& to)
 {
-    cout << "Call a move_piece; from : " << from << "; to: " << to << endl;
+    //cout << "Call a move_piece; from : " << from << "; to: " << to << endl;
     // Se la posizione di partenza viene chiamata una eccezione, errore grave
     if (!is_valid_position_8(from)) throw bad_position_8();
     // Provare a muovere un pezzo da una posizione valida a una non comporta "solo" che la funzione restituisca false
@@ -246,6 +247,7 @@ bool board::move_piece(const position& from, const position& to)
     // Mossa lecita
     count_draw++;
     states[all_board_symbols()]++;
+    //cout << "state: " << all_board_symbols() << ": " << states[all_board_symbols()] << endl;
     log.push_back(get_string_8(from) + " " + get_string_8(to));
     return true;    
 }
@@ -294,7 +296,7 @@ bool board::has_king_been_captured(player_id id)
 */
 bool board::is_checkmate(player_id player_number)
 {
-    cout << "Call a check mate.\n";
+    //cout << "Call a check mate.\n";
     for (auto p : board_matrix) // Per ogni pezzo della board
     {
         // Il puntatore deve essere valido ed avere numero di giocatore uguale a player_number
@@ -323,12 +325,12 @@ bool board::is_checkmate(player_id player_number)
 
             if (!is_check_bool) // Se eseguendo tale mossa non vi è più lo scacco, allora non è scacco matto
             {   
-                cout << "NO check mate.\n"; 
+                //cout << "NO check mate.\n"; 
                 return false;
             }
         }
     }
-    cout << "YES check mate.\n"; 
+    //cout << "YES check mate.\n"; 
     return true; // Altrimenti è necessariamente scacco matto
 }
 
@@ -650,7 +652,7 @@ bool board::is_draw(player_id pl)
 {
     //cout << "Numero di mosse: " << get_no_pwn_no_eat() << "\n";
 
-    //--------------- mancanza di movimenti del pedone e di catture ---------------
+    // --------------- mancanza di movimenti del pedone e di catture ---------------
     constexpr int limit {50};
     constexpr int reps_limit {3};
     if(get_no_pwn_no_eat() == limit /*|| too_much_reps(all_board_symbols())*/)
@@ -659,15 +661,27 @@ bool board::is_draw(player_id pl)
         return true;
     }
 
-    //--------------- patta per mancanza di mosse possibili del player pl ---------------
+    // --------------- patta per mancanza di mosse possibili del player pl ---------------
     piece* p;
     vector<position> possible_pos;
 
     if (!is_check(pl) && !can_do_legal_move(pl))
         return true;
 
-    return false;
     //_out_file << to_string_move(from, to) << endl;
+
+    // --------------- Controllo se è presente una configurazione avvenuta per 3 volte ---------------
+    constexpr int max_state_app{3};
+
+    // Chiamo funzione find_if con predicato una lambda expression che ritorna true se trova una ricorrenza comparsa per 3 volte.
+    auto it = find_if(states.begin(), states.end(), [max_state_app](const std::pair<string, int>& p) -> bool {return p.second == max_state_app;});
+    if (it != states.end())
+    {
+        cout << "Medesima configurazione avvenuta per " << max_state_app << " volte.\n";
+        return true;
+    }
+    
+    return false;
 }
 
 bool board::can_do_legal_move(player_id pl)
@@ -903,31 +917,40 @@ void board::setup_7()
 /*
     Setup 8:
      01234567
-    0////////
-    1/A//////
+    0///////R
+    1////////
     2////////
     3////////
-    4///P/a/p
-    5/////r//
-    6//////T/
-    7////////
+    4////////
+    5////T///
+    6////////
+    7///////r
 
-    // NON CONCLUSO
-    Test: Bug fix scacco matto.
+    Test: Patta per config ripetuta.
 */
 void board::setup_8()
 {
-    // Player 1
-    player_rooks[player_1].push_back(rook(position("A1"), player_1));
-    player_knights[player_1].push_back(knight(position("B1"), player_1));
-    player_queen[player_1].push_back(queen(position("D1"), player_1));
-    player_rooks[player_1].push_back(rook(position("F1"), player_1));
-    player_knights[player_1].push_back(knight(position("E2"), player_1));
-    player_pawns[player_1].push_back(pawn(position("A1"), player_1));
-    player_king[player_1].push_back(king(position("F3"), player_1));
-    player_bishops[player_1].push_back(bishop(position("F4"), player_1));
-    player_pawns[player_1].push_back(pawn(position("E5"), player_1));
-    player_bishops[player_1].push_back(bishop(position("F5"), player_1));
+    insert_king(position(7, 7), player_1);
+    insert_king(position(0, 7), player_2);
+    insert_rook(position(5, 4), player_1);
+}
 
+/*
+    Setup 8:
+     01234567
+    0///////R
+    1////////
+    2////////
+    3////////
+    4////////
+    5////////
+    6////////
+    7///////r
 
+    Test: Patta per config ripetuta.
+*/
+void board::setup_9()
+{
+    insert_king(position(7, 7), player_1);
+    insert_king(position(0, 7), player_2);
 }

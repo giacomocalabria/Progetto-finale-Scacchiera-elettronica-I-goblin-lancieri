@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
         int max_turn_counter {500};
         if (turn_counter >= max_turn_counter || main_board.is_draw(players[player_turn]->get_player_number()))
         {
-            cout << "Patta placeholder." << endl;
+            cout << "Situazione di patta." << endl;
             log = main_board.get_log();
             log.push_back("PP PP");
             break;

@@ -131,6 +131,7 @@ class board
         void setup_6();
         void setup_7();
         void setup_8();
+        void setup_9();
 };
 
 #endif // BOARD_H
