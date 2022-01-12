@@ -132,6 +132,9 @@ bool board::move_piece(const position& from, const position& to)
         board_matrix[make_index_8(rook_to)] = _rook;
         board_matrix[make_index_8(rook_from)] = nullptr;
 
+        _rook->set_init_pos();
+        _king->set_init_pos();
+
         count_draw++;
         states[all_board_symbols()]++;
         log.push_back(get_string_8(from) + " " + get_string_8(to));
@@ -163,6 +166,8 @@ bool board::move_piece(const position& from, const position& to)
             return false;
         }
 
+        p->set_init_pos();
+
         count_draw++;
         states[all_board_symbols()]++;
         log.push_back(get_string_8(from) + " " + get_string_8(to));
@@ -186,6 +191,8 @@ bool board::move_piece(const position& from, const position& to)
             board_matrix[make_index_8(to)] = prev_in_dest;
             return false;
         }
+        
+        p->set_init_pos();
     }
     else return false;
 
@@ -374,6 +381,7 @@ bool board::promote(const position& pos)
         */
         player_queen[player_num].push_back(queen(p->get_position(), player_num));
         board_matrix[make_index_8(pos)] = &player_queen[player_num].back();
+        player_queen[player_num].back().set_init_pos();
         return true;
     }
     
