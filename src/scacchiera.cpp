@@ -17,16 +17,16 @@ const string nome_file{"log.txt"};
 
 int main(int argc, char *argv[])
 {
-    if(argv[1][1] != 'c' || argv[1][0] != 'c' && argv[1][0] != 'p'){ // se l'argomento non è nè pc nè cc allora il programma termina
+    if(argc != 2 || argv[1][1] != 'c' || argv[1][0] != 'c' && argv[1][0] != 'p')
+    { 
+        // se l'argomento non è nè pc nè cc allora il programma termina
         cerr << "[ERROR] Parametri da riga di comando non corretti !!" << endl;
         return -1;
     }
 
     bool type_of_match = (argv[1][0] == 'p'); //questa variabile è vera se la partita è del tipo giocatore vs computer. E' falsa nel caso contrario ovvero se è del tipo  computer vs computer
 
-    /*
-        Board principale su cui avviene il gioco.
-    */
+    // Board principale su cui avviene il gioco.
     board main_board;
     main_board.print_board();
 
@@ -42,9 +42,11 @@ int main(int argc, char *argv[])
     vector<player*> players(player_id::player_count);
 
     // Reserve delle capacità dei vector per le regole del gioco.
-    human_player_game.reserve(1);
-    computer_player_game.reserve(2);
-    players.reserve(2);
+    constexpr int max_human_player {1};
+    constexpr int max_computer_player{2};
+    human_player_game.reserve(max_human_player);
+    computer_player_game.reserve(max_computer_player);
+    players.reserve(player_count);
 
     // Se il tipo di match è giocatore vs computer
     if (type_of_match)
@@ -52,22 +54,18 @@ int main(int argc, char *argv[])
         std::cout << "Partita giocatore vs computer.\n";
 
         // Scelgo casualmente un id giocatore 
-        // DA SISTEMARE RNG
-        std::random_device rd;
-        std::uniform_int_distribution<int> dstr(0, 1);
-        int int_player_id = dstr(rd);
+        default_random_engine ran(chrono::system_clock::now().time_since_epoch().count());
+        int int_player_id = uniform_int_distribution<>{0, 1}(ran);
+
         player_id human_id = int_player_id == 0 ? player_1 : player_2;
         player_id computer_id = human_id == player_1 ? player_2 : player_1;
-        
-
-        //cout << "human_id: " << human_id << "\ncomputer_id: " << computer_id << endl;
 
         computer_player_game.push_back(computer_player(&main_board, computer_id));
         human_player_game.push_back(human_player(&main_board, human_id));
 
         // vector players contiene un rif ad un human_player e duno a un computer_player
-        players[computer_player_game[0].get_player_number()] = &computer_player_game[0];
-        players[human_player_game[0].get_player_number()] = &human_player_game[0];
+        players.at(computer_player_game.front().get_player_number()) = &computer_player_game.front();
+        players.at(human_player_game.front().get_player_number()) = &human_player_game.front();
 
     }
     else    // Tipo di match computer vs computer
@@ -75,24 +73,14 @@ int main(int argc, char *argv[])
         computer_player_game.push_back(computer_player(&main_board, player_1));
         computer_player_game.push_back(computer_player(&main_board, player_2));
 
-        players[0] = &computer_player_game[0];
-        players[1] = &computer_player_game[1];
+        constexpr int first_player{0};
+        constexpr int second_player{1};
+        players.at(first_player) = &computer_player_game.at(first_player);
+        players.at(second_player) = &computer_player_game.at(second_player);
     }
 
-    #if NO_TURNS
-    main_board.print_board();
-    main_board.move_piece(position("C2"), position("C3"));
-    main_board.move_piece(position("D2"), position("D3"));
-    main_board.print_board();
-    main_board.move_piece(position("C1"), position("D2"));
-    main_board.print_board();
-    main_board.move_piece(position(7, 1), position(6, 3));
-    main_board.print_board();
-    #endif
-
-    
-    #if !NO_TURNS
     int turn_counter{0};
+    constexpr int max_turn_counter {500};
     vector<string> log;
     while (true)
     {
@@ -115,6 +103,7 @@ int main(int argc, char *argv[])
             log.push_back("FF " + winner);
             break;
         }
+
         /*
             Apparentemente sembra oppurtuno verificare che un giocatore abbia ancora pezzi,
             ma chiaramente se non possiede pezzi allora non possiede nemmeno il re,
@@ -133,8 +122,8 @@ int main(int argc, char *argv[])
 
         // Se non è sotto scacco allora il giocatore può eseguire la sua mossa.
         players[player_turn]->turn();
-
-        int max_turn_counter {500};
+        
+        // Condizioni di patta -> fine prematura della partita.
         if (turn_counter >= max_turn_counter || main_board.is_draw(players[player_turn]->get_player_number()))
         {
             cout << "Situazione di patta." << endl;
@@ -145,15 +134,19 @@ int main(int argc, char *argv[])
 
         turn_counter++;
     }
-    #endif
 
+    // Una volta finita la partita avviene la scrittura su file.
     cout << "Partita finita, scrittura file 'log.txt'" << endl;
     ofstream out_file(nome_file);
-    if(out_file.is_open()){
-        for(auto command : log){
+    if(out_file.is_open())
+    {
+        for(auto command : log)
+        {
             out_file << command << endl;
         }
-    } else {
+    } 
+    else 
+    {
         cerr << "[ERROR] Impossibile aprire/leggere il file: '" << nome_file << "'" << endl;
         return -1;
     }

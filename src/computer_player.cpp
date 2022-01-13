@@ -27,12 +27,6 @@ bool computer_player::move()
     //cout << "Computer_player move.\n";
     // Ottengo tutti i pezzi ancora nella board di questo giocatore in un vector
     vector<position> player_pieces_positions = b->get_player_in_board_pieces_positions(id);
-
-    /*std::cout << "\n-------------------\n"; 
-    for (auto p : player_pieces_positions)
-    {
-        std::cout << p << "\n";
-    }*/
     
     // Inizializzazione della generazione
 
@@ -41,10 +35,6 @@ bool computer_player::move()
     int random_index = (int)uniform_int_distribution<>(0, player_pieces_positions.size() - 1)(ran);
     position from = player_pieces_positions.at(random_index);  // from contiene la posiz. del pezzo scelto causalmente
     piece* p = b->get_board_piece(from);    // Pezzo scelto casualmente  
-
-#if DEBUG
-    std::cout << "random index: " << random_index << "\nfrom: " << from << "\n";
-#endif
 
     // Ottengo tutte le possibili posizioni del pezzo scelto causalmente
     vector<position> possible_positions = p->get_possible_positions();

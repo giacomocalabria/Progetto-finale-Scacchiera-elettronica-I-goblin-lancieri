@@ -16,6 +16,16 @@
 #include "queen.h"
 #include "rook.h"
 
+/*  
+    ----------------------------------------------------
+    La classe board contiene concretamente i pezzi e
+    interfaccia i player con essi. Fornisce controlli
+    sul flusso della partita, la sua visualizzazione,
+    sullo scacco (attraverso i king) e sullo scacco
+    matto.
+    ----------------------------------------------------
+*/
+
 class board
 {
     public:
@@ -26,14 +36,13 @@ class board
         void init_game();
         void init_board();
 
-        // ------------------ Costruttore e inizializzatori ------------------
+        // ------------------ Funzioni membro pubbliche ------------------
         inline std::vector<std::string> get_log() { return log; }
         std::string row_symbols(int i);
         std::string all_board_symbols();
         void print_board();
         void file_print_board(std::ofstream& _out_file);
-        piece* get_board_piece(position pos){return board_matrix[make_index_8(pos)];}
-        void set_board_piece(position pos, piece* p){board_matrix[make_index_8(pos)] = p;}
+        piece* get_board_piece(const position& pos){return board_matrix.at(make_index_8(pos));}
         std::vector<position> get_player_pieces_positions(player_id player);
         std::vector<position> get_player_in_board_pieces_positions(player_id player);
 
@@ -47,20 +56,19 @@ class board
         bool has_king_been_captured(player_id id);
         bool is_castling(const position& from, const position& to);
         bool can_en_passant(const position& passing, const position& to_pass);
-        bool too_much_reps(std::string str); //controlla il numero di ripetizioni di una singola "posizione" della board
         int get_count_draw() {return count_draw;}
         int get_no_pwn_no_eat() {return no_pwn_no_eat;}
 
         // ------------------ Funzioni membro di inserimento ------------------
-        private:
-            void insert_pawn(const position& pos, player_id id);
-            void insert_king(const position& pos, player_id id);
-            void insert_queen(const position& pos, player_id id);
-            void insert_rook(const position& pos, player_id id);
-            void insert_bishop(const position& pos, player_id id);
-            void insert_knight(const position& pos, player_id id);
+    private:
+        void insert_pawn(const position& pos, player_id id);
+        void insert_king(const position& pos, player_id id);
+        void insert_queen(const position& pos, player_id id);
+        void insert_rook(const position& pos, player_id id);
+        void insert_bishop(const position& pos, player_id id);
+        void insert_knight(const position& pos, player_id id);
 
-            class too_many_pieces{};
+        class too_many_pieces{};
     
     // Costanti relative al numero di pezzi di ogni giocatore.
     private:
@@ -114,10 +122,10 @@ class board
         bool can_do_legal_move(player_id pl);
 
     private:
-        int count_draw = 0;         //tiene conto del numero di mosse fatte da tutti e 2 i giocatori
-        int no_pwn_no_eat = 0;      //tiene conto del numero di mosse senza mangiate e senza movimenti di pawn
-        std::map<std::string, int> states;    //mappa che contiene le varie "posizioni" della scacchiera e il numero di volte che si sono presentate durante una partita
-        std::vector<std::string> log; //Vector per memorizzare tutte le mosse effettuate dai giocatori
+        int count_draw = 0;         // tiene conto del numero di mosse fatte da tutti e 2 i giocatori
+        int no_pwn_no_eat = 0;      // tiene conto del numero di mosse senza mangiate e senza movimenti di pawn
+        std::map<std::string, int> states;    // mappa che contiene le varie "posizioni" della scacchiera e il numero di volte che si sono presentate durante una partita
+        std::vector<std::string> log; // Vector per memorizzare tutte le mosse effettuate dai giocatori
 
 
     // -------------- setup di debug --------------

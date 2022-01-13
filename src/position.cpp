@@ -9,11 +9,13 @@ position::position(const std::string& pos)
 {
     char c_col = pos.at(0);
     char c_row = pos.at(1);
-    if(c_col < 'a') //lettera maiuscola
-        col = c_col - 'A';
+    constexpr char min_col_lowercase {'a'};
+
+    if(c_col < min_col_lowercase) //lettera maiuscola
+        col = c_col - min_col;
     else            //lettera minuscola
-        col = c_col - 'a';
-    row = '7' - c_row;
+        col = c_col - min_col_lowercase;
+    row = max_row - c_row;
 }
 
 position operator+(position p1, position p2)
@@ -53,11 +55,12 @@ int make_index_8(int row, int col)
 
 position position_from_8(int idx)
 {
-    return position(idx/8, idx - (idx/8)*8);    //idx/8 mi da un int, troncandomi il resto e trovando la riga corrispondente
+    return position(idx / 8, idx - (idx / 8) * 8);    //idx/8 mi da un int, troncandomi il resto e trovando la riga corrispondente
 }
 
 bool is_valid_position_8(const position& pos)
 {
+    // Una posizione è valida se ha riga e colonne comprese fra 0 e 7 inclusi
     return pos.row < max_position && pos.col < max_position && pos.row >= min_position && pos.col >= min_position;
 }
 
@@ -68,8 +71,8 @@ std::string get_string_8(const position& pos)
         throw bad_position_8();
     }
     std::string s;
-    s.push_back((char) (pos.col + 'A'));
-    s.push_back((char) (pos.row + '0'));
+    s.push_back((char) (pos.col + min_col));
+    s.push_back((char) (pos.row + min_row));
     return s;
 }
 
@@ -80,10 +83,10 @@ std::string get_string_move_8(const position& p1, const position& p2)
         throw bad_position_8();
     }
 
-    char p1_row = '7' - p1.row;
-    char p1_col = 'A' + p1.col;
-    char p2_row = '7' - p2.row;
-    char p2_col = 'A' + p2.col;
+    char p1_row = max_row - p1.row;
+    char p1_col = min_col + p1.col;
+    char p2_row = max_row - p2.row;
+    char p2_col = min_col + p2.col;
 
     std::string str{p1_col, p1_row, ' ', p2_col, p2_row};
     return str;

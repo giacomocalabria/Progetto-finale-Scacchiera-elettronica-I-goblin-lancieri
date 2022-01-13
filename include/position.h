@@ -6,6 +6,16 @@
 #include <iostream>
 #include <string>
 
+/*
+    ----------------------------------------------------
+    position e' alla base di tutto cio' che riguarda
+    il concetto astratto di posizione, nella board
+    concreta e come variabile membro all'interno di
+    un pezzo. Dunque e' stata pensata per essere molto
+    flessibile e dotata di molti operatori.
+    ----------------------------------------------------
+*/
+
 struct position
 {
     /*
@@ -32,12 +42,14 @@ struct position
 
 class bad_position_8{};
 
+// Overload degli operatori
 position operator+(position p1, position p2);
 position operator-(position p1, position p2);
 position operator*(int scalar, position p);
 std::ostream& operator<<(std::ostream& os, position p);
 bool operator==(position p1, position p2);
 
+// Helper functions
 int make_index_8(position p);
 int make_index_8(int row, int col);
 position position_from_8(int idx);
@@ -45,7 +57,12 @@ std::string get_string_move_8(const position& p1, const position& p2);
 bool is_valid_position_8(const position& pos);
 std::string get_string_8(const position& pos);
 
+// Costanti globali
 constexpr int max_position {8};
 constexpr int min_position {0};
+// Utilizzati soprattutto nei calcoli in position.cpp
+constexpr char max_row {'8'};   // '8' Massima riga nella rappresentazione della board
+constexpr char min_row {'0'};   // '0'
+constexpr char min_col {'A'};   // 'A' Minima colonna nella rappresentazione
 
 #endif // POSITION_H
