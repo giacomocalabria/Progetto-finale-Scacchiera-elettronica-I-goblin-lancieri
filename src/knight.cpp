@@ -9,6 +9,7 @@
 using namespace std;
 
 bool knight::can_move_to(const position& dest, const vector<piece*>& board_pieces){
+    //cout << "Call a can_move_to di knight; from : " << pos << ", dest: " << dest << endl;
     vector<position> possible_pos = get_possible_positions();
     auto it = find(possible_pos.begin(), possible_pos.end(), dest);
     if (it == possible_pos.end()) 

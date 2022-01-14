@@ -39,13 +39,14 @@ bool human_player::move(){
     position from = position(inp1);
     position to = position(inp2);
     
-    if(!is_valid_position_8(from) && !is_valid_position_8(to)){
+    if(!is_valid_position_8(from) || !is_valid_position_8(to)){
         cerr << "Comando non valido! La posizione non è nella scacchiera" << endl;
         return false;
     }
 
     if (!b->get_board_piece(from))
     {
+        cout << "Nessun pezzo selezionato.\n";
         return false;
     }
 

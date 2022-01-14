@@ -35,11 +35,10 @@ class piece
         virtual char symbol() = 0;
         virtual std::vector<position> get_possible_positions() = 0;
 
+        // Setters e getters
         position get_position(){return pos;}
         void set_position(position new_pos){pos = new_pos;}
-        
         player_id get_player(){return player;}
-
         bool get_init_pos(){return is_init_pos;}
         void set_init_pos(){is_init_pos = false;}
         
@@ -51,6 +50,14 @@ class piece
         
 };
 
+/*
+    Funzioni che prendono come parametro un puntatore
+    ad un pezzo e restituiscono true se e solo se
+    sono un'istanza di quel particolare pezzo.
+    Molto più elegante di un upcast, sfrutta la
+    funzione membro virtuale pura symbol di ciascun
+    pezzo per dedurne univocamente la natura.
+*/
 bool is_pawn(piece* p);
 bool is_king(piece* p);
 bool is_queen(piece* p);

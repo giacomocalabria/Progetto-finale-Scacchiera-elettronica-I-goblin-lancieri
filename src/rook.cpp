@@ -11,6 +11,7 @@ using namespace std;
 
 bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
+    //cout << "Call a can_move_to di rook; from : " << pos << ", dest: " << dest << endl;
     if (!is_valid_position_8(dest))
     {
         return false;

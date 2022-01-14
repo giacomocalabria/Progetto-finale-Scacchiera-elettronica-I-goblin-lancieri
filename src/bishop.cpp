@@ -10,9 +10,9 @@ using namespace std;
 
 bool bishop::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
-
-//--------controllo il bounding--------
-	if(dest.row > 8 || dest.row < 0 || dest.col > 8 || dest.col < 0)	//ridondante? velocizza????????
+	//cout << "Call a can_move_to di bishop; from : " << pos << ", dest: " << dest << endl;
+	//--------controllo il bounding--------
+	if(!is_valid_position_8(dest))	//ridondante? velocizza????????
 	{
 		return false;
 	}
@@ -23,7 +23,7 @@ bool bishop::can_move_to(const position& dest, const vector<piece*>& board_piece
 		return false;
 
 	position go_on = position(pos.row, pos.col);		//posizione che avanza fino a dest
-	piece* go_piece = board_pieces[make_index_8(go_on)];	//pedina di ogni posizione considerata fino a dest
+	piece* go_piece = board_pieces.at(make_index_8(go_on));	//pedina di ogni posizione considerata fino a dest
 
 	//controllo se la destinazione e' a "destra" rispetto alla current_pos
 	if(dest.col > pos.col)
@@ -37,7 +37,7 @@ bool bishop::can_move_to(const position& dest, const vector<piece*>& board_piece
 
 			while(go_on.row != dest.row && go_on.col != dest.col)
 			{
-				go_piece = board_pieces[make_index_8(go_on)];
+				go_piece = board_pieces.at(make_index_8(go_on));
 
 				if(go_piece)
 				{
@@ -53,7 +53,7 @@ bool bishop::can_move_to(const position& dest, const vector<piece*>& board_piece
 
 			while(go_on.row != dest.row && go_on.col != dest.col)
 			{
-				go_piece = board_pieces[make_index_8(go_on)];
+				go_piece = board_pieces.at(make_index_8(go_on));
 
 				if(go_piece)
 				{
@@ -77,7 +77,7 @@ bool bishop::can_move_to(const position& dest, const vector<piece*>& board_piece
 
 			while(go_on.row != dest.row && go_on.col != dest.col)
 			{
-				go_piece = board_pieces[make_index_8(go_on)];
+				go_piece = board_pieces.at(make_index_8(go_on));
 
 				if(go_piece)
 				{
@@ -93,7 +93,7 @@ bool bishop::can_move_to(const position& dest, const vector<piece*>& board_piece
 
 			while(go_on.row != dest.row && go_on.col != dest.col)
 			{
-				go_piece = board_pieces[make_index_8(go_on)];
+				go_piece = board_pieces.at(make_index_8(go_on));
 
 				if(go_piece)
 				{
@@ -109,7 +109,7 @@ bool bishop::can_move_to(const position& dest, const vector<piece*>& board_piece
 		return false;
 
 	//controllo se in dest c' e' una pedina avversaria o nulla (se trovo una pedina dello stesso player, ritorno false)
-	go_piece = board_pieces[make_index_8(dest)];	//inserisco in go_piece il pezzo presente in dest (eventualmente null)
+	go_piece = board_pieces.at(make_index_8(dest));	//inserisco in go_piece il pezzo presente in dest (eventualmente null)
 	if(go_piece && go_piece->get_player() == player)
 		return false;
 
@@ -128,6 +128,7 @@ bool bishop::can_capture(const position& dest, const vector<piece*>& board_piece
 
 vector<position> bishop::get_possible_positions()
 {
+	//cout << "Call a get_possible_positions di bishop." << endl;
 	vector<position> possible_positions;
 
 	position go_on = position(pos.row + 1, pos.col + 1);
@@ -166,5 +167,6 @@ vector<position> bishop::get_possible_positions()
 		go_on.col--;		//controllo le posizioni successive (in cui bishop puo'andare)
 	}
 
+	//cout << "Fine call a get_possible_positions di bishop.\n\n";
 	return possible_positions;
 }
