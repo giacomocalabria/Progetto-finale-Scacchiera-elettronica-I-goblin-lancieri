@@ -82,7 +82,6 @@ bool board::move_piece(const position& from, const position& to)
             {
                 if(board_matrix.at(make_index_8(from.row,i)))
                     return false;
-                }
             }
 
             // Inizio di una mossa fittizia
@@ -127,7 +126,6 @@ bool board::move_piece(const position& from, const position& to)
             for(int i = from.col + 1 ; i < 7; i++){
                 if(board_matrix.at(make_index_8(from.row,i)))
                     return false;
-                }
             }
             position temp_pos = position(from.row, from.col + 1);
             piece* prev_in_dest{board_matrix.at(make_index_8(temp_pos))};
@@ -354,7 +352,7 @@ bool board::is_castling(const position& from, const position& to)
     const position king_start_2(0, 4);
     constexpr int col_diff{2};
     
-    if(abs(from.col - to.col) == col_dif && from == king_start_1 || from == king_start_2){
+    if(abs(from.col - to.col) == col_diff && from == king_start_1 || from == king_start_2)
         return true;
 
     return false;
