@@ -66,8 +66,9 @@ bool board::move_piece(const position& from, const position& to)
                 return false;
             }
             for(int i = 1; i < from.col; i++){
-                if(!board_matrix[make_index_8(from.row,i)])
+                if(board_matrix[make_index_8(from.row,i)]){
                     return false;
+                }
             }
             position temp_pos = position(from.row, from.col - 1);
             piece* prev_in_dest{board_matrix[make_index_8(temp_pos)]};
@@ -94,8 +95,9 @@ bool board::move_piece(const position& from, const position& to)
                 return false;
             }
             for(int i = from.col + 1 ; i < 7; i++){
-                if(!board_matrix[make_index_8(from.row,i)])
+                if(board_matrix[make_index_8(from.row,i)]){
                     return false;
+                }
             }
             position temp_pos = position(from.row, from.col + 1);
             piece* prev_in_dest{board_matrix[make_index_8(temp_pos)]};
@@ -304,10 +306,10 @@ bool board::is_checkmate(player_id player_number)
 
 bool board::is_castling(const position& from, const position& to)
 {
-    if(!(from == position(7, 4)) || !(from == position(0, 4)) && abs(from.col - to.col) != 2){
-        return false;
+    if(abs(from.col - to.col) == 2 && from == position(7, 4) || from == position(0, 4)){
+        return true;
     }
-    return true;
+    return false;
 }
 
 
