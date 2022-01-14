@@ -49,7 +49,7 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         cursor = cursor + position(1, 0);
         while (is_valid_position_8(cursor) && cursor.row < dest.row)
         {
-            other = board_pieces[make_index_8(cursor)];
+            other = board_pieces.at(make_index_8(cursor));
             /*
                 other restituisce true se la pedina
                 "andrebbe a sbattere" prima di raggiungere
@@ -68,7 +68,7 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         cursor = cursor - position(1, 0);
         while (is_valid_position_8(cursor) && cursor.row > dest.row)
         {
-            other = board_pieces[make_index_8(cursor)];
+            other = board_pieces.at(make_index_8(cursor));
             if (other)
             {
                 //cout << "Obstacle.\n";
@@ -84,7 +84,7 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         cursor = cursor + position(0, 1);
         while (is_valid_position_8(cursor) && cursor.col < dest.col)
         {    
-            other = board_pieces[make_index_8(cursor)];
+            other = board_pieces.at(make_index_8(cursor));
             if (other)
                 return false;
             cursor = cursor + position(0, 1);
@@ -97,7 +97,7 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         cursor = cursor - position(0, 1);
         while (is_valid_position_8(cursor) && cursor.col > dest.col)
         {
-            other = board_pieces[make_index_8(cursor)];
+            other = board_pieces.at(make_index_8(cursor));
             if (other)
                 return false;
             cursor = cursor - position(0, 1);
@@ -105,7 +105,7 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     }
 
     // se la cella di arrivo è occupata ed è occupata da un pezzo del stesso giocatore -> rest falso
-    other = board_pieces[make_index_8(dest)];
+    other = board_pieces.at(make_index_8(dest));
     //cout << other->symbol();
     if (other && other->get_player() == player)
     {

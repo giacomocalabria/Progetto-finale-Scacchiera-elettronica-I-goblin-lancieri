@@ -136,7 +136,7 @@ bool board::move_piece(const position& from, const position& to)
             {
                 board_matrix.at(make_index_8(from)) = _king;
                 _king->set_position(from);
-                board_matrix[make_index_8(temp_pos)] = prev_in_dest;
+                board_matrix.at(make_index_8(temp_pos)) = prev_in_dest;
                 return false;
             }
             board_matrix.at(make_index_8(from)) = _king;
@@ -733,11 +733,11 @@ void board::setup_1()
     player_rooks[player_id::player_2].push_back(rook(position(2, 7), player_id::player_2));
 
 
-    board_matrix[make_index_8(0, 2)] = &player_bishops[player_id::player_2][0];
-    board_matrix[make_index_8(0, 4)] = &player_rooks[player_id::player_2][0];
-    board_matrix[make_index_8(2, 4)] = &player_king[player_id::player_1][0];
-    board_matrix[make_index_8(0, 6)] = &player_bishops[player_id::player_2][1];
-    board_matrix[make_index_8(2, 7)] = &player_rooks[player_id::player_2][1];
+    board_matrix.at(make_index_8(0, 2)) = &player_bishops[player_id::player_2][0];
+    board_matrix.at(make_index_8(0, 4)) = &player_rooks[player_id::player_2][0];
+    board_matrix.at(make_index_8(2, 4)) = &player_king[player_id::player_1][0];
+    board_matrix.at(make_index_8(0, 6)) = &player_bishops[player_id::player_2][1];
+    board_matrix.at(make_index_8(2, 7)) = &player_rooks[player_id::player_2][1];
 
 }
 
@@ -765,12 +765,12 @@ void board::setup_2()
     player_pawns[player_id::player_2].push_back(pawn(position(2, 3), player_id::player_2));
 
 
-    board_matrix[make_index_8(0, 2)] = &player_bishops[player_id::player_2][0];
-    board_matrix[make_index_8(0, 4)] = &player_rooks[player_id::player_2][0];
-    board_matrix[make_index_8(2, 4)] = &player_king[player_id::player_1][0];
-    board_matrix[make_index_8(0, 6)] = &player_bishops[player_id::player_2][1];
-    board_matrix[make_index_8(2, 7)] = &player_rooks[player_id::player_2][1];
-    board_matrix[make_index_8(2, 3)] = &player_pawns[player_id::player_2][0];
+    board_matrix.at(make_index_8(0, 2)) = &player_bishops[player_id::player_2][0];
+    board_matrix.at(make_index_8(0, 4)) = &player_rooks[player_id::player_2][0];
+    board_matrix.at(make_index_8(2, 4)) = &player_king[player_id::player_1][0];
+    board_matrix.at(make_index_8(0, 6)) = &player_bishops[player_id::player_2][1];
+    board_matrix.at(make_index_8(2, 7)) = &player_rooks[player_id::player_2][1];
+    board_matrix.at(make_index_8(2, 3)) = &player_pawns[player_id::player_2][0];
 }
 
 /*
@@ -792,8 +792,8 @@ void board::setup_3()
     player_king[player_id::player_1].push_back(king(position(2, 4), player_id::player_1));
     player_pawns[player_id::player_2].push_back(pawn(position(1, 5), player_id::player_2));
 
-    board_matrix[make_index_8(2, 4)] = &player_king[player_id::player_1][0];
-    board_matrix[make_index_8(1, 5)] = &player_pawns[player_id::player_2][0];
+    board_matrix.at(make_index_8(2, 4)) = &player_king[player_id::player_1][0];
+    board_matrix.at(make_index_8(1, 5)) = &player_pawns[player_id::player_2][0];
 }
 
 /*
@@ -816,9 +816,9 @@ void board::setup_4()
     player_rooks[player_id::player_2].push_back(rook(position(0, 4), player_id::player_2));
     player_bishops[player_id::player_1].push_back(bishop(position(2, 6), player_id::player_1));
 
-    board_matrix[make_index_8(2, 4)] = &player_king[player_id::player_1][0];
-    board_matrix[make_index_8(0, 4)] = &player_rooks[player_id::player_2][0];
-    board_matrix[make_index_8(2, 6)] = & player_bishops[player_id::player_1][0];
+    board_matrix.at(make_index_8(2, 4)) = &player_king[player_id::player_1][0];
+    board_matrix.at(make_index_8(0, 4)) = &player_rooks[player_id::player_2][0];
+    board_matrix.at(make_index_8(2, 6)) = & player_bishops[player_id::player_1][0];
 }
 
 /*
@@ -846,13 +846,13 @@ void board::setup_5()
     player_rooks[player_id::player_2].push_back(rook(position(4, 4), player_id::player_2));
     player_bishops[player_id::player_2].push_back(bishop(position(0, 7), player_id::player_2));
 
-    board_matrix[make_index_8(2, 4)] = &player_king[player_id::player_1][0];
-    board_matrix[make_index_8(4, 3)] = &player_rooks[player_id::player_2][0];
-    board_matrix[make_index_8(3, 0)] = &player_rooks[player_id::player_2][1];
-    board_matrix[make_index_8(1, 0)] = &player_rooks[player_id::player_2][2];
-    board_matrix[make_index_8(4, 5)] = &player_rooks[player_id::player_2][3];
-    board_matrix[make_index_8(4, 4)] = &player_rooks[player_id::player_2][4];
-    board_matrix[make_index_8(0, 7)] = &player_bishops[player_id::player_2][0];
+    board_matrix.at(make_index_8(2, 4)) = &player_king[player_id::player_1][0];
+    board_matrix.at(make_index_8(4, 3)) = &player_rooks[player_id::player_2][0];
+    board_matrix.at(make_index_8(3, 0)) = &player_rooks[player_id::player_2][1];
+    board_matrix.at(make_index_8(1, 0)) = &player_rooks[player_id::player_2][2];
+    board_matrix.at(make_index_8(4, 5)) = &player_rooks[player_id::player_2][3];
+    board_matrix.at(make_index_8(4, 4)) = &player_rooks[player_id::player_2][4];
+    board_matrix.at(make_index_8(0, 7)) = &player_bishops[player_id::player_2][0];
 
     //move_piece(position(3, 0), position(2, 0));
 
@@ -884,12 +884,12 @@ void board::setup_6()
     //player_rooks[PLAYER_2].push_back(rook(position(4, 4), PLAYER_2));
     player_bishops[player_id::player_2].push_back(bishop(position(0, 7), player_id::player_2));
 
-    board_matrix[make_index_8(2, 4)] = &player_king[player_id::player_1][0];
-    board_matrix[make_index_8(4, 3)] = &player_rooks[player_id::player_2][0];
-    board_matrix[make_index_8(3, 0)] = &player_rooks[player_id::player_2][1];
-    board_matrix[make_index_8(4, 5)] = &player_rooks[player_id::player_2][2];
-    //board_matrix[make_index_8(4, 4)] = &player_rooks[PLAYER_2][3];
-    board_matrix[make_index_8(0, 7)] = &player_bishops[player_id::player_2][0];
+    board_matrix.at(make_index_8(2, 4)) = &player_king[player_id::player_1][0];
+    board_matrix.at(make_index_8(4, 3)) = &player_rooks[player_id::player_2][0];
+    board_matrix.at(make_index_8(3, 0)) = &player_rooks[player_id::player_2][1];
+    board_matrix.at(make_index_8(4, 5)) = &player_rooks[player_id::player_2][2];
+    //board_matrix.at(make_index_8(4, 4)) = &player_rooks[PLAYER_2][3];
+    board_matrix.at(make_index_8(0, 7)) = &player_bishops[player_id::player_2][0];
 
     //move_piece(position(3, 0), position(2, 0));
 
@@ -914,7 +914,7 @@ void board::setup_6()
 void board::setup_7()
 {
     player_pawns[player_id::player_1].push_back(pawn(position(2, 5), player_id::player_1));
-    board_matrix[make_index_8(position(2, 5))] = &player_pawns[player_id::player_1][0];
+    board_matrix.at(make_index_8(position(2, 5))) = &player_pawns[player_id::player_1][0];
 }
 
 /*

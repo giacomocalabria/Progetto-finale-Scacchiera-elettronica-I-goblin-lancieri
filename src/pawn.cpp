@@ -33,7 +33,7 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     if (dest == pos + (sign * position(1, 0)))
     {
         // Allora si sta muovendo in avanti
-        if (board_pieces[make_index_8(dest)])
+        if (board_pieces.at(make_index_8(dest)))
         {
             return false;
         }
@@ -45,7 +45,7 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     if (dest == pos + (sign * position(2, 0)))
     {
         // Allora si sta muovendo in avanti
-        if (board_pieces[make_index_8(dest)] || board_pieces[make_index_8(dest.row - sign, dest.col)])
+        if (board_pieces.at(make_index_8(dest)) || board_pieces.at(make_index_8(dest.row - sign, dest.col)))
         {
             return false;
         }
@@ -56,7 +56,7 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     }
 
     // Sicuramente si sta muovendo in diagonale (gli altri casi hanno già portato a conclusione)
-    piece* other = board_pieces[make_index_8(dest)];
+    piece* other = board_pieces.at(make_index_8(dest));
     if (other)
     {
         if (player != other->get_player())
@@ -71,7 +71,7 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 
 bool pawn::can_capture(const position& dest, const vector<piece*>& board_pieces)   //serve per definire la condizione di scacco del re avversario
 {
-    piece* other = board_pieces[make_index_8(dest)];
+    piece* other = board_pieces.at(make_index_8(dest));
 
     // Ovviamente se nella cella di destinazione non c'è nulla non può mangiare.
     if (!other)

@@ -15,7 +15,7 @@ bool knight::can_move_to(const position& dest, const vector<piece*>& board_piece
     if (it == possible_pos.end()) 
         return false;
     
-    piece* other = board_pieces[make_index_8(dest)];
+    piece* other = board_pieces.at(make_index_8(dest));
     if (other){
         if(player != other -> get_player()){
             return true;

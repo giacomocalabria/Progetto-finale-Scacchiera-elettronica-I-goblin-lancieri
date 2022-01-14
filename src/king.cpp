@@ -17,7 +17,7 @@ bool king::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         return false;
     }
     
-    piece* dest_pce{board_pieces[make_index_8(dest)]};
+    piece* dest_pce{board_pieces.at(make_index_8(dest))};
     /*
         Se è presente un pezzo nella posizione di destinazione
         e se questo ha id giocatore uguale a quella di questo pezzo,

@@ -32,7 +32,7 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
         cursor = cursor + position(1, 0);
         while (cursor.row < piece::max_position && cursor.row < dest.row)
         {
-            other = board_pieces[make_index_8(cursor)];
+            other = board_pieces.at(make_index_8(cursor));
             /*
                 other restituisce true se la pedina
                 "andrebbe a sbattere" prima di raggiungere
@@ -51,7 +51,7 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
         cursor = cursor - position(1, 0);
         while (cursor.row >= piece::min_position && cursor.row > dest.row)
         {
-            other = board_pieces[make_index_8(cursor)];
+            other = board_pieces.at(make_index_8(cursor));
             if (other)
             {
                 //cout << "Obstacle.\n";
@@ -67,7 +67,7 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
         cursor = cursor + position(0, 1);
         while (cursor.col < piece::max_position && cursor.col < dest.col)
         {    
-            other = board_pieces[make_index_8(cursor)];
+            other = board_pieces.at(make_index_8(cursor));
             if (other)
                 return false;
             cursor = cursor + position(0, 1);
@@ -80,7 +80,7 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
         cursor = cursor - position(0, 1);
         while (cursor.col >= piece::min_position && cursor.col > dest.col)
         {
-            other = board_pieces[make_index_8(cursor)];
+            other = board_pieces.at(make_index_8(cursor));
             if (other)
                 return false;
             cursor = cursor - position(0, 1);
@@ -90,7 +90,7 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
     if(cursor == dest)
     {
         //controllo se in dest c' e' una pedina avversaria o nulla (se trovo una pedina dello stesso player, ritorno false)
-        other = board_pieces[make_index_8(dest)];    //inserisco in other il pezzo presente in dest (eventualmente null)
+        other = board_pieces.at(make_index_8(dest));    //inserisco in other il pezzo presente in dest (eventualmente null)
         if(other && other->get_player() == player)
             return false;
 
@@ -98,7 +98,7 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
     }
 
     cursor = pos;        //posizione che avanza fino a dest
-    other = board_pieces[make_index_8(cursor)];            //pedina di ogni posizione considerata fino a dest
+    other = board_pieces.at(make_index_8(cursor));            //pedina di ogni posizione considerata fino a dest
 
     //controllo se la destinazione e' a "destra" rispetto alla pos corrente
     if(dest.col > pos.col)
@@ -112,7 +112,7 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
 
             while(cursor.row != dest.row && cursor.col != dest.col)
             {
-                other = board_pieces[make_index_8(cursor)];
+                other = board_pieces.at(make_index_8(cursor));
 
                 if(other)
                 {
@@ -128,7 +128,7 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
 
             while(cursor.row != dest.row && cursor.col != dest.col)
             {
-                other = board_pieces[make_index_8(cursor)];
+                other = board_pieces.at(make_index_8(cursor));
 
                 if(other)
                 {
@@ -152,7 +152,7 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
 
             while(cursor.row != dest.row && cursor.col != dest.col)
             {
-                other = board_pieces[make_index_8(cursor)];
+                other = board_pieces.at(make_index_8(cursor));
 
                 if(other)
                 {
@@ -168,7 +168,7 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
 
             while(cursor.row != dest.row && cursor.col != dest.col)
             {
-                other = board_pieces[make_index_8(cursor)];
+                other = board_pieces.at(make_index_8(cursor));
 
                 if(other)
                 {
@@ -182,7 +182,7 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
     }
 
     //controllo se in dest c' e' una pedina avversaria o nulla (se trovo una pedina dello stesso player, ritorno false)
-    other = board_pieces[make_index_8(dest)];    //inserisco in other il pezzo presente in dest (eventualmente null)
+    other = board_pieces.at(make_index_8(dest));    //inserisco in other il pezzo presente in dest (eventualmente null)
     if(other && other->get_player() == player)
         return false;
 
