@@ -22,10 +22,8 @@ bool human_player::move(){
 
     getline(cin, input);
 
-    string inp1 = input.substr(0, 2);
-    string inp2 = input.substr(3, 2);
-
-    if(input.length() != 5){
+    constexpr int max_input_lenght {5};
+    if(input.length() != max_input_lenght){
         cerr << "Comando non valido! " << endl;
         return false;
     }
@@ -35,6 +33,9 @@ bool human_player::move(){
         b->print_board();
         return false;
     }
+
+    string inp1 = input.substr(0, 2);
+    string inp2 = input.substr(3, 2);
 
     position from = position(inp1);
     position to = position(inp2);

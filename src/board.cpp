@@ -22,7 +22,17 @@ board::board()
 */
 bool board::move_piece(const position& from, const position& to)
 {
-    //cout << "Call a move_piece; from : " << from << "; to: " << to << endl;
+    /*try
+    {
+        cout << "Call a move_piece; from : " << get_string_8(from) << "; to: " << get_string_8(to) << endl;
+    }
+    catch(const bad_position_8)
+    {
+        std::cerr << "bad_position in move_piece. returning false." << '\n';
+        //return false;
+    }*/
+    
+    
     // Se la posizione di partenza viene chiamata una eccezione, errore grave
     if (!is_valid_position_8(from)) throw bad_position_8();
     // Provare a muovere un pezzo da una posizione valida a una non comporta "solo" che la funzione restituisca false
@@ -51,13 +61,16 @@ bool board::move_piece(const position& from, const position& to)
     }
 
     // ----------------- Arrocco -----------------
-    if(is_castling(from, to))
+    if(is_king(p) && !is_check(p->get_player()) && is_castling(from, to))
+    //if (false)
     {
         //cout << "is_castling true\n";
         piece* _king = board_matrix.at(make_index_8(from));
         piece* _rook;
-        if(is_check(_king->get_player()))
+
+        /*if(is_check(_king->get_player()))
             return false;
+        */
         
         position rook_from; // Posizione di partenza della torre
         position rook_to;   // Sua posizione di arrivo
@@ -164,6 +177,8 @@ bool board::move_piece(const position& from, const position& to)
         board_matrix.at(make_index_8(rook_from)) = nullptr;
 
         // TO DO: Set initial position to false
+        //_rook->set_init_pos();
+        //_king->set_init_pos();
 
         count_draw++;
         states[all_board_symbols()]++;
@@ -197,6 +212,7 @@ bool board::move_piece(const position& from, const position& to)
         }
 
         // TO DO: Set initial position to false
+        //p->set_init_pos();
 
         count_draw++;
         states[all_board_symbols()]++;
@@ -221,6 +237,7 @@ bool board::move_piece(const position& from, const position& to)
             board_matrix.at(make_index_8(to)) = prev_in_dest;
             return false;
         }
+        //p->set_init_pos();
     }
     else return false;
 
@@ -347,10 +364,12 @@ bool board::is_castling(const position& from, const position& to)
     const position king_start_2(0, 4);
     constexpr int col_diff{2};
 
-    if(!(from == king_start_1) || !(from == king_start_2) && abs(from.col - to.col) != col_diff){
-        return false;
+    if((abs(from.col - to.col) == col_diff) && (from == king_start_1 || from == king_start_2))
+    {
+        return true;
     }
-    return true;
+
+    return false;
 }
 
 
@@ -424,6 +443,7 @@ bool board::promote(const position& pos)
         */
         player_queen[player_num].push_back(queen(p->get_position(), player_num));
         board_matrix.at(make_index_8(pos)) = &player_queen[player_num].back();
+        player_queen[player_num].back().set_init_pos_to_false();
         return true;
     }
     
