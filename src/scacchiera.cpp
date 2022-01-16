@@ -15,6 +15,23 @@ using namespace std;
 
 const string nome_file{"log.txt"};
 
+int main_2()
+{
+    board b1;
+    b1.move_piece(position("C2"), position("C4"));
+
+    board b2;
+    cout << "created\n";
+    b2 = b1;
+    cout << "copied\n";
+    b1.print_board();
+    b2.print_board();
+
+    b2.move_piece(position("G2"), position("G3"));
+    b1.print_board();
+    b2.print_board();
+}
+
 int main(int argc, char *argv[])
 {
     if(argc != 2 || argv[1][1] != 'c' || argv[1][0] != 'c' && argv[1][0] != 'p')
