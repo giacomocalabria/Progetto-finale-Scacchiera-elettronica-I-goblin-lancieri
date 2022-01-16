@@ -22,15 +22,15 @@ bool bishop::can_move_to(const position& dest, const vector<piece*>& board_piece
 	if(it == possible_positions.end())
 		return false;
 
-	position go_on = position(pos.row, pos.col);		//posizione che avanza fino a dest
-	piece* go_piece = board_pieces.at(make_index_8(go_on));	//pedina di ogni posizione considerata fino a dest
+	position go_on = position(pos.row, pos.col);  // ---------- posizione che avanza fino a dest
+	piece* go_piece = board_pieces.at(make_index_8(go_on));	// --- pedina di ogni posizione considerata fino a dest
 
 	//controllo se la destinazione e' a "destra" rispetto alla current_pos
 	if(dest.col > pos.col)
 	{
 		go_on = go_on + position(0, 1);
 
-		//controllo se la destinazione e' "in basso" (a destra) rispetto alla current_pos
+	//-------controllo se la destinazione e' "in basso" (a destra) rispetto alla current_pos-------
 		if(dest.row > pos.row)
 		{
 			go_on = go_on + position(1, 0);
@@ -46,7 +46,7 @@ bool bishop::can_move_to(const position& dest, const vector<piece*>& board_piece
 				go_on = go_on + position(1, 1);
 			}
 		}
-		//controllo se la destinazione e' "in alto" (a destra) rispetto alla current_pos
+	//-------controllo se la destinazione e' "in alto" (a destra) rispetto alla current_pos-------
 		else if(dest.row < pos.row)
 		{
 			go_on = go_on - position(1, 0);
@@ -70,7 +70,7 @@ bool bishop::can_move_to(const position& dest, const vector<piece*>& board_piece
 	{
 		go_on = go_on - position(0, 1);
 
-		//controllo se la destinazione e' "in basso" (a sinistra) rispetto alla current_pos
+	//-------controllo se la destinazione e' "in basso" (a sinistra) rispetto alla current_pos-------
 		if(dest.row > pos.row)
 		{
 			go_on = go_on + position(1, 0);
@@ -86,7 +86,7 @@ bool bishop::can_move_to(const position& dest, const vector<piece*>& board_piece
 				go_on = go_on + position(1, -1);
 			}
 		}
-		//controllo se la destinazione e' "in alto" (a sinistra) rispetto alla current_pos
+	//-------controllo se la destinazione e' "in alto" (a sinistra) rispetto alla current_pos-------
 		else if(dest.row < pos.row)
 		{
 			go_on = go_on - position(1, 0);
@@ -137,7 +137,7 @@ vector<position> bishop::get_possible_positions()
 		possible_positions.push_back(go_on);
 
 		go_on.row++;
-		go_on.col++;		//controllo le posizioni successive (in cui bishop puo'andare)
+		go_on.col++;		//controllo le posizioni "in basso a destra" (in cui bishop puo'andare)
 	}
 
 	go_on = position(pos.row - 1, pos.col + 1);
@@ -146,7 +146,7 @@ vector<position> bishop::get_possible_positions()
 		possible_positions.push_back(go_on);
 
 		go_on.row--;
-		go_on.col++;		//controllo le posizioni successive (in cui bishop puo'andare)
+		go_on.col++;		//controllo le posizioni "in alto a destra" (in cui bishop puo'andare)
 	}
 
 	go_on = position(pos.row + 1, pos.col - 1);
@@ -155,7 +155,7 @@ vector<position> bishop::get_possible_positions()
 		possible_positions.push_back(go_on);
 
 		go_on.row++;
-		go_on.col--;		//controllo le posizioni successive (in cui bishop puo'andare)
+		go_on.col--;		//controllo le posizioni "in basso a sinistra" (in cui bishop puo'andare)
 	}
 
 	go_on = position(pos.row - 1, pos.col - 1);
@@ -164,7 +164,7 @@ vector<position> bishop::get_possible_positions()
 		possible_positions.push_back(go_on);
 
 		go_on.row--;
-		go_on.col--;		//controllo le posizioni successive (in cui bishop puo'andare)
+		go_on.col--;		//controllo le posizioni "in alto a sinistra" (in cui bishop puo'andare)
 	}
 
 	//cout << "Fine call a get_possible_positions di bishop.\n\n";

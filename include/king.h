@@ -22,6 +22,10 @@ class king : public piece
         std::vector<position> get_possible_positions() override;
          
     public:
+        /*  ------------------------------------------------------------
+            Metodo che controlla se il re e' in scacco
+            ------------------------------------------------------------
+        */
         bool is_check(const std::vector<piece*>& board_pieces);
 };
 
