@@ -38,6 +38,7 @@ bool computer_player::move()
 
     // Ottengo tutte le possibili posizioni del pezzo scelto causalmente
     vector<position> possible_positions = p->get_possible_positions();
+
     if (possible_positions.size() == 0)
     {   
         //cout << "END MOVE (0 POSITIONS)\n\n";

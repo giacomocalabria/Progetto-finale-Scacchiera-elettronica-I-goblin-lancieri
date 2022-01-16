@@ -175,8 +175,10 @@ bool board::move_piece(const position& from, const position& to)
     piece* prev_in_dest = board_matrix.at(make_index_8(to));
     piece* p = board_matrix.at(make_index_8(from));
 
+    // Se non è un pedone oppure non può fare l'en passant
     if(!is_pawn(p) || !can_en_passant(from, to))
     {
+        // 
         for(int i = 0; i < player_pawns[p->get_player()].size(); i++)
         {
             (player_pawns[p->get_player()].at(i)).set_can_be_passed(false);

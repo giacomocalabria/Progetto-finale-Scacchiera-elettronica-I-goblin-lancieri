@@ -69,6 +69,14 @@ vector<position> king::get_possible_positions()
             }  
         }
     }
+
+    // Movimenti dell'arrocco aggiuntivi: se e solo se è nella posizione iniziale
+    if (is_init_pos)
+    {
+        possible_pos.push_back(pos + position(0, 2));
+        possible_pos.push_back(pos - position(0, 2));
+    }
+
     return possible_pos;
 }
 

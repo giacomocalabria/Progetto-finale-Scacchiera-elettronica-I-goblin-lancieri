@@ -142,6 +142,12 @@ std::vector<position> pawn::get_possible_positions()
     if(is_valid_position_8(dest))
         possible_positions.push_back(dest);
 
+    /*
+        Il movimento dell'en passant è già incluso nel movimento
+        in diagonale. move_piece della board si occuperà poi
+        di fare i controlli del caso.
+    */
+
     return possible_positions;
 }
 
