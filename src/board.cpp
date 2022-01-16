@@ -14,6 +14,129 @@ board::board()
     init_player_pieces();
 }
 
+// Copy constructor
+board::board(const board& other)
+{
+    init_board();
+    for (piece* p : other.board_matrix)
+    {
+        if(!p)  continue;
+
+        if (is_pawn(p))
+            insert_pawn(p->get_position(), p->get_player());
+        else if (is_king(p))
+            insert_king(p->get_position(), p->get_player());
+        else if (is_queen(p))
+            insert_queen(p->get_position(), p->get_player());
+        else if (is_rook(p))
+            insert_rook(p->get_position(), p->get_player());
+        else if (is_knight(p))
+            insert_knight(p->get_position(), p->get_player());
+        else if (is_bishop(p))
+            insert_bishop(p->get_position(), p->get_player());  
+    }
+}
+
+// Copy assignment
+board board::operator=(const board& other)
+{
+    // Copia dei piece
+    vector<pawn> new_p_pawns_1 = other.player_pawns[player_1];
+    vector<pawn> new_p_pawns_2 = other.player_pawns[player_2];
+    vector<bishop> new_p_bishops_1 = other.player_bishops[player_1];
+    vector<bishop> new_p_bishops_2 = other.player_bishops[player_2];
+    vector<king> new_p_king_1 = other.player_king[player_1];
+    vector<king> new_p_king_2 = other.player_king[player_2];
+    vector<queen> new_p_queen_1 = other.player_queen[player_1];
+    vector<queen> new_p_queen_2 = other.player_queen[player_2];
+    vector<rook> new_p_rook_1 = other.player_rooks[player_1];
+    vector<rook> new_p_rook_2 = other.player_rooks[player_2];
+    vector<knight> new_p_knight_1 = other.player_knights[player_1];
+    vector<knight> new_p_knight_2 = other.player_knights[player_2];
+
+    // Solo una volta effettuata la copia posso eliminare (gestione caso in cui other == this)
+    player_pawns[player_1].clear();
+    player_pawns[player_2].clear();
+    player_bishops[player_1].clear();
+    player_bishops[player_2].clear();
+    player_king[player_1].clear();
+    player_king[player_2].clear();
+    player_queen[player_1].clear();
+    player_queen[player_2].clear();
+    player_rooks[player_1].clear();
+    player_rooks[player_2].clear();
+    player_knights[player_1].clear();
+    player_knights[player_2].clear();
+
+    //cout << "cleared.\n";
+
+    init_board();
+    
+    // Inserisco i pezzi copiati nei vector
+    // Pawn
+    for (pawn p : new_p_pawns_1)
+    {
+        insert_pawn(p.get_position(), p.get_player());
+    }
+    for (pawn p : new_p_pawns_2)
+    {
+        insert_pawn(p.get_position(), p.get_player());
+    }
+    //cout << "pawns inserted.\n";
+    // Rook
+    for (rook p : new_p_rook_1)
+    {
+        insert_rook(p.get_position(), p.get_player());
+    }
+    for (rook p : new_p_rook_2)
+    {
+        insert_rook(p.get_position(), p.get_player());
+    }
+    //cout << "rook inserted.\n";
+    // King
+    for (king p : new_p_king_1)
+    {
+        insert_king(p.get_position(), p.get_player());
+    }
+    for (king p : new_p_king_2)
+    {
+        insert_king(p.get_position(), p.get_player());
+    }
+    //cout << "king inserted.\n";
+    // Queen
+    for (queen p : new_p_queen_1)
+    {
+        insert_queen(p.get_position(), p.get_player());
+    }
+    for (queen p : new_p_queen_2)
+    {
+        insert_queen(p.get_position(), p.get_player());
+    }
+    //cout << "queen inserted.\n";
+    // Bishops
+    for (bishop p : new_p_bishops_1)
+    {
+        insert_bishop(p.get_position(), p.get_player());
+    }
+    for (bishop p : new_p_bishops_2)
+    {
+        insert_bishop(p.get_position(), p.get_player());
+    }
+    //cout << "bishops inserted.\n";
+    // Knight
+    for (knight p : new_p_knight_1)
+    {
+        insert_knight(p.get_position(), p.get_player());
+    }
+    for (knight p : new_p_knight_2)
+    {
+        insert_knight(p.get_position(), p.get_player());
+    }
+    //cout << "knight inserted.\n";
+
+    return *this;
+}
+
 /*
     La funzione membro move_piece rappresenta l'interfaccia fra il player 
     e la board concreta. Essa chiama per un determinato pezzo le funzioni 
@@ -22,7 +145,17 @@ board::board()
 */
 bool board::move_piece(const position& from, const position& to)
 {
-    //cout << "Call a move_piece; from : " << from << "; to: " << to << endl;
+    /*try
+    {
+        cout << "Call a move_piece; from : " << get_string_8(from) << "; to: " << get_string_8(to) << endl;
+    }
+    catch(const bad_position_8)
+    {
+        std::cerr << "bad_position in move_piece. returning false." << '\n';
+        //return false;
+    }*/
+    
+    
     // Se la posizione di partenza viene chiamata una eccezione, errore grave
     if (!is_valid_position_8(from)) throw bad_position_8();
     // Provare a muovere un pezzo da una posizione valida a una non comporta "solo" che la funzione restituisca false
@@ -42,8 +175,10 @@ bool board::move_piece(const position& from, const position& to)
     piece* prev_in_dest = board_matrix.at(make_index_8(to));
     piece* p = board_matrix.at(make_index_8(from));
 
+    // Se non è un pedone oppure non può fare l'en passant
     if(!is_pawn(p) || !can_en_passant(from, to))
     {
+        // 
         for(int i = 0; i < player_pawns[p->get_player()].size(); i++)
         {
             (player_pawns[p->get_player()].at(i)).set_can_be_passed(false);
@@ -51,13 +186,16 @@ bool board::move_piece(const position& from, const position& to)
     }
 
     // ----------------- Arrocco -----------------
-    if(is_castling(from, to))
+    if(is_king(p) && !is_check(p->get_player()) && is_castling(from, to))
+    //if (false)
     {
         //cout << "is_castling true\n";
         piece* _king = board_matrix.at(make_index_8(from));
         piece* _rook;
-        if(is_check(_king->get_player()))
+
+        /*if(is_check(_king->get_player()))
             return false;
+        */
         
         position rook_from; // Posizione di partenza della torre
         position rook_to;   // Sua posizione di arrivo
@@ -164,6 +302,8 @@ bool board::move_piece(const position& from, const position& to)
         board_matrix.at(make_index_8(rook_from)) = nullptr;
 
         // TO DO: Set initial position to false
+        //_rook->set_init_pos();
+        //_king->set_init_pos();
 
         _rook->set_init_pos();
         _king->set_init_pos();
@@ -199,7 +339,7 @@ bool board::move_piece(const position& from, const position& to)
             return false;
         }
 
-        p->set_init_pos();
+        p->set_init_pos_to_false();
 
         count_draw++;
         states[all_board_symbols()]++;
@@ -224,8 +364,7 @@ bool board::move_piece(const position& from, const position& to)
             board_matrix.at(make_index_8(to)) = prev_in_dest;
             return false;
         }
-        
-        p->set_init_pos();
+        p->set_init_pos_to_false();
     }
     else return false;
 
@@ -260,7 +399,7 @@ bool board::move_piece(const position& from, const position& to)
     return true;    
 }
 
-bool board::can_en_passant(const position& passing, const position& to)
+bool board::can_en_passant(const position& passing, const position& to) const
 {
     piece* pce{board_matrix.at(make_index_8(passing))};
 
@@ -289,7 +428,7 @@ bool board::is_check(player_id player_number)
     return player_king[player_number].front().is_check(board_matrix);
 }
 
-bool board::has_king_been_captured(player_id id)
+bool board::has_king_been_captured(player_id id) const
 {
     for (auto p : board_matrix)
     {
@@ -346,14 +485,16 @@ bool board::is_checkmate(player_id player_number)
 }
 
 
-bool board::is_castling(const position& from, const position& to)
+bool board::is_castling(const position& from, const position& to) const
 {
     const position king_start_1(7, 4);
     const position king_start_2(0, 4);
     constexpr int col_diff{2};
-    
-    if(abs(from.col - to.col) == col_diff && from == king_start_1 || from == king_start_2)
+
+    if((abs(from.col - to.col) == col_diff) && (from == king_start_1 || from == king_start_2))
+    {
         return true;
+    }
 
     return false;
 }
@@ -429,14 +570,14 @@ bool board::promote(const position& pos)
         */
         player_queen[player_num].push_back(queen(p->get_position(), player_num));
         board_matrix.at(make_index_8(pos)) = &player_queen[player_num].back();
-        player_queen[player_num].back().set_init_pos();
+        player_queen[player_num].back().set_init_pos_to_false();
         return true;
     }
     
     return false;
 }
 
-std::vector<position> board::get_player_pieces_positions(player_id player)
+std::vector<position> board::get_player_pieces_positions(player_id player) const
 {
     vector<position> player_pieces_positions;
     
@@ -477,7 +618,7 @@ std::vector<position> board::get_player_pieces_positions(player_id player)
 
 }
 
-std::vector<position> board::get_player_in_board_pieces_positions(player_id player)
+std::vector<position> board::get_player_in_board_pieces_positions(player_id player) const
 {
     vector<position> player_in_board_pieces_positions;
     for (piece* pce : board_matrix)
@@ -601,7 +742,7 @@ void board::init_player_pieces()
     
 }
 
-void board::print_board()
+void board::print_board() const
 {
     for (int i = 0; i < board_size; i++)
     {
@@ -622,7 +763,7 @@ void board::file_print_board(ofstream& _out_file)
 /*
 Mi restituisce una stringa con i simboli della riga i della board (compresi gli spazi)
 */
-string board::row_symbols(int i)
+string board::row_symbols(int i) const
 {
     string str_board;
 
@@ -640,7 +781,7 @@ string board::row_symbols(int i)
     return str_board;
 }
 
-string board::all_board_symbols()
+string board::all_board_symbols() const
 {
     string all_symbols;
     for(int i = 0; i < board_size; i++)
@@ -687,7 +828,7 @@ bool board::is_draw(player_id pl)
     return false;
 }
 
-bool board::can_do_legal_move(player_id pl)
+bool board::can_do_legal_move(player_id pl) const
 {
     // Per ogni pedina
     for (auto p : board_matrix)

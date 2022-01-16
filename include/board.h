@@ -31,20 +31,22 @@ class board
     public:
         // ------------------ Costruttore e inizializzatori ------------------
         board();
+        board(const board& other);
         void to_empty();    // rende la board priva di pezzi
         bool move_piece(const position& from, const position& to);
         void init_game();
         void init_board();
 
         // ------------------ Funzioni membro pubbliche ------------------
-        inline std::vector<std::string> get_log() { return log; }
-        std::string row_symbols(int i);
-        std::string all_board_symbols();
-        void print_board();
+        board operator=(const board& other);
+        inline std::vector<std::string> get_log() const { return log; }
+        std::string row_symbols(int i) const;
+        std::string all_board_symbols() const;
+        void print_board() const;
         void file_print_board(std::ofstream& _out_file);
-        piece* get_board_piece(const position& pos){return board_matrix.at(make_index_8(pos));}
-        std::vector<position> get_player_pieces_positions(player_id player);
-        std::vector<position> get_player_in_board_pieces_positions(player_id player);
+        piece* get_board_piece(const position& pos) const {return board_matrix.at(make_index_8(pos));}
+        std::vector<position> get_player_pieces_positions(player_id player) const;
+        std::vector<position> get_player_in_board_pieces_positions(player_id player) const;
 
         // Lato della board        
         static const int board_size {8};
@@ -53,11 +55,11 @@ class board
         bool is_check(player_id player_number);
         bool is_checkmate(player_id player_number);
         bool is_draw(player_id pl);
-        bool has_king_been_captured(player_id id);
-        bool is_castling(const position& from, const position& to);
-        bool can_en_passant(const position& passing, const position& to_pass);
-        int get_count_draw() {return count_draw;}
-        int get_no_pwn_no_eat() {return no_pwn_no_eat;}
+        bool has_king_been_captured(player_id id) const;
+        bool is_castling(const position& from, const position& to) const;
+        bool can_en_passant(const position& passing, const position& to_pass) const;
+        int get_count_draw() const {return count_draw;}
+        int get_no_pwn_no_eat() const {return no_pwn_no_eat;}
 
         // ------------------ Funzioni membro di inserimento ------------------
     private:
@@ -119,7 +121,7 @@ class board
     private:   
         void init_player_pieces();
         bool promote(const position& pos);
-        bool can_do_legal_move(player_id pl);
+        bool can_do_legal_move(player_id pl) const;
 
     private:
         int count_draw = 0;         // tiene conto del numero di mosse fatte da tutti e 2 i giocatori

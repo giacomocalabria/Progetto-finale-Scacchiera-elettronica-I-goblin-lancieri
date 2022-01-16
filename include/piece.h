@@ -71,7 +71,7 @@ class piece
         void set_position(position new_pos){pos = new_pos;}
         player_id get_player(){return player;}
         bool get_init_pos(){return is_init_pos;}
-        void set_init_pos(){is_init_pos = false;}
+        void set_init_pos_to_false(){is_init_pos = false;}
         
     protected:
         // variabili di esemplare

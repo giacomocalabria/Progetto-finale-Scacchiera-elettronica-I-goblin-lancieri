@@ -22,7 +22,8 @@ bool human_player::move(){
 
     getline(cin, input);
 
-    if(input.length() != 5){
+    constexpr int max_input_lenght {5};
+    if(input.length() != max_input_lenght){
         cerr << "Comando non valido! " << endl;
         return false;
     }

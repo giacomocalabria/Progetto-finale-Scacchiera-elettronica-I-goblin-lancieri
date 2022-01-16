@@ -72,7 +72,8 @@ std::string get_string_8(const position& pos)
     }
     std::string s;
     s.push_back((char) (pos.col + min_col));
-    s.push_back((char) (pos.row + min_row));
+    //s.push_back((char) (pos.row + min_row));
+    s.push_back((char) max_row - pos.row);
     return s;
 }
 
