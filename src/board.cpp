@@ -301,12 +301,10 @@ bool board::move_piece(const position& from, const position& to)
         board_matrix.at(make_index_8(rook_to)) = _rook;
         board_matrix.at(make_index_8(rook_from)) = nullptr;
 
-        // TO DO: Set initial position to false
-        //_rook->set_init_pos();
-        //_king->set_init_pos();
+        //Set initial position to false
 
-        _rook->set_init_pos();
-        _king->set_init_pos();
+        _rook->set_init_pos_to_false();
+        _king->set_init_pos_to_false();
 
         count_draw++;
         states[all_board_symbols()]++;
