@@ -45,7 +45,7 @@ inline char knight::symbol(){
     all' interno dei range della scacchiera.
 */
 
-vector<position> knight::get_possible_positions(){ 
+/*vector<position> knight::get_possible_positions(){ 
     vector<position> possible_pos;
     position dest;
 
@@ -62,5 +62,42 @@ vector<position> knight::get_possible_positions(){
     }
 
     return possible_pos;
-}
+}*/
 
+vector<position> knight::get_possible_positions(){ 
+    vector<position> possible_pos;
+
+    position dest = pos + position(1, 2);
+    if(is_valid_position_8(dest))
+        possible_pos.push_back(dest);
+
+    dest = pos + position(2, 1);
+    if(is_valid_position_8(dest))
+        possible_pos.push_back(dest);
+
+    dest = pos + position(1, -2);
+    if(is_valid_position_8(dest))
+        possible_pos.push_back(dest);
+    
+    dest = pos + position(2, -1);
+    if(is_valid_position_8(dest))
+        possible_pos.push_back(dest);
+    
+    dest = pos + position(-1, -2);
+    if(is_valid_position_8(dest))
+        possible_pos.push_back(dest);
+    
+    dest = pos + position(-2, -1);
+    if(is_valid_position_8(dest))
+        possible_pos.push_back(dest);
+    
+    dest = pos + position(-1, 2);
+    if(is_valid_position_8(dest))
+        possible_pos.push_back(dest);
+    
+    dest = pos + position(-2, 1);
+    if(is_valid_position_8(dest))
+        possible_pos.push_back(dest);
+
+    return possible_pos;
+}
