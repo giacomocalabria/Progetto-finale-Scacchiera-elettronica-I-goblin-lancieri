@@ -21,6 +21,11 @@ class pawn : public piece
         std::vector<position> get_possible_positions() override;
 
     private:
+        /*  ----------------------------------------------------------------------------
+            can_be_passed e' una variabile booleana che ci dice se un pedone puo' essere
+            catturato mediante en passant (in quel caso, can_be_passed = true).
+            ----------------------------------------------------------------------------
+        */
         bool can_be_passed {false};
 
     public:

@@ -29,11 +29,13 @@ class piece
             pos = _pos;
         };
 
+
         /*  -----------------------------------------------------------------
             Funzione che dice se il pezzo puo' spostarsi nella posizione dest
             -----------------------------------------------------------------
         */
         virtual bool can_move_to(const position& dest, const std::vector<piece*>& board_pieces) = 0;
+
 
         /*  -----------------------------------------------------------------------------------
             Mi dice se il pezzo in questione puo' catturare il pezzo avente come posizione dest
@@ -45,6 +47,7 @@ class piece
         */
         virtual bool can_capture(const position& dest, const std::vector<piece*>& board_pieces) = 0;
 
+
         /*  ---------------------------------------------------------------------------------
             Restituisce la variabile can_be_passed, la quale mi dice se una certa pedina puo'
             subire l'en passant (ovviamente, per definizione, can_be_passed puo' essere true
@@ -53,11 +56,13 @@ class piece
         */
         virtual bool get_can_be_passed() = 0;
 
+
         /*  -------------------------------------------------------------------
             Restituisce il simbolo (da inserire in una scacchiera) della pedina
             -------------------------------------------------------------------
         */
         virtual char symbol() = 0;
+
 
         /*  -----------------------------------------------------------------------------------
             Restituisce un vector contenente tutte le posizioni in cui una pedina puo' muoversi
@@ -82,15 +87,18 @@ class piece
         */
         player_id player; 
 
+
         /*  -----------------------------------------------------------------------------------
             Posizione della pedina nella scacchiera
             -----------------------------------------------------------------------------------
         */
         position pos;
 
+
         /*  --------------------------------------------------------------------------------
             Ci dice se la pedina deve ancora muoversi o meno (serve soprattutto ai pedoni, i
-            quali possono fare il doppio passo solo se non hanno ancora fatto alcuna mossa)
+            quali possono fare il doppio passo solo se non hanno ancora fatto alcuna mossa e
+            al re per poter fare l'arrocco)
             --------------------------------------------------------------------------------
         */
         bool is_init_pos {true};    //
