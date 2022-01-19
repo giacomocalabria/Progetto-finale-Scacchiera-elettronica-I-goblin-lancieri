@@ -400,7 +400,6 @@ bool board::has_king_been_captured(player_id id) const
 */
 bool board::is_checkmate(player_id player_number)
 {
-    //cout << "Call a check mate.\n";
     for (auto p : board_matrix) // Per ogni pezzo della board
     {
         // Il puntatore deve essere valido ed avere numero di giocatore uguale a player_number
@@ -429,12 +428,10 @@ bool board::is_checkmate(player_id player_number)
 
             if (!is_check_bool) // Se eseguendo tale mossa non vi è più lo scacco, allora non è scacco matto
             {   
-                //cout << "NO check mate.\n"; 
                 return false;
             }
         }
     }
-    //cout << "YES check mate.\n"; 
     return true; // Altrimenti è necessariamente scacco matto
 }
 
@@ -513,7 +510,7 @@ bool board::promote(const position& pos)
     return false;
 }
 
-std::vector<position> board::get_player_pieces_positions(player_id player) const
+vector<position> board::get_player_pieces_positions(player_id player) const
 {
     vector<position> player_pieces_positions;
     
@@ -540,7 +537,7 @@ std::vector<position> board::get_player_pieces_positions(player_id player) const
     return player_pieces_positions;
 }
 
-std::vector<position> board::get_player_in_board_pieces_positions(player_id player) const
+vector<position> board::get_player_in_board_pieces_positions(player_id player) const
 {
     vector<position> player_in_board_pieces_positions;
     for (piece* pce : board_matrix)

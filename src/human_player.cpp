@@ -54,10 +54,6 @@ bool human_player::move(){
         cerr << "Comando non valido! Non puoi muovere una pedina avversaria" << endl;
         return false;
     }
-    /*if(b->get_board_piece(to)->get_player() == get_player_number()){
-        cout << "Comando non valido! Non puoi andare su una tua pedina" << endl;
-        return false;
-    }*/
 
     if(! b->move_piece(from, to)){
         cerr << "Comando non valido! Non puoi fare quella mossa" << endl;

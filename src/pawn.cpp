@@ -112,9 +112,9 @@ inline char pawn::symbol()
     celle frontali. Se si trova nella posizione iniziale allora
     ha la possibilità di fare un salto in avanti di 2.
 */
-std::vector<position> pawn::get_possible_positions()
+vector<position> pawn::get_possible_positions()
 {
-    std::vector<position> possible_positions;
+    vector<position> possible_positions;
     int sign = player == player_id::player_1 ? -1 : 1;  // orientazione
     position dest;
     

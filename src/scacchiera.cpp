@@ -15,23 +15,6 @@ using namespace std;
 
 const string nome_file{"log.txt"};
 
-int main_2()
-{
-    board b1;
-    b1.move_piece(position("C2"), position("C4"));
-
-    board b2;
-    cout << "created\n";
-    b2 = b1;
-    cout << "copied\n";
-    b1.print_board();
-    b2.print_board();
-
-    b2.move_piece(position("G2"), position("G3"));
-    b1.print_board();
-    b2.print_board();
-}
-
 int main(int argc, char *argv[])
 {
     if(argc != 2 || argv[1][1] != 'c' || argv[1][0] != 'c' && argv[1][0] != 'p')
@@ -45,7 +28,6 @@ int main(int argc, char *argv[])
 
     // Board principale su cui avviene il gioco.
     board main_board;
-    main_board.print_board();
 
     /*
         Vector contenente human_player e computer_players. Il primo
@@ -68,7 +50,7 @@ int main(int argc, char *argv[])
     // Se il tipo di match è giocatore vs computer
     if (type_of_match)
     {
-        std::cout << "Partita giocatore vs computer.\n";
+        cout << "Partita giocatore vs computer.\n";
 
         // Scelgo casualmente un id giocatore 
         default_random_engine ran(chrono::system_clock::now().time_since_epoch().count());
@@ -101,15 +83,7 @@ int main(int argc, char *argv[])
     vector<string> log;
     while (true)
     {
-        // Annuncio del turno
-        cout << endl <<  "Turno " << turn_counter << endl;
         int player_turn{turn_counter % 2};
-        if (player_turn == 0)
-            cout << "Tocca al bianco." << endl;
-        else
-            cout << "Tocca al nero." << endl;
-
-        main_board.print_board();
 
         // -------------------------- Controllo se il giocatore ha ancora il re --------------------------
         if (main_board.has_king_been_captured(players[player_turn]->get_player_number()))

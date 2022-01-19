@@ -11,14 +11,12 @@ using namespace std;
 
 bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
-    //cout << "Call a can_move_to di rook; from : " << pos << ", dest: " << dest << endl;
     if (!is_valid_position_8(dest))
     {
         return false;
     }
 
     vector<position> possible_positions = get_possible_positions();
-    //std::cout << "Positions generated (Rook).\n";
     
     /*
         Ricerca della posizione di destinazione all'interno
@@ -31,7 +29,6 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     if (it == possible_positions.end())
         return false;
 
-    //std::cout << "Destination in possible_positions.\n";
     position cursor = pos;
     piece* other;
     
@@ -45,7 +42,6 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     // ----------- scansione in basso -----------  
     if (dest.row > pos.row)
     {
-        //std::cout << "Scansione in basso.\n";
         cursor = cursor + position(1, 0);
         while (is_valid_position_8(cursor) && cursor.row < dest.row)
         {
@@ -64,14 +60,12 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     // ----------- scansione in alto -----------
     else if (dest.row < pos.row)
     {
-        //std::cout << "Scansione in alto.\n";
         cursor = cursor - position(1, 0);
         while (is_valid_position_8(cursor) && cursor.row > dest.row)
         {
             other = board_pieces.at(make_index_8(cursor));
             if (other)
             {
-                //cout << "Obstacle.\n";
                 return false;
             }
             cursor = cursor - position(1, 0);
@@ -80,7 +74,6 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     // ----------- scansione a destra -----------
     else if (dest.col > pos.col)
     {
-        //std::cout << "Scansione a destra.\n";
         cursor = cursor + position(0, 1);
         while (is_valid_position_8(cursor) && cursor.col < dest.col)
         {    
@@ -93,7 +86,6 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     // ----------- scansione a sinistra -----------
     else if (dest.col < pos.col)
     {
-        //std::cout << "Scansione a sinistra.\n";
         cursor = cursor - position(0, 1);
         while (is_valid_position_8(cursor) && cursor.col > dest.col)
         {
@@ -106,10 +98,8 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 
     // se la cella di arrivo è occupata ed è occupata da un pezzo del stesso giocatore -> rest falso
     other = board_pieces.at(make_index_8(dest));
-    //cout << other->symbol();
     if (other && other->get_player() == player)
     {
-        //cout << "Same color.\n";
         return false;
     }
     return true;
@@ -125,15 +115,13 @@ inline char rook::symbol()
     return player == player_id::player_1 ? 't' : 'T';
 }
 
-std::vector<position> rook::get_possible_positions()
+vector<position> rook::get_possible_positions()
 {
-    std::vector<position> possible_positions;
+    vector<position> possible_positions;
 
     position cursor = pos;
-
     
     // ----------- scansione a destra -----------
-    //std::cout << "Scansione a destra.\n";
     cursor = pos;
     while (cursor.col < piece::max_position)
     {
@@ -142,7 +130,6 @@ std::vector<position> rook::get_possible_positions()
     }
 
     // ----------- scansione a sinistra -----------
-    //std::cout << "Scansione a sinistra.\n";
     cursor = pos;
     while (cursor.col > piece::min_position)
     {
@@ -151,7 +138,6 @@ std::vector<position> rook::get_possible_positions()
     }
 
     // ----------- scansione in basso -----------
-    //std::cout << "Scansione in basso.\n";
     cursor = pos;
     while (cursor.row < piece::max_position)
     {
@@ -160,7 +146,6 @@ std::vector<position> rook::get_possible_positions()
     }
 
     // ----------- scansione in alto -----------
-    //std::cout << "Scansione in alto.\n";
     cursor = pos;
     while (cursor.row > piece::min_position)
     {

@@ -80,7 +80,7 @@ vector<position> king::get_possible_positions()
     return possible_pos;
 }
 
-bool king::is_check(const std::vector<piece*>& board_pieces)
+bool king::is_check(const vector<piece*>& board_pieces)
 {
     for(int i = 0; i < board::board_size * board::board_size; i++)
     {
