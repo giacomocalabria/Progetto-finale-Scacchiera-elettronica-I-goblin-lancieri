@@ -1,14 +1,27 @@
 #Author: GIACOMO CALABRIA
 
-cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
-set (CMAKE_CXX_STANDARD 11)
-set (CMAKE_CXX_FLAGS "-O2")
+#Questo è il file CMakeLists che contiene l'insieme delle direttive
+#e istruzioni che descrivono il codice sorgente del progetto e
+#i vari target per la compilazione (eseguibili, librerie)
 
-include_directories(include)
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR) #Check della versione di CMake
+set (CMAKE_CXX_STANDARD 11) #Abilita il codice allo standard C++11
+set (CMAKE_CXX_FLAGS "-O2") #Attivazione delle opzioni di ottimizzazione
 
-project(Scacchiera_elettronica)
+include_directories(include) 
 
-# librerie del progetto
+project(Scacchiera_elettronica #Crea il progetto "Scacchiera_elettronica"
+    VERSION
+        1.0
+    DESCRIPTION
+        "Corso di Laboratorio di Programmazione: progetto finale"
+    LANGUAGES
+        CXX
+)
+
+# *** librerie del progetto ***
+
+#libreria della scacchiera
 add_library(board
     include/position.h
     include/board.h
@@ -16,6 +29,7 @@ add_library(board
     src/board.cpp
 )
 
+#libreria dei pezzi
 add_library(pieces
     include/piece.h
     src/piece.cpp
@@ -33,6 +47,7 @@ add_library(pieces
     src/bishop.cpp
 )
 
+#libreria dei giocatori
 add_library(player
     include/player.h
     include/human_player.h
@@ -43,11 +58,15 @@ add_library(player
     src/computer_player.cpp
 )
 
+#libreria dedicata al replay
 add_library(replay_player
     include/replay_player.h
     include/replay.h
     src/replay_player.cpp
 )
+
+
+# *** eseguibili del progetto ***
 
 #eseguibile della scacchiera
 add_executable(scacchiera

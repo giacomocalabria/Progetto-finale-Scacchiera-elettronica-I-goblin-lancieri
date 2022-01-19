@@ -45,9 +45,8 @@ bool human_player::move(){
         return false;
     }
 
-    if (!b->get_board_piece(from))
-    {
-        cout << "Nessun pezzo selezionato.\n";
+    if (!b->get_board_piece(from)){
+        cerr << "Comando non valido! Nessun pezzo selezionato." << endl;
         return false;
     }
 

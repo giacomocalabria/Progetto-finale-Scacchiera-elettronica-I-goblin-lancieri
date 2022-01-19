@@ -11,8 +11,9 @@
     -------------------------------------------------------------------
     La classe player è una virtuale pura. Le sue
     classe derivate hanno il compito di interfacciarsi
-    con la board operando su di essa. Le due funzioni membro
-    principali sono:
+    con la board operando su di essa. 
+
+    Le due funzioni membro principali sono:
     
     turn: da inizio all'intero turno del giocatore, dunque all'interno
     di essa viene chiamata la funzione move più volte finché essa non
@@ -32,7 +33,7 @@ class player{
         virtual void turn() = 0;
 
     protected:
-        board* b;
+        board* b; //riferimento alla scacchiera su cui si muove
         player_id id;
         virtual bool move() = 0;
 };
