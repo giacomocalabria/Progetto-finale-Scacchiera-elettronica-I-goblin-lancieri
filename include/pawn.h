@@ -2,7 +2,7 @@
 
 /*  
     ----------------------------------------------------
-    Classe derivata del pawn/pedone.
+    Classe derivata da piece del pawn/pedone.
     ----------------------------------------------------
 */
 

@@ -8,21 +8,19 @@
 #include "player_id.h"
 
 /*
-    -------------------------------------------------------------------
-    La classe player è una virtuale pura. Le sue
-    classe derivate hanno il compito di interfacciarsi
-    con la board operando su di essa. 
+    ---------------------------------------------------------------------------
+    La classe player è una virtuale pura. Le sue classe derivate hanno il compito
+    di interfacciarsi con la board operando su di essa. 
 
     Le due funzioni membro principali sono:
     
-    turn: da inizio all'intero turno del giocatore, dunque all'interno
-    di essa viene chiamata la funzione move più volte finché essa non
-    gestisce un caso valido.
+    turn: da inizio all'intero turno del giocatore, dunque all'interno di essa 
+    viene chiamata la funzione move più volte finché essa non gestisce 
+    un caso valido.
 
-    move: gestisce la mossa di un pezzo. Chiama sulla board move_piece,
-    che appunto muove concretamente i pezzi. E' il punto di contatto
-    fra board e player.
-    -------------------------------------------------------------------
+    move: gestisce la mossa di un pezzo. Chiama sulla board move_piece, che appunto 
+    muove concretamente i pezzi. E' il punto di contatto fra board e player.
+    ---------------------------------------------------------------------------
 */
 
 class player{
@@ -33,8 +31,8 @@ class player{
         virtual void turn() = 0;
 
     protected:
-        board* b; //riferimento alla scacchiera su cui si muove
-        player_id id;
+        board* b; //riferimento alla scacchiera su cui si opera il giocatore
+        player_id id; //Questa variabile ci dice quale giocatore è tra i due disponibili
         virtual bool move() = 0;
 };
 
