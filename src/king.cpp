@@ -1,4 +1,4 @@
-//Author: EDDIE CARRARO
+//Author: NICOLA MARITAN
 
 #include "king.h"
 

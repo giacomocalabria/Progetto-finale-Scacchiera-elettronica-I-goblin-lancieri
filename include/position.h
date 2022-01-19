@@ -1,4 +1,4 @@
-// Author: NICOLA MARITAN
+// Author: GIACOMO CALABRIA
 
 #ifndef POSITION_H
 #define POSITION_H

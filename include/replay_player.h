@@ -1,4 +1,4 @@
-//author: GIACOMO CALABRIA
+//author: EDDIE CARRARO
 
 #ifndef REPLAY_PLAYER_H
 #define REPLAY_PLAYER_H

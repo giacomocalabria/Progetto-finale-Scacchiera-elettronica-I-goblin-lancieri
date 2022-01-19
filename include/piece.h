@@ -1,4 +1,4 @@
-// Author: NICOLA MARITAN
+// Author: EDDIE CARRARO
 
 /*  ----------------------------------------------------
     Classe virtuale pura. Classe da cui discendono le

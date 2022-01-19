@@ -1,4 +1,4 @@
-// Author: EDDIE CARRARO
+// Author: GIACOMO CALABRIA
 
 #include "pawn.h"
 
