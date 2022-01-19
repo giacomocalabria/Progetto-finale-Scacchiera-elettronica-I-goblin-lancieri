@@ -10,12 +10,11 @@ using namespace std;
 
 bool bishop::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
-	//cout << "Call a can_move_to di bishop; from : " << pos << ", dest: " << dest << endl;
 	//--------controllo il bounding--------
-	if(!is_valid_position_8(dest))	//ridondante? velocizza????????
-	{
+	if(!is_valid_position_8(dest))
 		return false;
-	}
+
+	//------- controllo se la posizione dest e' raggiungibile dalla pedina -------
 	vector<position> possible_positions = get_possible_positions();
 	vector<position>::iterator it;
 	it = find(possible_positions.begin(), possible_positions.end(), dest);
@@ -128,7 +127,6 @@ bool bishop::can_capture(const position& dest, const vector<piece*>& board_piece
 
 vector<position> bishop::get_possible_positions()
 {
-	//cout << "Call a get_possible_positions di bishop." << endl;
 	vector<position> possible_positions;
 
 	position go_on = position(pos.row + 1, pos.col + 1);
@@ -167,6 +165,5 @@ vector<position> bishop::get_possible_positions()
 		go_on.col--;		//controllo le posizioni "in alto a sinistra" (in cui bishop puo'andare)
 	}
 
-	//cout << "Fine call a get_possible_positions di bishop.\n\n";
 	return possible_positions;
 }

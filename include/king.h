@@ -23,7 +23,7 @@ class king : public piece
          
     public:
         /*  ------------------------------------------------------------
-            Metodo che controlla se il re e' in scacco
+            Metodo che controlla se il re e' sotto scacco
             ------------------------------------------------------------
         */
         bool is_check(const std::vector<piece*>& board_pieces);

@@ -7,6 +7,8 @@
 using namespace std;
 
 bool knight::can_move_to(const position& dest, const vector<piece*>& board_pieces){
+
+    //------- controllo se la posizione dest e' raggiungibile dalla pedina -------
     vector<position> possible_pos = get_possible_positions();
     auto it = find(possible_pos.begin(), possible_pos.end(), dest);
     // Se la destinazione non è all' interno delle possibili posizioni

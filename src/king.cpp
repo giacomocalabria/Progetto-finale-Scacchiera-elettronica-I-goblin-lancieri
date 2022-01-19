@@ -10,6 +10,7 @@ using namespace std;
 
 bool king::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
+    //------- controllo se la posizione dest e' raggiungibile dalla pedina -------
     vector<position> possible_pos = get_possible_positions();
     auto it = find(possible_pos.begin(), possible_pos.end(), dest);
     if (it == possible_pos.end())
@@ -18,11 +19,12 @@ bool king::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     }
     
     piece* dest_pce{board_pieces.at(make_index_8(dest))};
+
     /*
-        Se è presente un pezzo nella posizione di destinazione
+        Se e' presente un pezzo nella posizione di destinazione
         e se questo ha id giocatore uguale a quella di questo pezzo,
-        allora non può muoversi sopra in quanto pedina propria.
-        Se dest_pce è false per corto circuito non verrà chiamata
+        allora non puo' muoversi sopra in quanto pedina propria.
+        Se dest_pce e' false per corto circuito non verra' chiamata
         la funzione membro non causando alcun accesso a nullptr.
     */
     if (dest_pce && dest_pce->get_player() == get_player())
@@ -45,7 +47,7 @@ inline char king::symbol(){
 vector<position> king::get_possible_positions()
 {
     vector<position> possible_pos;
-
+    
     position possibility;
     possibility.row = pos.row;
     possibility.col = pos.col;
@@ -59,10 +61,8 @@ vector<position> king::get_possible_positions()
                 possibility.row += i;
                 possibility.col += j;
 
-                if(possibility.col > -1 && possibility.col < 8 && possibility.row > -1 && possibility.row < 8) //cambiare sta roba !!
-                {
+                if(is_valid_position_8(possibility))
                     possible_pos.push_back(possibility);
-                }
 
                 possibility.row = pos.row;
                 possibility.col = pos.col;
@@ -70,7 +70,7 @@ vector<position> king::get_possible_positions()
         }
     }
 
-    // Movimenti dell'arrocco aggiuntivi: se e solo se è nella posizione iniziale
+    // Movimenti dell'arrocco aggiuntivi: se e solo se e' nella posizione iniziale
     if (is_init_pos)
     {
         possible_pos.push_back(pos + position(0, 2));
@@ -82,19 +82,14 @@ vector<position> king::get_possible_positions()
 
 bool king::is_check(const std::vector<piece*>& board_pieces)
 {
-    //cout << "CALL IS_CHECK\n";
     for(int i = 0; i < board::board_size * board::board_size; i++)
     {
-        if(board_pieces[i] && board_pieces[i]->get_player() != get_player()) //NOTA: ricordati la condizione (board[i])!
-        { 
-            // Commenti UTILISSIMI per debug: non eliminare pls
-            //cout << board_pieces[i]->symbol() << ", " << board_pieces[i]->get_position();
+        if(board_pieces[i] && board_pieces[i]->get_player() != get_player())
+        {
             if((*(board_pieces[i])).can_capture(get_position(), board_pieces))
             {
-                //cout << "CHEKS\n";
                 return true;
             }
-            //cout << "NOT CHECKS\n";
         }
     }
     return false;

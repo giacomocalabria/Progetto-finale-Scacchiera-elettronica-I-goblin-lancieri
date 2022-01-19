@@ -176,13 +176,29 @@ bool board::move_piece(const position& from, const position& to)
     piece* p = board_matrix.at(make_index_8(from));
 
     // Se non è un pedone oppure non può fare l'en passant
-    if(!is_pawn(p) || !can_en_passant(from, to))
+    /*if(!is_pawn(p) || !can_en_passant(from, to))
     {
-        // 
         for(int i = 0; i < player_pawns[p->get_player()].size(); i++)
         {
             (player_pawns[p->get_player()].at(i)).set_can_be_passed(false);
         }
+    }*/
+
+    for(int i = 0; i < player_pawns[p->get_player()].size(); i++)
+    {
+        //----- prendo, uno ad uno, tutti i pedoni del giocatore che sta facendo la mossa... -----
+        pawn* p2 = &player_pawns[p->get_player()].at(i);
+
+        /*  --------------------------------------------------------------------------------------
+            ...e, se sono diversi da p, pongo la loro variabile can_be_passed a false (in quanto
+            effettivamente non possono piu' essere catturati "in passant": questo accade perche',
+            da regola, l'en passant puo' verificarsi solo subito dopo un movimento di 2 posizioni
+            da parte del pedone da catturare, ma se faccio altro devo assicurarmi che l'en passant
+            non possa erroneamente capitare successivamente).
+            --------------------------------------------------------------------------------------
+        */  
+        //if(p2 != p)
+            (p2)->set_can_be_passed(false);
     }
 
     // ----------------- Arrocco -----------------
@@ -313,14 +329,14 @@ bool board::move_piece(const position& from, const position& to)
     }
 
     // ----------------- En passant -----------------
-    // N.B.! Nella posizione to, in caso di en passant, e' impossibile che vi sia una pedina; 
-    // se fosse il contrario, il pedone avversario non avrebbe potuto fare 2 passi (nemmeno uno in realta')
+    //N.B.! Nella posizione to, in caso di en passant, NON e' possibile che vi sia una pedina; 
+    //se fosse il contrario, il pedone avversario non avrebbe potuto fare 2 passi (nemmeno uno in realta').
     if(can_en_passant(from, to))
     {
         int sign = p->get_player() == player_id::player_1 ? -1 : 1;  // orientazione
         position pos_to_pass = to - position(sign, 0);
 
-        // Pezzo sulla scacchiera sulla posizione di destinazione (eventualmente anche nullptr)
+        // Pezzo sulla scacchiera sulla posizione in cui vi e' il pedone da catturare
         prev_in_dest = board_matrix.at(make_index_8(pos_to_pass));
 
         p->set_position(to);
@@ -397,6 +413,18 @@ bool board::move_piece(const position& from, const position& to)
     return true;    
 }
 
+
+/*  ---------------------------------------------------------------------------------------------------------
+    Gestisce l'en passant, ovvero la condizione nella quale un pedone puo' catturare un pedone avversario
+    "passandogli accanto", ovvero senza passargli sopra come succede sovente. Puo' accadere solo se
+    il pedone avversario, SOLO nel turno precedente, si e' mosso di 2 posizioni (quindi durante la sua prima
+    mossa) in avanti.
+    La posizione to, passata come parametro, rappresenta una posizione diagonale rispetto al pedone che si
+    sta muovendo. Questa scelta e' stata fatta per rendere omogeneo il codice in se' (in effetti, all'interno
+    della funzione, ricaviamo da "to" la posizione in cui puo' trovarsi la pedina da catturare (ovvero
+    pce_to_pass)).
+    ---------------------------------------------------------------------------------------------------------
+*/
 bool board::can_en_passant(const position& passing, const position& to) const
 {
     piece* pce{board_matrix.at(make_index_8(passing))};
@@ -414,7 +442,7 @@ bool board::can_en_passant(const position& passing, const position& to) const
 
     if (is_pawn(pce))
     {
-        if(pce_to_pass->get_can_be_passed() && pce_to_pass->get_player() != pce->get_player())
+        if(pce_to_pass->get_can_be_passed() && (pce_to_pass->get_player() != pce->get_player()))
             return true;        
     }
     
