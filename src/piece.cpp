@@ -1,3 +1,5 @@
+// Author: NICOLA MARITAN
+
 #include "piece.h"
 
 bool is_pawn(piece* p){return (p->symbol() == 'p' || p->symbol() == 'P');}

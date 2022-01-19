@@ -170,45 +170,6 @@ std::vector<position> rook::get_possible_positions()
     
 
     /*
-    // ----------- scansione a destra -----------
-    //std::cout << "Scansione a destra.\n";
-    cursor = pos + position(0, 1);
-    while (is_valid_position_8(cursor))
-    { 
-        possible_positions.push_back(cursor);
-        cursor = cursor + position(0, 1);
-    }
-
-    // ----------- scansione a sinistra -----------
-    //std::cout << "Scansione a sinistra.\n";
-    cursor = pos - position(0, 1);
-    while (is_valid_position_8(cursor))
-    {
-        possible_positions.push_back(cursor);
-        cursor = cursor - position(0, 1);
-    }
-
-    // ----------- scansione in basso -----------
-    //std::cout << "Scansione in basso.\n";
-    cursor = pos + position(1, 0);
-    while (is_valid_position_8(pos))
-    {
-        possible_positions.push_back(cursor);
-        cursor = cursor + position(1, 0);
-    }
-
-    // ----------- scansione in alto -----------
-    //std::cout << "Scansione in alto.\n";
-    cursor = pos - position(1, 0);
-    while (cursor.row > piece::min_position)
-    {
-        possible_positions.push_back(cursor);
-        cursor = cursor - position(1, 0);
-    }
-    */
-
-
-    /*
         Ora possible_positions contiene tutte le posizioni
         possibili (anche non raggiungibili effettivamente)
         che sono quelle lungo la stessa riga e colonna di pos.
