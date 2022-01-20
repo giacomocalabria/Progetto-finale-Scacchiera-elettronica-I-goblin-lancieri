@@ -10,7 +10,7 @@ using namespace std;
 
 bool king::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 {
-    //------- controllo se la posizione dest e' raggiungibile dalla pedina -------
+    // Controllo se la posizione dest e' raggiungibile dalla pedina
     vector<position> possible_pos = get_possible_positions();
     auto it = find(possible_pos.begin(), possible_pos.end(), dest);
     if (it == possible_pos.end())
@@ -52,15 +52,21 @@ vector<position> king::get_possible_positions()
     possibility.row = pos.row;
     possibility.col = pos.col;
 
-    for(int i = -1; i < 2; i++)
+    // Ottengo tutte le posizioni valide di movimento
+    // Riga e colonna partono da -1 incluso a 1 incluso (2 escluso)
+    constexpr int min_offset{-1};
+    constexpr int max_offset{2};
+    for(int i = min_offset; i < max_offset; i++)
     {
-        for(int j = -1; j < 2; j++)
+        for(int j = min_offset; j < max_offset; j++)
         {
+            // Se almeno uno degli offset e' diversi da 0
             if( i != 0 || j != 0)
             {
                 possibility.row += i;
                 possibility.col += j;
 
+                // e se tale posizione e' valida all'interno della board
                 if(is_valid_position_8(possibility))
                     possible_pos.push_back(possibility);
 
@@ -82,15 +88,20 @@ vector<position> king::get_possible_positions()
 
 bool king::is_check(const vector<piece*>& board_pieces)
 {
+    // Per ogni pezzo della board
     for(int i = 0; i < board::board_size * board::board_size; i++)
     {
-        if(board_pieces[i] && board_pieces[i]->get_player() != get_player())
+        // Se il pezzo non e' nullptr e se il suo id e' diverso da quello del re
+        // controllo se puo' mangiare.
+        if(board_pieces.at(i) && board_pieces.at(i)->get_player() != get_player())
         {
-            if((*(board_pieces[i])).can_capture(get_position(), board_pieces))
+            if(board_pieces.at(i)->can_capture(get_position(), board_pieces))
             {
+                // Questo pezzo puo' mangiare il re: scacco
                 return true;
             }
         }
     }
+    // Allora nessun pezzo puo' mangiare il re.
     return false;
 }

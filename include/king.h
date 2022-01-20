@@ -2,6 +2,15 @@
 
 /*  ----------------------------------------------------
     Classe derivata da piece del king/re.
+    Chiaramente il re assume una importanza a se' per il
+    flusso del gioco degli scacchi. Oltre alle funzioni
+    membro virtuali della classe piece tale classe e'
+    dotata della funz. membro is_check, la quale controlla
+    se il re si trova nella posizione di scacco, cioe'
+    se esso puo' essere "mangiato" da un pezzo avversario.
+    Tale funzione membro e' richiamata dalla board
+    a seconda dell'id del pezzo (vedasi is_check nella classe
+    board).
     ----------------------------------------------------
 */
 
@@ -21,10 +30,7 @@ class king : public piece
         std::vector<position> get_possible_positions() override;
          
     public:
-        /*  ------------------------------------------------------------
-            Metodo che controlla se il re e' sotto scacco
-            ------------------------------------------------------------
-        */
+        // Funzione membro che controlla se il re e' sotto scacco
         bool is_check(const std::vector<piece*>& board_pieces);
 };
 

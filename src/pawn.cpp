@@ -8,11 +8,10 @@
 
 using namespace std;
 
-/*  ------------------------------------------------------------------
+/* 
     Costruttore della classe pawn. Essa semplicemente richiama il
     costruttore della base class piece. Ciò avviene in modo totalmente
     analogo nelle altre classi derivate da piece.
-    ------------------------------------------------------------------
 */
 pawn::pawn(const position& _pos, player_id _player) : piece(_pos, _player) {}
 
@@ -29,18 +28,25 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         return false;
 
     int sign = player == player_id::player_1 ? -1 : 1;  // orientazione
+
+    // Se la posizione di destinazione e' la posizione del pedone + 1 in avanti
     if (dest == pos + (sign * position(1, 0)))
     {
-        // Allora si sta muovendo in avanti
+        // Allora si sta muovendo in avanti di 1
+
+        // Se c'e' un altra pedina muovendosi in avanti allora la mossa non e' valida
         if (board_pieces.at(make_index_8(dest)))
         {
             return false;
         }
+
+        // altrimenti puo' muoversi
         is_init_pos = false;
         can_be_passed = false;
         return true;
     }
 
+    // Se la posizione di destinazione e' la posizione del pedone + 2 in avanti
     if (dest == pos + (sign * position(2, 0)))
     {
         // Allora si sta muovendo in avanti di 2 posizioni
@@ -58,12 +64,15 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         return true;
     }
 
-    // Sicuramente si sta muovendo in diagonale (gli altri casi hanno già portato a conclusione)
+    // Sicuramente si sta muovendo in diagonale (gli altri casi avrebbero già portato a conclusione)
     piece* other = board_pieces.at(make_index_8(dest));
+    // Se vi e' un altro pezzo...
     if (other)
     {
+        // ... e se tale pezzo e' dell'avversario
         if (player != other->get_player())
         {
+            // Puo' mangiarlo
             is_init_pos = false;
             can_be_passed = false;
             return true;
@@ -74,7 +83,7 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     return false;
 }
 
-//Serve per definire la condizione di scacco del re avversario
+// Serve per definire la condizione di scacco del re avversario
 bool pawn::can_capture(const position& dest, const vector<piece*>& board_pieces)
 {
     piece* other = board_pieces.at(make_index_8(dest));
@@ -121,19 +130,23 @@ vector<position> pawn::get_possible_positions()
     // Se si trova nella posizione iniziale
     if (is_init_pos)
     {
+        // Aggiungo il salto in avanti di 2
         dest = pos + (sign * position(2, 0));
         if(is_valid_position_8(dest))
             possible_positions.push_back(dest);
     }
 
+    // Salto in avanti di 1
     dest = pos + (sign * position(1, 0));
     if(is_valid_position_8(dest))
         possible_positions.push_back(dest);
     
+    // Salto in diagonale a destra
     dest = pos + (sign * position(1, 1));
     if(is_valid_position_8(dest))
         possible_positions.push_back(dest);
     
+    // Salto in diagonale a sinistra
     dest = pos + (sign * position(1, -1));
     if(is_valid_position_8(dest))
         possible_positions.push_back(dest);

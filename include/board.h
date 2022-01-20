@@ -17,10 +17,11 @@
 #include "rook.h"
 
 /*  
-    --------------------------------------------------------------------------------------------------------
-    La classe board contiene concretamente i pezzi e interfaccia i player con essi. Fornisce controlli
-    sul flusso della partita, la sua visualizzazione, sullo scacco (attraverso i king) e sullo scacco matto.
-    --------------------------------------------------------------------------------------------------------
+    -------------------------------------------------------------------------
+    La classe board contiene concretamente i pezzi e interfaccia i player con
+    essi. Fornisce controlli sul flusso della partita, la sua visualizzazione,
+    sullo scacco (attraverso i king) e sullo scacco matto.
+    --------------------------------------------------------------------------
 */
 
 class board
@@ -84,20 +85,26 @@ class board
         // ------------------ Variabili membro private ------------------
 
         /*
-            Board concreata di puntatori a piece. L'accesso alla cella di di riga i e colonna j avviene tramite la formula 8*i + j.
-            A tal proposito vi e' l'uso massiccio della funzione make_index_8 definita in position.h che si occupa di questo calcolo.
+            Board concreata di puntatori a piece. L'accesso alla cella di di riga i e
+            colonna j avviene tramite la formula 8*i + j.
+            A tal proposito vi e' l'uso massiccio della funzione make_index_8 definita
+            in position.h che si occupa di questo calcolo.
         */
         std::vector<piece*> board_matrix;
         
         /* 
-            Array di dimensione 2, contenenti i vector dei pezzi dei giocatori 1 e 2. In questo modo per accedere ai pezzi del giocatore X basta
-            la notazione player_piece[PLAYER_X].
+            Array di dimensione 2, contenenti i vector dei pezzi dei giocatori 1 e 2. In
+            questo modo per accedere ai pezzi del giocatore X basta la notazione player_piece[PLAYER_X].
             
-            Essi sono di fatto dei contenitore statici dei pezzi della board: la loro capacità non cambia durante l'esecuzione del programma,
-            poiché in init_board per ognuno di questi vector vi è un reserve della memoria necessaria. La staticità dei vector è indispensabile
-            in quanto una riallocazione della memoria nel freestore di un vector rende in generale invalidi i riferimenti nella board. In questo modo
-            si evita ogni tipo di memory leak in quanto l'allocazione dinamica della memoria è gestita dai vector stessi della STL, e si dispone
-            di un modo molto comodo per avere a disposizione i vari pezzi. In questo modo per accedere ai pezzi del giocatore 2 basta la notazione player_pieces[1].
+            Essi sono di fatto dei contenitore statici dei pezzi della board: la loro
+            capacità non cambia durante l'esecuzione del programma, poiché in init_board
+            per ognuno di questi vector vi è un reserve della memoria necessaria. La staticità
+            dei vector è indispensabile in quanto una riallocazione della memoria nel freestore
+            di un vector rende in generale invalidi i riferimenti nella board. In questo modo
+            si evita ogni tipo di memory leak in quanto l'allocazione dinamica della memoria è
+            gestita dai vector stessi della STL, e si dispone di un modo molto comodo per avere
+            a disposizione i vari pezzi. In questo modo per accedere ai pezzi del giocatore 2 basta
+            la notazione player_pieces[1].
         */
         std::vector<pawn> player_pawns[player_id::player_count];
         std::vector<knight> player_knights[player_id::player_count];

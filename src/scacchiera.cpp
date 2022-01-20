@@ -13,7 +13,15 @@
 
 using namespace std;
 
-const string nome_file{"log.txt"};
+/*
+    ------------------------------------------------------------------
+    L'eseguibile scacchiera si limita a creare delle istanze di board,
+    dei due player e di farli comunicare tra loro. Ovviamente esiste
+    solo una board, il cui riferimento e' passato ai due player.
+    Se si verifica una situazione di scacco matto o di patta la partita
+    si blocca e viene decretato un vincitore.
+    ------------------------------------------------------------------
+*/
 
 int main(int argc, char *argv[])
 {
@@ -128,6 +136,7 @@ int main(int argc, char *argv[])
 
     // Una volta finita la partita avviene la scrittura su file.
     cout << "Partita finita, scrittura file 'log.txt'" << endl;
+    const string nome_file{"log.txt"};
     ofstream out_file(nome_file);
     if(out_file.is_open())
     {

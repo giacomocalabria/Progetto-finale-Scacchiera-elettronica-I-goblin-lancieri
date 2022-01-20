@@ -53,7 +53,8 @@ board board::operator=(const board& other)
     vector<knight> new_p_knight_1 = other.player_knights[player_1];
     vector<knight> new_p_knight_2 = other.player_knights[player_2];
 
-    // Solo una volta effettuata la copia posso eliminare (gestione caso in cui other == this)
+    /*Solo una volta effettuata la copia posso eliminare (gestione caso in 
+    cui other == this)*/
     player_pawns[player_1].clear();
     player_pawns[player_2].clear();
     player_bishops[player_1].clear();
@@ -110,15 +111,18 @@ board board::operator=(const board& other)
 }
 
 /*
-    La funzione membro move_piece rappresenta l'interfaccia fra il player e la board concreta. Essa chiama per un determinato pezzo le funzioni 
+    La funzione membro move_piece rappresenta l'interfaccia fra il player e la
+    board concreta. Essa chiama per un determinato pezzo le funzioni 
     membro virtuali can_move_to, can_capture, ecc. di piece. 
-    Essa modifica concretamente la board. Funzione membro CHIAVE della board che muove fisicamente il pezzo.
+    Essa modifica concretamente la board. Funzione membro CHIAVE della
+    board che muove fisicamente il pezzo.
 */
 bool board::move_piece(const position& from, const position& to)
 {    
     // Se la posizione di partenza viene chiamata una eccezione, errore grave
     if (!is_valid_position_8(from)) throw bad_position_8();
-    // Provare a muovere un pezzo da una posizione valida a una non comporta "solo" che la funzione restituisca false
+    // Provare a muovere un pezzo da una posizione valida a una non comporta
+    // "solo" che la funzione restituisca false
     if (!is_valid_position_8(to)) return false;
 
     if(is_draw(board_matrix.at(make_index_8(from))->get_player()))
@@ -141,16 +145,15 @@ bool board::move_piece(const position& from, const position& to)
 
     for(int i = 0; i < player_pawns[p->get_player()].size(); i++)
     {
-        //----- prendo, uno ad uno, tutti i pedoni del giocatore che sta facendo la mossa... -----
+        // Prendo, uno ad uno, tutti i pedoni del giocatore che sta facendo la mossa...
         pawn* p2 = &player_pawns[p->get_player()].at(i);
 
-        /*  --------------------------------------------------------------------------------------
-            ...e, se sono diversi da p, pongo la loro variabile can_be_passed a false (in quanto
-            effettivamente non possono piu' essere catturati "in passant": questo accade perche',
-            da regola, l'en passant puo' verificarsi solo subito dopo un movimento di 2 posizioni
-            da parte del pedone da catturare, ma se faccio altro devo assicurarmi che l'en passant
-            non possa erroneamente capitare successivamente).
-            --------------------------------------------------------------------------------------
+        /*
+            ...e, se sono diversi da p, pongo la loro variabile can_be_passed
+            a false (in quanto effettivamente non possono piu' essere catturati "in passant":
+            questo accade perche', da regola, l'en passant puo' verificarsi solo subito dopo
+            un movimento di 2 posizioni da parte del pedone da catturare, ma se faccio altro
+            devo assicurarmi che l'en passant non possa erroneamente capitare successivamente).
         */  
         //if(p2 != p)
             (p2)->set_can_be_passed(false);
@@ -264,9 +267,10 @@ bool board::move_piece(const position& from, const position& to)
     }
 
     // ----------------- En passant -----------------
-    //N.B.! Nella posizione to, in caso di en passant, NON e' possibile che vi sia una pedina; 
-    //se fosse il contrario, il pedone avversario non avrebbe potuto fare 2 passi (nemmeno uno in realta').
-    // N.B.! Nella posizione to, in caso di en passant, e' impossibile che vi sia una pedina; se fosse il contrario, il pedone avversario non avrebbe potuto fare 2 passi (nemmeno uno in realta')
+    /*
+        N.B.! Nella posizione to, in caso di en passant, NON e' possibile che vi sia una pedina; 
+        se fosse il contrario, il pedone avversario non avrebbe potuto fare 2 passi (nemmeno uno in realta').
+    */
     if(can_en_passant(from, to))
     {
         int sign = p->get_player() == player_id::player_1 ? -1 : 1;  // orientazione
@@ -345,7 +349,7 @@ bool board::move_piece(const position& from, const position& to)
 }
 
 
-/*  ---------------------------------------------------------------------------------------------------------
+/*
     Gestisce l'en passant, ovvero la condizione nella quale un pedone puo' catturare un pedone avversario
     "passandogli accanto", ovvero senza passargli sopra come succede sovente. Puo' accadere solo se
     il pedone avversario, SOLO nel turno precedente, si e' mosso di 2 posizioni (quindi durante la sua prima
@@ -354,7 +358,6 @@ bool board::move_piece(const position& from, const position& to)
     sta muovendo. Questa scelta e' stata fatta per rendere omogeneo il codice in se' (in effetti, all'interno
     della funzione, ricaviamo da "to" la posizione in cui puo' trovarsi la pedina da catturare (ovvero
     pce_to_pass)).
-    ---------------------------------------------------------------------------------------------------------
 */
 bool board::can_en_passant(const position& passing, const position& to) const
 {
@@ -510,6 +513,10 @@ bool board::promote(const position& pos)
     return false;
 }
 
+/*
+    Restituisce un vector con tutte le posizioni dei pezzi di
+    un determinato giocatore.
+*/
 vector<position> board::get_player_pieces_positions(player_id player) const
 {
     vector<position> player_pieces_positions;
@@ -537,6 +544,11 @@ vector<position> board::get_player_pieces_positions(player_id player) const
     return player_pieces_positions;
 }
 
+
+/*
+    Analogo  a sopra, ma considera solamente quelli presenti nella board,
+    cioè controlla i riferimenti in essa.
+*/
 vector<position> board::get_player_in_board_pieces_positions(player_id player) const
 {
     vector<position> player_in_board_pieces_positions;
@@ -646,6 +658,7 @@ void board::print_board() const
     cout << "  ABCDEFGH" << endl;
 }
 
+// Output della board su file.
 void board::file_print_board(ofstream& _out_file)
 {
     for (int i = 0; i < board_size; i++)
@@ -707,6 +720,7 @@ bool board::is_draw(player_id pl)
     return false;
 }
 
+// Restituisce true se può eseguire almeno una mossa legale
 bool board::can_do_legal_move(player_id pl) const
 {
     // Per ogni pedina
