@@ -21,6 +21,11 @@ board::board(const board& other)
     {
         if(!p)  continue;
 
+        /*
+            Per ogni puntatore diverso da nullptr ne ottengo
+            il tipo e a seconda di esso eseguo un inserimento
+            nel corrispettivo vector.
+        */
         if (is_pawn(p))
             insert_pawn(p->get_position(), p->get_player());
         else if (is_king(p))
@@ -362,8 +367,6 @@ bool board::move_piece(const position& from, const position& to)
 bool board::can_en_passant(const position& passing, const position& to) const
 {
     piece* pce{board_matrix.at(make_index_8(passing))};
-
-    // AGGIUNTO IN CORSO D'OPERA (ho modificato pensando di rendere il tutto piu coerente)
     int sign = pce->get_player() == player_id::player_1 ? -1 : 1;  // orientazione
     position pos_to_pass = to - position(sign, 0);
 
@@ -387,6 +390,7 @@ bool board::is_check(player_id player_number)
     return player_king[player_number].front().is_check(board_matrix);
 }
 
+// E' il re del giocatore id presente ancora nella scacchiera?
 bool board::has_king_been_captured(player_id id) const
 {
     for (auto p : board_matrix)
@@ -398,8 +402,10 @@ bool board::has_king_been_captured(player_id id) const
 }
 
 /*
-    Si occupa di determinare lo stato di check_mate per un determinato giocatore. Se ogni mossa possibile del giocare non risolve la situazione
-    di scacco, allora è necessariamente scacco matto. Se esiste anche solamente una mossa che lo evita allora restituisce false.
+    Si occupa di determinare lo stato di check_mate per un determinato giocatore.
+    Se ogni mossa possibile del giocare non risolve la situazione
+    di scacco, allora è necessariamente scacco matto. Se esiste anche solamente
+    una mossa che lo evita allora restituisce false.
 */
 bool board::is_checkmate(player_id player_number)
 {
@@ -458,14 +464,16 @@ void board::to_empty()
             board_matrix.at(make_index_8(i, j)) = nullptr;
 }
 
+// Inizializza la board
 void board::init_board()
 {
     // Resize del vector di puntatori: chiaramente ha 64 elementi
     board_matrix.resize(board_size * board_size);
 
     /*
-        Reserve dei vector dei pezzi, in quanto una riallocazione dinamica della memoria da parte di ognuno di essi in genere
-        renderebbe invalidi i puntatori in board_matrix. La loro dimensione non è variata durante l'esecuzione.
+        Reserve dei vector dei pezzi, in quanto una riallocazione dinamica della
+        memoria da parte di ognuno di essi in genere renderebbe invalidi i
+        puntatori in board_matrix. La loro dimensione non è variata durante l'esecuzione.
     */
     // King
     player_king[player_id::player_1].reserve(piece_numbers::king_number);
@@ -483,6 +491,7 @@ void board::init_board()
     player_rooks[player_id::player_1].reserve(piece_numbers::rook_number);
     player_rooks[player_id::player_2].reserve(piece_numbers::rook_number);
     // Queens
+    // Particolare: gestisce l'eventuale promozione di tutti i pawn
     player_queen[player_id::player_1].reserve(piece_numbers::queen_number + piece_numbers::pawn_number);
     player_queen[player_id::player_2].reserve(piece_numbers::queen_number + piece_numbers::pawn_number);
     
@@ -490,20 +499,24 @@ void board::init_board()
 }
 
 /*
-    Promote viene chiamata quando quando una cella si ritrova dalla parte opposta della board, tenendo conto del colore
-    del giocatore: se il pezzo può pruomovere allora viene sostituito da una regina.
+    Promote viene chiamata quando quando una cella si ritrova dalla parte opposta della board,
+    tenendo conto del colore del giocatore: se il pezzo può pruomovere allora viene
+    sostituito da una regina.
 */
 bool board::promote(const position& pos)
 {
     piece* p{board_matrix.at(make_index_8(pos))};
     if (!p) return false;
 
+    // Promozione possibile solo sui pedoni
     if (is_pawn(p))
     {
         player_id player_num{p->get_player()};
         /*
-            Il pezzo viene inserito nel vector dei pezzi in quanto nuovo pezzo concreto. Ciò NON causa la riallocazione dei vector poiché avviene il reserve della
-            memoria del vector di 1 (la regina iniziale) + 8 (i pedoni iniziali, che possono promuovere).
+            Il pezzo viene inserito nel vector dei pezzi in quanto nuovo pezzo concreto.
+            Ciò NON causa la riallocazione dei vector poiché avviene il reserve della
+            memoria del vector di 1 (la regina iniziale) + 8 (i pedoni iniziali
+            che possono promuovere).
         */
         player_queen[player_num].push_back(queen(p->get_position(), player_num));
         board_matrix.at(make_index_8(pos)) = &player_queen[player_num].back();
@@ -560,7 +573,10 @@ vector<position> board::get_player_in_board_pieces_positions(player_id player) c
     return player_in_board_pieces_positions;
 }
 
-// Tali funzioni inseriscono nella board un pezzo. Prima lo inseriscono nel corrispettivo vector e poi aggiornano i puntatori di board_matrix
+/*
+    Tali funzioni inseriscono nella board un pezzo. Prima lo inseriscono nel
+    corrispettivo vector e poi aggiornano i puntatori di board_matrix
+*/
 void board::insert_pawn(const position& pos, player_id id)
 {
     if (!is_valid_position_8(pos))  throw bad_position_8();
@@ -582,7 +598,8 @@ void board::insert_king(const position& pos, player_id id)
 void board::insert_queen(const position& pos, player_id id)
 {
     if (!is_valid_position_8(pos))  throw bad_position_8();
-    if (player_queen[id].size() == piece_numbers::queen_number)  throw too_many_pieces();
+    // Conto le eventuali promozioni
+    if (player_queen[id].size() == piece_numbers::queen_number + piece_numbers::pawn_number)  throw too_many_pieces();
 
     player_queen[id].push_back(queen(pos, id));
     board_matrix.at(make_index_8(pos)) = &player_queen[id].back();
@@ -681,6 +698,7 @@ string board::row_symbols(int i) const
     return str_board;
 }
 
+// Ottengo tutti i simboli della board
 string board::all_board_symbols() const
 {
     string all_symbols;
@@ -708,6 +726,7 @@ bool board::is_draw(player_id pl)
         return true;
 
     // --------------- Controllo se è presente una configurazione avvenuta per 3 volte ---------------
+    // Massimo numero di apparizioni ammesse
     constexpr int max_state_app{3};
     // Chiamo funzione find_if con predicato una lambda expression che ritorna true se trova una ricorrenza comparsa per 3 volte.
     auto it = find_if(states.begin(), states.end(), [max_state_app](const std::pair<string, int>& p) -> bool {return p.second == max_state_app;});

@@ -1,10 +1,9 @@
 //Author: NICOLA MARITAN
 
-#include "king.h"
-
 #include <algorithm>
 
 #include "board.h"
+#include "king.h"
 
 using namespace std;
 
@@ -13,11 +12,14 @@ bool king::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     // Controllo se la posizione dest e' raggiungibile dalla pedina
     vector<position> possible_pos = get_possible_positions();
     auto it = find(possible_pos.begin(), possible_pos.end(), dest);
+    // Se non e' presente (cioe' se l'iteratore punta ad end)
     if (it == possible_pos.end())
     {
+        // dest non e' fra le posizioni generate
         return false;
     }
     
+    // Puntatore al pezzo nella board (eventualmente nullptr)
     piece* dest_pce{board_pieces.at(make_index_8(dest))};
 
     /*
@@ -35,6 +37,7 @@ bool king::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     return true;
 }
 
+// Si limita a chiamare can_move_to non avendo casi particolari
 bool king::can_capture(const position& dest, const vector<piece*>& board_pieces)
 {
     return this->can_move_to(dest, board_pieces);
@@ -44,11 +47,18 @@ inline char king::symbol(){
     return player == player_id::player_1 ? 'r' : 'R';
 }
 
+/*
+    Le possibili posizioni del re sono le 8 posizioni adiacenti nella
+    board (sempre se tali posizioni sono possibili, esempio al corner
+    o in una parete ve ne sono meno: tali casi sono filtrati tramite
+    is_valid_position_8.)
+*/
 vector<position> king::get_possible_positions()
 {
     vector<position> possible_pos;
     
     position possibility;
+    // Valore della posizione iniziale
     possibility.row = pos.row;
     possibility.col = pos.col;
 
@@ -86,6 +96,14 @@ vector<position> king::get_possible_positions()
     return possible_pos;
 }
 
+/*
+    Funzione membro che controlla se tale pezzo e' soggetto a scacco.
+    Per ogni pezzo della board controlla, chiamando can_capture verso
+    la posizione di questo pezzo, se puo' raggiungerlo e catturarlo.
+    Nel caso ve ne fosse ALMENO UNO allora la funzione membro restituisce
+    true (chiaramente non e' detto che sia scacco matto). Se non vi e'
+    nessun pezzo che puo' catturare il re allora non e' scacco.
+*/
 bool king::is_check(const vector<piece*>& board_pieces)
 {
     // Per ogni pezzo della board
@@ -95,6 +113,7 @@ bool king::is_check(const vector<piece*>& board_pieces)
         // controllo se puo' mangiare.
         if(board_pieces.at(i) && board_pieces.at(i)->get_player() != get_player())
         {
+            // Puo' mangiare?
             if(board_pieces.at(i)->can_capture(get_position(), board_pieces))
             {
                 // Questo pezzo puo' mangiare il re: scacco
