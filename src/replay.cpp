@@ -24,6 +24,15 @@ using namespace std;
 */
 
 int main(int argc, char* argv[]){
+    if(argc == 1){
+        /*  Se non sono stati inseriti dei parametri allora argc vale 1 in quanto
+            c'è solo il nome del programma
+            Chiedo quindi all' utente di inserire dei parametri
+        */
+        cerr << "[ERROR] Inserire dei parametri da riga di comando !!" << endl;
+        return -1;
+    }
+
     if(argv[1][0] != 'v' && argv[1][0] != 'f' || argv[2] == nullptr){
         /*  Se la prima lettera non è nè 'v' nè 'f' il programma termina.
             Se non esiste un riferimento alla stringa nel nome_file_log
