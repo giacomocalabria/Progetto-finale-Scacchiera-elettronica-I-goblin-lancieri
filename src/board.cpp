@@ -419,7 +419,7 @@ bool board::is_checkmate(player_id player_number)
             board_matrix.at(make_index_8(p->get_position())) = nullptr;
             p->set_position(dest);
 
-            bool is_check_bool = is_check(player_number); // Controllo se in tale configurazione è scaco
+            bool is_check_bool = is_check(player_number); // Controllo se in tale configurazione è scacco
 
             // Ripristino della configurazione iniziale
             board_matrix.at(make_index_8(dest)) = prev_in_dest;
