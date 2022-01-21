@@ -7,7 +7,7 @@ using namespace std;
 /*  -----------------------------------------------------------------------------------
         L' eseguibile replay accetta da riga di comando dei parametri, che ne determinano
         il comportamento durante l'esecuzione e il relativo output. Le configurazioni dei
-        parametri sono le seguenti_
+        parametri sono le seguenti:
 
         - argomento v [nome_file_log]: stampa a video il replay del file di log indicato;
         - argomento f [nome_file_log] [nome_file_output_replay]: scrive su file il 

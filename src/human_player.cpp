@@ -16,6 +16,17 @@ void human_player::turn(){
     }
 }
 
+/*
+    L' interfaccia del giocatore umano è implementata da riga di comando
+    la quale accettta le indicazioni di spostamento mediante due coppie 
+    di coordinate, che rappresentano partenza e arrivo.
+
+    Inoltre il giocatore umano ha la possibilità di visualizzare la scacchiera
+    e quindi la dispositizione dei pezzi inserendo nell' interfaccia da riga di 
+    comando per l'inserimento delle mosse con un comando speciale: 'XX XX'
+
+*/
+
 bool human_player::move(){
     //Comando per l'utente di inserire una stringa
     cout << "Inserisci mossa tramite coordinate di partenza e arrivo nel formato 'A4 T9' oppure i comandi speciali" << endl;
