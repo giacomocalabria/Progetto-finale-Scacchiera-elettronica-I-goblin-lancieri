@@ -9,11 +9,23 @@ using namespace std;
 void human_player::turn(){
     bool success = false;
     while(!success){
+        // Faccio la chiamata a move finchè questa non restituisce true
         if(move()){
             success = true;
         }
     }
 }
+
+/*
+    L' interfaccia del giocatore umano è implementata da riga di comando
+    la quale accettta le indicazioni di spostamento mediante due coppie 
+    di coordinate, che rappresentano partenza e arrivo.
+
+    Inoltre il giocatore umano ha la possibilità di visualizzare la scacchiera
+    e quindi la dispositizione dei pezzi inserendo nell' interfaccia da riga di 
+    comando per l'inserimento delle mosse con un comando speciale: 'XX XX'
+
+*/
 
 bool human_player::move(){
     //Comando per l'utente di inserire una stringa

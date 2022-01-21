@@ -12,9 +12,7 @@
 #include "board.h"
 #include "replay_player.h"
 
-using namespace std;
-
-int video_replay(const string& _nome_file_log);
-int file_replay(const string& _nome_file_log, const string& _nome_file_output_replay);
+int video_replay(const std::string& _nome_file_log);
+int file_replay(const std::string& _nome_file_log, const std::string& _nome_file_output_replay);
 
 #endif // REPLAY_H
