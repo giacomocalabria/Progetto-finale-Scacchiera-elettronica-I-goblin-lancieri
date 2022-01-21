@@ -15,7 +15,7 @@ position::position(const string& pos)
 
     if(c_col < min_col_lowercase) //lettera maiuscola
         col = c_col - min_col;
-    else            //lettera minuscola
+    else                          //lettera minuscola
         col = c_col - min_col_lowercase;
     row = max_row - c_row;
 }
@@ -57,12 +57,13 @@ int make_index_8(int row, int col)
 
 position position_from_8(int idx)
 {
-    return position(idx / 8, idx - (idx / 8) * 8);    //idx/8 mi da un int, troncandomi il resto e trovando la riga corrispondente
+    //idx/8 mi da un int, troncandomi il resto e trovando la riga corrispondente
+    return position(idx / 8, idx - (idx / 8) * 8);
 }
 
 bool is_valid_position_8(const position& pos)
 {
-    // Una posizione è valida se ha riga e colonne comprese fra 0 e 7 inclusi
+    // Una posizione e' valida se ha riga e colonne comprese fra 0 e 7 inclusi
     return pos.row < max_position && pos.col < max_position && pos.row >= min_position && pos.col >= min_position;
 }
 
@@ -74,7 +75,6 @@ string get_string_8(const position& pos)
     }
     string s;
     s.push_back((char) (pos.col + min_col));
-    //s.push_back((char) (pos.row + min_row));
     s.push_back((char) max_row - pos.row);
     return s;
 }

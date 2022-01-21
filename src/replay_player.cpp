@@ -7,7 +7,7 @@ using namespace std;
 /*
     Il metodo turn estrae le posizioni di partenza e di arrivo contenute
     nella stringa mossa.
-    Tali posizioni, per costruzione del progetto, sono già posizioni valide
+    Tali posizioni, per costruzione del progetto, sono gia' posizioni valide
     e corrispondono ad una mossa lecita.
     Viene quindi chiamato il metodo move_piece della board con le relative
     posizioni di partenza e arrivo

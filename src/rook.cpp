@@ -32,11 +32,12 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
     position cursor = pos;
     piece* other;
     
-    /*
+    /*  ------------------------------------------------------------
         La scansione avviene solamente lungo una direzione: dipende
         da dove si trova dest rispetto a pos. Ad esempio, se la riga
-        di dest è maggiore di pos, allora la scansione avviene solo
+        di dest e' maggiore di pos, allora la scansione avviene solo
         verso il basso.
+        ------------------------------------------------------------
     */
 
     // ----------- scansione in basso -----------  
@@ -96,7 +97,7 @@ bool rook::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         }
     }
 
-    // se la cella di arrivo è occupata ed è occupata da un pezzo del stesso giocatore -> rest falso
+    // se la cella di arrivo e' occupata ed e' occupata da un pezzo del stesso giocatore -> rest falso
     other = board_pieces.at(make_index_8(dest));
     if (other && other->get_player() == player)
     {

@@ -107,7 +107,10 @@ bool bishop::can_move_to(const position& dest, const vector<piece*>& board_piece
 	else
 		return false;
 
-	//controllo se in dest c' e' una pedina avversaria o nulla (se trovo una pedina dello stesso player, ritorno false)
+
+	/*	controllo se in dest c' e' una pedina avversaria o nulla
+		(se trovo una pedina dello stesso player, ritorno false)
+	*/
 	go_piece = board_pieces.at(make_index_8(dest));	//inserisco in go_piece il pezzo presente in dest (eventualmente null)
 	if(go_piece && go_piece->get_player() == player)
 		return false;
@@ -135,7 +138,7 @@ vector<position> bishop::get_possible_positions()
 		possible_positions.push_back(go_on);
 
 		go_on.row++;
-		go_on.col++;		//controllo le posizioni "in basso a destra" (in cui bishop puo'andare)
+		go_on.col++;		//controllo le posizioni "in basso a destra"
 	}
 
 	go_on = position(pos.row - 1, pos.col + 1);
@@ -144,7 +147,7 @@ vector<position> bishop::get_possible_positions()
 		possible_positions.push_back(go_on);
 
 		go_on.row--;
-		go_on.col++;		//controllo le posizioni "in alto a destra" (in cui bishop puo'andare)
+		go_on.col++;		//controllo le posizioni "in alto a destra"
 	}
 
 	go_on = position(pos.row + 1, pos.col - 1);
@@ -153,7 +156,7 @@ vector<position> bishop::get_possible_positions()
 		possible_positions.push_back(go_on);
 
 		go_on.row++;
-		go_on.col--;		//controllo le posizioni "in basso a sinistra" (in cui bishop puo'andare)
+		go_on.col--;		//controllo le posizioni "in basso a sinistra"
 	}
 
 	go_on = position(pos.row - 1, pos.col - 1);
@@ -162,7 +165,7 @@ vector<position> bishop::get_possible_positions()
 		possible_positions.push_back(go_on);
 
 		go_on.row--;
-		go_on.col--;		//controllo le posizioni "in alto a sinistra" (in cui bishop puo'andare)
+		go_on.col--;		//controllo le posizioni "in alto a sinistra"
 	}
 
 	return possible_positions;

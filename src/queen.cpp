@@ -25,7 +25,7 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
     /*  ------------------------------------------------------------
         La scansione avviene solamente lungo una direzione: dipende
         da dove si trova dest rispetto a pos. Ad esempio, se la riga
-        di dest è maggiore di pos, allora la scansione avviene solo
+        di dest e' maggiore di pos, allora la scansione avviene solo
         verso il basso.
         ------------------------------------------------------------
     */
@@ -86,6 +86,13 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
         }
     }
 
+    /*  --------------------------------------------------------------------------
+        Il controllo all'interno dell'if che segue avviene solo se cursor == dest,
+        altrimenti significa che la queen non puo' muoversi fino a dest mediante
+        movimenti orizzontali o verticali e, quindi, devo controllare se puo'
+        arrivarci mediante movimenti diagonali, altrimenti ritorno falso
+        --------------------------------------------------------------------------
+    */
     if(cursor == dest)
     {
         /*  controllo se in dest c' e' una pedina avversaria o nulla
@@ -100,6 +107,12 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
         return true;
     }
 
+    /*
+        Pongo di nuovo il cursore = pos, in modo tale che possa ricominciare il
+        controllo dalla posizione corrente della regina (se non lo facessi, il
+        cursore sarebbe in un punto accessibile solo mediante movimenti orizzontali
+        o verticali, i quali pero', in questo caso, non sono leciti come gia' visto).
+    */
     cursor = pos;        //posizione che avanza fino a dest
     other = board_pieces.at(make_index_8(cursor));  //pedina di ogni posizione considerata fino a dest
 
@@ -184,7 +197,7 @@ bool queen::can_move_to(const position& dest, const vector<piece*>& board_pieces
             return false;
     }
 
-    /*  La parte seguente e' ripetuta in quanto dovevo cambiare il valore alla variabile other,
+    /*  La parte seguente e' ripetuta in quanto bisogna cambiare il valore alla variabile other,
         perdendo il riferimento interessato...*/
     /*  controllo se in dest c' e' una pedina avversaria o nulla
         (se trovo una pedina dello stesso player, ritorno false)
