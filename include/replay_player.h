@@ -12,9 +12,12 @@
     sulla board e opera attraverso il metodo turn, che a sua volta invocherà il metodo 
     move_piece della board.
 
-    Il file di replay è stato costruito in modo tale che al suo interno vengano messe solo mosse valide/lecite. Per tanto non è nemmeno necessario creare due giocatori di 
+    Il file di replay è stato costruito in modo tale che al suo interno vengano messe 
+    solo mosse valide/lecite. Per tanto non è nemmeno necessario creare due giocatori di 
     tipo replay in quanto basta un solo giocatore che esegue le mosse nell' ordine 
     indicato dal file di replay
+
+    Per questi motivi tale classe non implementa la classe player
     -----------------------------------------------------------------------------------
 */
 

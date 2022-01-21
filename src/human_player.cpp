@@ -9,6 +9,7 @@ using namespace std;
 void human_player::turn(){
     bool success = false;
     while(!success){
+        // Faccio la chiamata a move finchè questa non restituisce true
         if(move()){
             success = true;
         }
