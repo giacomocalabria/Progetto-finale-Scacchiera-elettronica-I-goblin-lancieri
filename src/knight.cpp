@@ -21,7 +21,9 @@ bool knight::can_move_to(const position& dest, const vector<piece*>& board_piece
     //Non è necessario controllare le posizioni su cui trasla il cavallo in quanto 
     //il cavallo può scavalcare le altre pedine siano esse avversarie o non.
     if (other){
-        //Il cavallo non può andare su una pedina dello stesso colore
+        //Se nella posizione di destinazione c'è un pezzo che ha l'identificativo
+        //del giocatore uguale al quella del pezzo, allora il cavallo non può 
+        // andare su quella posizione in quanto è occupata da una pedina dello stesso colore
         if(player != other -> get_player()){
             return true;
         }
@@ -32,6 +34,7 @@ bool knight::can_move_to(const position& dest, const vector<piece*>& board_piece
 
 bool knight::can_capture(const position& dest, const vector<piece*>& board_pieces){
     //Il cavallo può sempre catturare un pezzo avversario nella casa di destinazione
+    // non vi sono casi particolari
     return this->can_move_to(dest, board_pieces);
 }
 
@@ -40,29 +43,12 @@ inline char knight::symbol(){
 }
 
 /*
-    La mossa del cavallo è una mossa a "L".
+    Le 8 possibili posizioni del cavallo sono le posizioni che formano la lettera "L",
+    ovvero le posizioni nella board che prevedono uno spostamento di una casella in verticale
+    e due in orizzontale oppure due in verticale e una in orizzontale.
     Prima di inserire una posizione nel vector controllo che tale posizione sia
     all' interno dei range della scacchiera.
 */
-
-/*vector<position> knight::get_possible_positions(){ 
-    vector<position> possible_pos;
-    position dest;
-
-    for(int i = -1; i < 2; i + 2){
-        for(int j = -1; j < 2; j + 2){
-            dest = pos + position(1 * j, 2 * i);
-            if(is_valid_position_8(dest))
-                possible_pos.push_back(dest);
-
-            dest = pos + position(2 * j, 1 * i);
-            if(is_valid_position_8(dest))
-                possible_pos.push_back(dest);
-        }
-    }
-
-    return possible_pos;
-}*/
 
 vector<position> knight::get_possible_positions(){ 
     vector<position> possible_pos;

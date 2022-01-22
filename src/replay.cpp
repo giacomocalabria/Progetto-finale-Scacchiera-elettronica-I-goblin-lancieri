@@ -126,6 +126,9 @@ int video_replay(const string& _nome_file_log){
         // Il ciclo continua finchè non viene trovata una delle tre stringhe terminatori
         while(true){
             getline(in_file, mossa); // prendo una stringa dal file
+
+            // Se la stringa corrisponde ad una dellestringhe che fanno terminare
+            // il gioco allora stampo a video un messaggio e termino il ciclo
             if(mossa == "FF nero"){
                 cout << endl <<"Fine replay, vincitore giocatore colore nero" << endl;
                 break;
@@ -182,8 +185,11 @@ int file_replay(const string& _nome_file_log, const string& _nome_file_output_re
 
             // Il ciclo continua finchè non viene trovata una delle tre stringhe terminatori
             while(true){
-                getline(in_file, mossa);
-                if(mossa == "FF nero"){ // prendo una stringa dal file
+                getline(in_file, mossa); // prendo una stringa dal file
+
+                // Se la stringa corrisponde ad una dellestringhe che fanno terminare
+                // il gioco allora stampo a video un messaggio e termino il ciclo
+                if(mossa == "FF nero"){
                     out_file << endl <<"Fine replay, vincitore giocatore colore nero" << endl;
                     break;
                 } else if(mossa == "FF bianco"){

@@ -23,8 +23,9 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
 
     //------- controllo se la posizione dest e' raggiungibile dalla pedina -------
     vector<position> possible_positions = get_possible_positions();
-    vector<position>::iterator it;
-    it = find(possible_positions.begin(), possible_positions.end(), dest);
+    auto it = find(possible_positions.begin(), possible_positions.end(), dest);
+    // Se la destinazione non è all' interno delle possibili posizioni
+    // la funzione can_move_to ritorna falso
     if (it == possible_positions.end())
         return false;
 
