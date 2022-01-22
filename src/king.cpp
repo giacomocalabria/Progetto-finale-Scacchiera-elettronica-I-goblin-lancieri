@@ -34,6 +34,12 @@ bool king::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         return false;
     }
 
+    // Allora si e' tentato un arrocco (nell'arrocco la differenza di colonne e' 2)
+    if ((abs(dest.col - pos.col) == 2) && is_check(board_pieces))
+    {
+        return false;
+    }
+
     return true;
 }
 
