@@ -42,7 +42,6 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         }
 
         // altrimenti puo' muoversi
-        //is_init_pos = false;
         can_be_passed = false;
         return true;
     }
@@ -58,7 +57,6 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         }
         /*...altrimenti la mossa e' lecita: pongo is_init_pos a false (non si
         trovera' sicuramente piu' nella sua posizione iniziale)*/
-        //is_init_pos = false;
         //il pedone in questione, solo nella prossima mossa dell'avversario, puo' essere catturato "in passant"
         can_be_passed = true;
         
@@ -74,7 +72,6 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         if (player != other->get_player())
         {
             // Puo' mangiarlo
-            is_init_pos = false;
             can_be_passed = false;
             return true;
         }
@@ -104,7 +101,6 @@ bool pawn::can_capture(const position& dest, const vector<piece*>& board_pieces)
         if (other->get_player() == get_player())
             return false;
 
-        is_init_pos = false;
         can_be_passed = false;
         return true;
     }
