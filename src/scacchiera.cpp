@@ -67,6 +67,20 @@ int main(int argc, char *argv[])
         player_id human_id = int_player_id == 0 ? player_1 : player_2;
         player_id computer_id = human_id == player_1 ? player_2 : player_1;
 
+        string color, format;
+        if (human_id == player_1)
+        {
+            color = "bianco";
+            format = "minuscole";
+        }
+        else
+        {
+            color = "nero";
+            format = "maiuscole";
+        }
+
+        cout << "Sei il giocatore " << color << " (lettere " << format << ").\n";
+
         computer_player_game.push_back(computer_player(&main_board, computer_id));
         human_player_game.push_back(human_player(&main_board, human_id));
 

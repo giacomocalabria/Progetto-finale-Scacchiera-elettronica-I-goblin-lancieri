@@ -42,13 +42,13 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         }
 
         // altrimenti puo' muoversi
-        is_init_pos = false;
+        //is_init_pos = false;
         can_be_passed = false;
         return true;
     }
 
     // Se la posizione di destinazione e' la posizione del pedone + 2 in avanti
-    if (dest == pos + (sign * position(2, 0)))
+    if (is_init_pos && (dest == pos + (sign * position(2, 0))))
     {
         // Allora si sta muovendo in avanti di 2 posizioni
         if (board_pieces.at(make_index_8(dest)) || board_pieces.at(make_index_8(dest.row - sign, dest.col)))
@@ -58,7 +58,7 @@ bool pawn::can_move_to(const position& dest, const vector<piece*>& board_pieces)
         }
         /*...altrimenti la mossa e' lecita: pongo is_init_pos a false (non si
         trovera' sicuramente piu' nella sua posizione iniziale)*/
-        is_init_pos = false;
+        //is_init_pos = false;
         //il pedone in questione, solo nella prossima mossa dell'avversario, puo' essere catturato "in passant"
         can_be_passed = true;
         
