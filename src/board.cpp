@@ -345,6 +345,10 @@ bool board::move_piece(const position& from, const position& to)
     {
         no_pwn_no_eat++;
     }
+    else
+    {
+        no_pwn_no_eat = 0;
+    }
 
     // Mossa lecita
     count_draw++;
