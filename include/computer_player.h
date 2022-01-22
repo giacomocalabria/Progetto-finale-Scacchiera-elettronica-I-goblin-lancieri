@@ -15,6 +15,12 @@
     ----------------------------------------------------
     La classe computer_player si interfaccia con la board
     in modo tale da operare su di essa in modo casuale.
+    Per far cio' ad un computer_player e' associata una
+    board. Su di essa opera in modo concreto chiamando
+    move_piece. Ovviamente un computer_player ha un id,
+    cioe' può essere player_id::player_1 p player_id::player_2.
+    Ciò e' necessario per operare sui propri pezzi e
+    riferire alla board il proprio id.
     ----------------------------------------------------
 */
 
@@ -25,8 +31,15 @@ class computer_player : public player
         {
             //std::cout << "computer_player_constructor; my id: " << id << std::endl;
         };
+
+        // Turno del computer player
         void turn() override;
+    
     protected:
+    /*
+        Mossa del computer player: turn chiama move finché non va a buon fine
+        Ritorna true se e solo se la mossa e' andata a buon fine.
+    */
         bool move() override;
 };
 

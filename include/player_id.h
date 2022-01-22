@@ -11,8 +11,13 @@
 
 enum player_id
 {
+    // Conteggio del numero di giocatori
     player_count = 2,
+
+    // Nessun player e' un caso contemplato
     no_player = -1,
+
+    // I due giocatori
     player_1 = 0,
     player_2 = 1, 
 };
